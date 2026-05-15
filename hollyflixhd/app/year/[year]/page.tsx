@@ -1,5 +1,6 @@
 import { getMoviesByYear } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
+import Pagination from '@/components/ui/Pagination';
 
 export const revalidate = 86400;
 
@@ -26,6 +27,7 @@ export default async function YearPage({
         Movies from {params.year}
       </h1>
       <MovieGrid movies={movies.results} />
+      <Pagination currentPage={page} totalPages={movies.total_pages} basePath={`/year/${params.year}`} />
     </div>
   );
 }

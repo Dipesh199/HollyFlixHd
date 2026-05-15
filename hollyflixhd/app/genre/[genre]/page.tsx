@@ -1,5 +1,6 @@
 import { getMoviesByGenre, getGenres } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
+import Pagination from '@/components/ui/Pagination';
 import { notFound } from 'next/navigation';
 import { extractIdFromSlug } from '@/lib/slugify';
 
@@ -38,6 +39,7 @@ export default async function GenrePage({
         {genreName} Movies
       </h1>
       <MovieGrid movies={movies.results} />
+      <Pagination currentPage={page} totalPages={movies.total_pages} basePath={`/genre/${params.genre}`} />
     </div>
   );
 }

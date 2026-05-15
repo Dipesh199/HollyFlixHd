@@ -1,5 +1,6 @@
 import { getTopRatedMovies } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
+import Pagination from '@/components/ui/Pagination';
 
 export const revalidate = 3600;
 
@@ -22,6 +23,7 @@ export default async function TopRatedPage({
         <span className="text-yellow-500">⭐</span> Top Rated Movies
       </h1>
       <MovieGrid movies={movies.results} />
+      <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/top-rated" />
     </div>
   );
 }

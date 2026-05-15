@@ -1,5 +1,6 @@
 import { getNewReleases } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
+import Pagination from '@/components/ui/Pagination';
 
 export const revalidate = 3600;
 
@@ -22,6 +23,7 @@ export default async function NewReleasesPage({
         <span className="text-blue-500">🆕</span> New Releases
       </h1>
       <MovieGrid movies={movies.results} />
+      <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/new-releases" />
     </div>
   );
 }

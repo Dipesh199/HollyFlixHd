@@ -1,5 +1,6 @@
 import { getPopularMovies } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
+import Pagination from '@/components/ui/Pagination';
 
 export const revalidate = 3600;
 
@@ -20,6 +21,7 @@ export default async function MoviesPage({
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">All Movies</h1>
       <MovieGrid movies={movies.results} />
+      <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/movies" />
     </div>
   );
 }

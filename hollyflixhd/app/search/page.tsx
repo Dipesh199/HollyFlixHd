@@ -1,5 +1,6 @@
 import { searchMovies } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
+import Pagination from '@/components/ui/Pagination';
 
 export async function generateMetadata({
   searchParams,
@@ -38,6 +39,7 @@ export default async function SearchPage({
         Search results for: <span className="text-red-500">{query}</span>
       </h1>
       <MovieGrid movies={movies.results} />
+      <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/search" queryParam={`q=${query}`} />
     </div>
   );
 }
