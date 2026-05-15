@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
 import { getEditorial } from '@/lib/editorial';
-import EditorialSection from '@/components/blog/EditorialSection';
+import { EditorialSection } from '@/components/blog/EditorialSection';
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
   

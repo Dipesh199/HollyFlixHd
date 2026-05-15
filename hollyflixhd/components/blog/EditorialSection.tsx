@@ -1,10 +1,10 @@
 import React from 'react'
 import { Editorial } from '@/lib/editorial'
 
-export default function EditorialSection({ data, movieTitle }: { data: Editorial, movieTitle: string }) {
+export function EditorialSection({ data, movieTitle }: { data: Editorial, movieTitle: string }) {
   const ratingColors = {
-    'Must Watch': 'bg-green-600 text-white',
-    'Worth Watching': 'bg-blue-600 text-white',
+    'Must Watch': 'bg-yellow-500 text-black',
+    'Worth Watching': 'bg-green-600 text-white',
     'Cult Classic': 'bg-purple-600 text-white',
     'Skip It': 'bg-red-600 text-white'
   }
