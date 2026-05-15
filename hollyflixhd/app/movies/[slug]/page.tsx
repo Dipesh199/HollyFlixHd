@@ -6,7 +6,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
-
+import { getEditorial } from '@/lib/editorial';
+import EditorialSection from '@/components/blog/EditorialSection';
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
   
@@ -71,6 +72,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function MoviePage({ params }: { params: { slug: string } }) {
   const movie = await getMovieBySlug(params.slug);
+  const editorial = getEditorial(params.slug);
 
   if (!movie) {
     notFound();
@@ -272,6 +274,8 @@ export default async function MoviePage({ params }: { params: { slug: string } }
               <h2 className="text-2xl font-bold mb-4 border-b border-gray-800 pb-2">Plot Summary</h2>
               <p className="text-gray-300 leading-relaxed text-lg">{movie.overview}</p>
             </section>
+
+            {editorial && <EditorialSection data={editorial} movieTitle={movie.title} />}
 
             {/* Cast */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (

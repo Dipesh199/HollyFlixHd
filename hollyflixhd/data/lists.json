@@ -1,0 +1,65 @@
+[
+  {
+    "slug": "best-christopher-nolan-movies-ranked",
+    "title": "Best Christopher Nolan Movies Ranked (2024)",
+    "category": "lists",
+    "metaDescription": "Every Christopher Nolan movie ranked from best to worst by our editorial team.",
+    "publishedAt": "2024-01-15",
+    "movies": [
+      {
+        "rank": 1,
+        "movieSlug": "the-dark-knight-2008",
+        "movieTitle": "The Dark Knight (2008)",
+        "reason": "The pinnacle of superhero cinema."
+      },
+      {
+        "rank": 2,
+        "movieSlug": "inception-2010",
+        "movieTitle": "Inception (2010)",
+        "reason": "A mind-bending original concept perfectly executed."
+      },
+      {
+        "rank": 3,
+        "movieSlug": "interstellar-2014",
+        "movieTitle": "Interstellar (2014)",
+        "reason": "A beautiful emotional core wrapped in stunning visuals."
+      }
+    ]
+  },
+  {
+    "slug": "top-sci-fi-movies-of-the-decade",
+    "title": "Top Sci-Fi Movies of the Decade",
+    "category": "lists",
+    "metaDescription": "The absolute best science fiction films from the last 10 years.",
+    "publishedAt": "2024-02-01",
+    "movies": [
+      {
+        "rank": 1,
+        "movieSlug": "interstellar-2014",
+        "movieTitle": "Interstellar (2014)",
+        "reason": "Redefined the modern space epic."
+      }
+    ]
+  },
+  {
+    "slug": "movies-that-will-mind-bend-you",
+    "title": "5 Movies That Will Bend Your Mind",
+    "category": "lists",
+    "metaDescription": "Films with complex plots that require multiple viewings.",
+    "publishedAt": "2024-03-10",
+    "movies": [
+      {
+        "rank": 1,
+        "movieSlug": "inception-2010",
+        "movieTitle": "Inception (2010)",
+        "reason": "Dreams within dreams, what else is there to say?"
+      },
+      {
+        "rank": 2,
+        "movieSlug": "tenet-2020",
+        "movieTitle": "Tenet (2020)",
+        "reason": "Time inversion mechanics that challenge comprehension."
+      }
+    ]
+  }
+]

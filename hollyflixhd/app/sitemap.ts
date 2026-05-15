@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 import { getPopularMovies } from '@/lib/tmdb'
 import { generateMovieSlug } from '@/lib/slugify'
-
+import listsData from '@/data/lists.json'
+import endingExplainedData from '@/data/ending-explained.json'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://hollyflixhd.com'
   
@@ -29,7 +30,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.9,
       }
     })
-    return [...routes, ...movieRoutes]
+
+    const blogRoutes = [
+      ...listsData.map((post) => ({
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+      })),
+      ...endingExplainedData.map((post) => ({
+        url: `${baseUrl}/blog/${post.slug}`,
+        lastModified: new Date().toISOString(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+      }))
+    ]
+
+    return [...routes, ...movieRoutes, ...blogRoutes]
   } catch {
     return routes
   }

@@ -22,6 +22,7 @@ export default function Header() {
           <Link href="/movies" className="hover:text-red-500 transition-colors">Movies</Link>
           <Link href="/new-releases" className="hover:text-red-500 transition-colors">New Releases</Link>
           <Link href="/top-rated" className="hover:text-red-500 transition-colors">Top Rated</Link>
+          <Link href="/blog" className="hover:text-red-500 transition-colors">Blog</Link>
         </nav>
       </div>
     </header>

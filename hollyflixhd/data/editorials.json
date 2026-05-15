@@ -1,0 +1,32 @@
+{
+  "inception-2010": {
+    "editorial": "Inception is Nolan's most rewatchable film — each viewing reveals a new layer you missed before. If you enjoy films that challenge your perception of reality, this is essential watching.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": ["mind-bending", "rewatch-worthy", "oscar-winner"]
+  },
+  "the-dark-knight-2008": {
+    "editorial": "A gritty, realistic take on Batman that redefined the superhero genre. Heath Ledger's Joker is legendary.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": ["superhero", "masterpiece", "action"]
+  },
+  "interstellar-2014": {
+    "editorial": "A visually stunning sci-fi epic exploring love and time dilation. The score by Hans Zimmer is unforgettable.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": ["sci-fi", "emotional", "space"]
+  },
+  "dunkirk-2017": {
+    "editorial": "A tense, visceral war film told from three distinct perspectives with minimal dialogue. A masterclass in suspense.",
+    "worthWatching": true,
+    "editorRating": "Worth Watching",
+    "tags": ["war", "suspense", "historical"]
+  },
+  "tenet-2020": {
+    "editorial": "An ambitious action thriller with a complex time-inversion concept. Visually spectacular but requires strict attention.",
+    "worthWatching": true,
+    "editorRating": "Worth Watching",
+    "tags": ["action", "time-travel", "complex"]
+  }
+}
