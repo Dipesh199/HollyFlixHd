@@ -53,3 +53,19 @@ export const getMovieBySlug = async (slug: string): Promise<Movie | null> => {
   }
   return null;
 }
+
+export const getMoviesByGenre = (genreId: number, page: number = 1) => 
+  fetchFromTMDB<PaginatedResponse<Movie>>('/discover/movie', { with_genres: genreId.toString(), page: page.toString() });
+
+export const getMoviesByYear = (year: string | number, page: number = 1) => 
+  fetchFromTMDB<PaginatedResponse<Movie>>('/discover/movie', { primary_release_year: year.toString(), page: page.toString() });
+
+export const getActorById = (actorId: number) => 
+  fetchFromTMDB<Actor>(`/person/${actorId}`);
+
+export const getActorMovies = (actorId: number) => 
+  fetchFromTMDB<{cast: Movie[]}>(`/person/${actorId}/movie_credits`);
+
+export const getGenres = () => 
+  fetchFromTMDB<{genres: {id: number, name: string}[]}>('/genre/movie/list');
+
