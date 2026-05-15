@@ -1,6 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-import { getMovieBySlug } from '../lib/tmdb'
+import { config } from 'dotenv'
+
+config({ path: path.resolve(__dirname, '../.env.local') })
+config({ path: path.resolve(__dirname, '../.env') })
+
 
 const EDITORIALS_PATH = path.join(__dirname, '../data/editorials.json')
 const OLLAMA_URL = 'http://localhost:11434/api/generate'
@@ -16,17 +20,25 @@ const DEFAULT_SLUGS = [
 
 async function generateEditorial(slug: string, current: number, total: number) {
   try {
-    const movie = await getMovieBySlug(slug)
-    if (!movie) {
-      console.warn(`⚠️  Movie not found for slug: ${slug}`)
-      return false
+    let movieTitle = slug.split('-').slice(0, -1).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+    let movieYear = slug.split('-').pop() || 'Unknown'
+    let genres = 'Unknown'
+    let director = 'Unknown'
+
+    try {
+      const { getMovieBySlug } = await import('../lib/tmdb')
+      const movie = await getMovieBySlug(slug)
+      if (movie) {
+        movieTitle = movie.title
+        movieYear = movie.release_date ? movie.release_date.split('-')[0] : movieYear
+        genres = movie.genres?.map(g => g.name).join(', ') || genres
+        director = movie.credits?.crew.find(c => c.job === 'Director')?.name || director
+      }
+    } catch (tmdbError: any) {
+      console.warn(`⚠️  TMDB fetch failed for ${slug} (${tmdbError.message}). Falling back to slug data...`)
     }
 
-    const year = movie.release_date ? movie.release_date.split('-')[0] : 'Unknown'
-    const genres = movie.genres?.map(g => g.name).join(', ') || 'Unknown'
-    const director = movie.credits?.crew.find(c => c.job === 'Director')?.name || 'Unknown'
-
-    const prompt = `Write a 2-3 sentence editorial about the movie "${movie.title} (${year})".
+    const prompt = `Write a 2-3 sentence editorial about the movie "${movieTitle} (${movieYear})".
 Genre: ${genres}. Director: ${director}.
 Rules:
 - Be specific about what makes this movie unique
@@ -49,7 +61,7 @@ JSON format:
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'qwen3.6:35b',
+        model: 'qwen2.5:7b',
         prompt: prompt,
         stream: false
       })
@@ -62,11 +74,11 @@ JSON format:
     const data = await response.json()
     let rawText = data.response.trim()
     
-    // Clean up potential markdown blocks if the model didn't listen
-    if (rawText.startsWith('```json')) {
-      rawText = rawText.replace(/^```json/, '').replace(/```$/, '').trim()
-    } else if (rawText.startsWith('```')) {
-      rawText = rawText.replace(/^```/, '').replace(/```$/, '').trim()
+    // Extract the JSON block specifically to ignore extra text or markdown
+    const firstBrace = rawText.indexOf('{')
+    const lastBrace = rawText.lastIndexOf('}')
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      rawText = rawText.substring(firstBrace, lastBrace + 1)
     }
 
     const parsed = JSON.parse(rawText)

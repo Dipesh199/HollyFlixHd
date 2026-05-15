@@ -1,1 +1,56 @@
-{}
+{
+  "inception-2010": {
+    "editorial": "You should watch Inception for its mind-bending narrative and complex visuals; it challenges perception like few films do.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": [
+      "mind-bending",
+      "rewatch-worthy"
+    ]
+  },
+  "the-dark-knight-2008": {
+    "editorial": "You must experience the psychological thrill of 'The Dark Knight'; it's a masterclass in storytelling that you'll want to revisit. It’s not just about superhero movies—it's an exploration of moral ambiguity and power that resonates beyond its genre.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": [
+      "mind-bending",
+      "rewatch-worthy"
+    ]
+  },
+  "interstellar-2014": {
+    "editorial": "You'll be spellbound by Interstellar's profound exploration of time and love, making it a must-see. Its complex narrative and stunning visuals are unforgettable.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": [
+      "mind-bending",
+      "rewatch-worthy"
+    ]
+  },
+  "tenet-2020": {
+    "editorial": "You must experience Tenet's mind-bending time-reversal concept and Nolan's intricate storytelling. Perfect for fans of complex narratives and visual spectacle.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": [
+      "mind-bending",
+      "rewatch-worthy"
+    ]
+  },
+  "the-matrix-1999": {
+    "editorial": "You won't find a more groundbreaking blend of action and philosophy. Experience the Matrix—must-see for anyone who loves deep, thought-provoking sci-fi. Unleash your inner philosopher while enjoying non-stop excitement.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": [
+      "mind-bending",
+      "rewatch-worthy"
+    ]
+  },
+  "dunkirk-2017": {
+    "editorial": "Dive into the claustrophobic tension and breathtaking visuals of Christopher Nolan's Dunkirk for a unique war experience.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": [
+      "mind-bending",
+      "rewatch-worthy"
+    ]
+  }
+}
