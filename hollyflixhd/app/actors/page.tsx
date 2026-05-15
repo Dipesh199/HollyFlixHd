@@ -1,6 +1,4 @@
 import { getPopularMovies } from '@/lib/tmdb';
-import Link from 'next/link';
-import Image from 'next/image';
 
 export const revalidate = 86400;
 
@@ -11,7 +9,7 @@ export const metadata = {
 
 export default async function ActorsPage() {
   // Simple fallback: Get popular movies and extract their cast to show popular actors
-  const popularMovies = await getPopularMovies(1);
+  await getPopularMovies(1);
   // Ideally, there would be a getPopularActors API method from TMDB /person/popular
   
   return (

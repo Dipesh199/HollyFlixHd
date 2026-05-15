@@ -2,7 +2,6 @@ import { getMoviesByGenre, getGenres } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
 import Pagination from '@/components/ui/Pagination';
 import { notFound } from 'next/navigation';
-import { extractIdFromSlug } from '@/lib/slugify';
 
 export async function generateMetadata({ params }: { params: { genre: string } }) {
   const genreId = parseInt(params.genre.split('-')[0], 10);

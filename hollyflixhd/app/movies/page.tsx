@@ -17,11 +17,24 @@ export default async function MoviesPage({
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
   const movies = await getPopularMovies(page);
 
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": movies.results.map((m, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "url": `https://hollyflixhd.com/movies/${m.id}`
+    }))
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">All Movies</h1>
-      <MovieGrid movies={movies.results} />
-      <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/movies" />
-    </div>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">All Movies</h1>
+        <MovieGrid movies={movies.results} />
+        <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/movies" />
+      </div>
+    </>
   );
 }

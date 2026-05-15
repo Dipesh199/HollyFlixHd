@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getMovieBySlug, getSimilarMovies } from '@/lib/tmdb';
 import { getMoviePosterUrl, getMovieBackdropUrl } from '@/lib/tmdb-image';
-import { slugify, generateMovieSlug } from '@/lib/slugify';
+import { slugify } from '@/lib/slugify';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';

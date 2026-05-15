@@ -1,4 +1,4 @@
-import { Movie, PaginatedResponse } from '@/types/movie';
+import { Movie, PaginatedResponse, Actor } from '@/types/movie';
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY || 'dummy_key';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';

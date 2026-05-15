@@ -34,6 +34,7 @@ export interface Actor {
   character: string;
   profile_path: string | null;
   order: number;
+  department?: string;
 }
 
 export interface Crew {
