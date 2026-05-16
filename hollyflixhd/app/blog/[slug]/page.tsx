@@ -59,8 +59,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       {/* Breadcrumb */}
       <div className="bg-gradient-to-b from-black/80 to-transparent pt-4 pb-4">
         <div className="container mx-auto px-4 text-sm text-gray-300">
-          <Link href="/" className="hover:text-white">Home</Link> &gt;{' '}
-          <Link href="/blog" className="hover:text-white">Blog</Link> &gt;{' '}
+          <Link prefetch={false} href="/" className="hover:text-white">Home</Link> &gt;{' '}
+          <Link prefetch={false} href="/blog" className="hover:text-white">Blog</Link> &gt;{' '}
           <span className="text-white">{post.title}</span>
         </div>
       </div>

@@ -26,13 +26,13 @@ export default function BlogIndexPage() {
       </div>
 
       <div className="flex justify-center gap-4 mb-12">
-        <Link href="/blog" className="px-6 py-2 rounded-full bg-red-600 text-white font-bold">
+        <Link prefetch={false} href="/blog" className="px-6 py-2 rounded-full bg-red-600 text-white font-bold">
           All
         </Link>
-        <Link href="/blog/category/lists" className="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-300 hover:bg-gray-800 transition-colors">
+        <Link prefetch={false} href="/blog/category/lists" className="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-300 hover:bg-gray-800 transition-colors">
           Best Of Lists
         </Link>
-        <Link href="/blog/category/ending-explained" className="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-300 hover:bg-gray-800 transition-colors">
+        <Link prefetch={false} href="/blog/category/ending-explained" className="px-6 py-2 rounded-full bg-[#1a1a1a] text-gray-300 hover:bg-gray-800 transition-colors">
           Ending Explained
         </Link>
       </div>

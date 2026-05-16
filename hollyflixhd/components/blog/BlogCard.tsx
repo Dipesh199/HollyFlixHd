@@ -13,7 +13,7 @@ export default function BlogCard({ slug, title, category, publishedAt }: BlogCar
   const categoryColor = isList ? 'bg-blue-600' : 'bg-red-600'
 
   return (
-    <Link href={`/blog/${slug}`} className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-5 hover:border-red-500 transition-colors flex flex-col h-full group">
+    <Link prefetch={false} href={`/blog/${slug}`} className="bg-[#1a1a1a] border border-gray-800 rounded-lg p-5 hover:border-red-500 transition-colors flex flex-col h-full group">
       <div className="flex justify-between items-start mb-4">
         <span className={`${categoryColor} text-white text-xs font-bold px-2 py-1 rounded uppercase tracking-wider`}>
           {categoryLabel}

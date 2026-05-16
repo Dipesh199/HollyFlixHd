@@ -17,7 +17,7 @@ export default function EndingExplainedPost({ post }: { post: EndingExplainedPos
       <header className="mb-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
         <p className="text-gray-400 mb-6">Published on {post.publishedAt}</p>
-        <Link 
+        <Link prefetch={false} 
           href={`/movies/${post.movieSlug}`}
           className="inline-block bg-[#1a1a1a] border border-gray-800 hover:border-red-500 text-white px-6 py-2 rounded-full transition-colors"
         >

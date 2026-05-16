@@ -14,7 +14,7 @@ export default function MovieCard({ movie }: Props) {
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
 
   return (
-    <Link href={`/movies/${slug}`} className="group flex flex-col bg-[#1a1a1a] rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
+    <Link prefetch={false} href={`/movies/${slug}`} className="group flex flex-col bg-[#1a1a1a] rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
       <div className="relative aspect-[2/3] w-full bg-gray-800">
         <Image 
           src={posterUrl} 

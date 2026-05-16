@@ -210,11 +210,11 @@ export default async function MoviePage({ params }: { params: { slug: string } }
         {/* Breadcrumb Visual */}
         <div className="absolute top-0 left-0 w-full z-20 bg-gradient-to-b from-black/80 to-transparent pt-4 pb-12">
           <div className="container mx-auto px-4 text-sm text-gray-300">
-            <Link href="/" className="hover:text-white">Home</Link> &gt;{' '}
-            <Link href="/movies" className="hover:text-white">Movies</Link> &gt;{' '}
+            <Link prefetch={false} href="/" className="hover:text-white">Home</Link> &gt;{' '}
+            <Link prefetch={false} href="/movies" className="hover:text-white">Movies</Link> &gt;{' '}
             {movie.genres && movie.genres[0] && (
               <>
-                <Link href={`/genre/${movie.genres[0].id}-${slugify(movie.genres[0].name)}`} className="hover:text-white">
+                <Link prefetch={false} href={`/genre/${movie.genres[0].id}-${slugify(movie.genres[0].name)}`} className="hover:text-white">
                   {movie.genres[0].name}
                 </Link> &gt;{' '}
               </>
@@ -254,7 +254,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                     <span className="text-gray-300">{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m</span>
                   )}
                   {movie.genres?.map(g => (
-                    <Link key={g.id} href={`/genre/${g.id}-${slugify(g.name)}`} className="bg-gray-800 hover:bg-gray-700 text-sm px-3 py-1 rounded-full transition-colors">
+                    <Link prefetch={false} key={g.id} href={`/genre/${g.id}-${slugify(g.name)}`} className="bg-gray-800 hover:bg-gray-700 text-sm px-3 py-1 rounded-full transition-colors">
                       {g.name}
                     </Link>
                   ))}
@@ -291,7 +291,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                 <h2 className="text-2xl font-bold mb-4 border-b border-gray-800 pb-2">Full Cast & Characters</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {movie.credits.cast.slice(0, 12).map(actor => (
-                    <Link href={`/actors/${actor.id}-${slugify(actor.name)}`} key={actor.id} className="bg-[#1a1a1a] rounded-lg overflow-hidden border border-gray-800 hover:border-red-500 transition-colors group">
+                    <Link prefetch={false} href={`/actors/${actor.id}-${slugify(actor.name)}`} key={actor.id} className="bg-[#1a1a1a] rounded-lg overflow-hidden border border-gray-800 hover:border-red-500 transition-colors group">
                       <div className="relative aspect-[2/3]">
                         <Image 
                           src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/images/no-actor.webp'}
@@ -314,7 +314,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
             {director && (
               <section>
                 <h2 className="text-2xl font-bold mb-4 border-b border-gray-800 pb-2">Director & Crew</h2>
-                <Link href={`/directors/${director.id}-${slugify(director.name)}`} className="inline-block bg-[#1a1a1a] border border-gray-800 rounded-lg p-4 hover:border-red-500 transition-colors">
+                <Link prefetch={false} href={`/directors/${director.id}-${slugify(director.name)}`} className="inline-block bg-[#1a1a1a] border border-gray-800 rounded-lg p-4 hover:border-red-500 transition-colors">
                   <p className="font-semibold">{director.name}</p>
                   <p className="text-sm text-gray-400">Director</p>
                 </Link>
@@ -386,7 +386,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                 <div>
                   <dt className="text-gray-500 mb-1">Release Date</dt>
                   <dd className="font-semibold">
-                    <Link href={`/year/${year}`} className="hover:text-red-500">{movie.release_date}</Link>
+                    <Link prefetch={false} href={`/year/${year}`} className="hover:text-red-500">{movie.release_date}</Link>
                   </dd>
                 </div>
                 {movie.budget ? (

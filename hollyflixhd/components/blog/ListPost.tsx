@@ -27,7 +27,7 @@ export default function ListPost({ post }: { post: ListPostData }) {
             </div>
             
             <h2 className="text-2xl font-bold mb-4 mt-2">
-              <Link href={`/movies/${movie.movieSlug}`} className="hover:text-red-500 transition-colors">
+              <Link prefetch={false} href={`/movies/${movie.movieSlug}`} className="hover:text-red-500 transition-colors">
                 {movie.movieTitle}
               </Link>
             </h2>
@@ -37,7 +37,7 @@ export default function ListPost({ post }: { post: ListPostData }) {
             </p>
             
             <div className="mt-6">
-              <Link 
+              <Link prefetch={false} 
                 href={`/movies/${movie.movieSlug}`}
                 className="inline-flex items-center text-red-500 hover:text-red-400 font-semibold"
               >

@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
-            <Link href="/" className="text-2xl font-bold text-red-600 mb-4 inline-block">
+            <Link prefetch={false} href="/" className="text-2xl font-bold text-red-600 mb-4 inline-block">
               HollyFlix<span className="text-white">HD</span>
             </Link>
             <p className="text-gray-400 max-w-md">
@@ -17,21 +17,21 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/movies" className="hover:text-white transition-colors">All Movies</Link></li>
-              <li><Link href="/top-rated" className="hover:text-white transition-colors">Top Rated</Link></li>
-              <li><Link href="/new-releases" className="hover:text-white transition-colors">New Releases</Link></li>
-              <li><Link href="/trending" className="hover:text-white transition-colors">Trending Now</Link></li>
-              <li><Link href="/genre" className="hover:text-white transition-colors">Browse by Genre</Link></li>
+              <li><Link prefetch={false} href="/movies" className="hover:text-white transition-colors">All Movies</Link></li>
+              <li><Link prefetch={false} href="/top-rated" className="hover:text-white transition-colors">Top Rated</Link></li>
+              <li><Link prefetch={false} href="/new-releases" className="hover:text-white transition-colors">New Releases</Link></li>
+              <li><Link prefetch={false} href="/trending" className="hover:text-white transition-colors">Trending Now</Link></li>
+              <li><Link prefetch={false} href="/genre" className="hover:text-white transition-colors">Browse by Genre</Link></li>
             </ul>
           </div>
           
           <div>
             <h3 className="text-white font-bold mb-4">Legal</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-              <li><Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
+              <li><Link prefetch={false} href="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link prefetch={false} href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><Link prefetch={false} href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link prefetch={false} href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>

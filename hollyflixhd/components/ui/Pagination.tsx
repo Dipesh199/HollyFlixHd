@@ -40,7 +40,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '', que
   return (
     <div className="flex justify-center items-center gap-2 mt-12 mb-8">
       {currentPage > 1 && (
-        <Link 
+        <Link prefetch={false} 
           href={getUrl(currentPage - 1)}
           className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition-colors"
         >
@@ -60,8 +60,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '', que
         const isCurrent = page === currentPage;
         
         return (
-          <Link
-            key={`page-${page}`}
+          <Link prefetch={false} key={`page-${page}`}
             href={getUrl(page as number)}
             className={`font-medium px-4 py-2 rounded-md transition-colors ${
               isCurrent 
@@ -75,7 +74,7 @@ export default function Pagination({ currentPage, totalPages, basePath = '', que
       })}
 
       {currentPage < maxPages && (
-        <Link 
+        <Link prefetch={false} 
           href={getUrl(currentPage + 1)}
           className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition-colors"
         >
