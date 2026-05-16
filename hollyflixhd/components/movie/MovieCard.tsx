@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function MovieCard({ movie }: Props) {
-  const slug = generateMovieSlug(movie.title, movie.release_date);
+  const slug = generateMovieSlug(movie.title, movie.id);
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w342');
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
 

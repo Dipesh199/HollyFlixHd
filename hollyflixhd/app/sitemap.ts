@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const popularMovies = await getPopularMovies(1)
     const movieRoutes = popularMovies.results.map((movie) => {
-      const slug = generateMovieSlug(movie.title, movie.release_date)
+      const slug = generateMovieSlug(movie.title, movie.id)
       return {
         url: `${baseUrl}/movies/${slug}`,
         lastModified: new Date().toISOString(),

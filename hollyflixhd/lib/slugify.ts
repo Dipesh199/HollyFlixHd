@@ -8,11 +8,10 @@ export const slugify = (text: string): string => {
     .replace(/\-\-+/g, '-');     // Replace multiple - with single -
 };
 
-export const generateMovieSlug = (title: string, year?: string | number): string => {
+export const generateMovieSlug = (title: string, id?: string | number): string => {
   const baseSlug = slugify(title);
-  if (year) {
-    const yearStr = typeof year === 'string' ? year.split('-')[0] : year;
-    return `${baseSlug}-${yearStr}`;
+  if (id) {
+    return `${baseSlug}-${id}`;
   }
   return baseSlug;
 };
