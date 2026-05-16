@@ -25,6 +25,7 @@ export interface Movie {
   videos?: {
     results: Video[];
   };
+  similar?: PaginatedResponse<Movie>;
 }
 
 export interface Actor {

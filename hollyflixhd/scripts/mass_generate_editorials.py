@@ -136,7 +136,8 @@ def main():
         for movie in raw_movies:
             title = movie.get('title')
             overview = movie.get('overview', '')
-            slug = f"{slugify(title)}-{year}"
+            movie_id = movie.get('id')
+            slug = f"{slugify(title)}-{movie_id}"
             
             file_path = os.path.join(editorials_dir, f"{slug}.json")
             if os.path.exists(file_path):

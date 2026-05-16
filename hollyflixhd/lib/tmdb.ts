@@ -36,22 +36,25 @@ export const searchMovies = (query: string, page: number = 1) =>
   fetchFromTMDB<PaginatedResponse<Movie>>('/search/movie', { query, page: page.toString() });
 
 export const getMovieById = (id: number) => 
-  fetchFromTMDB<Movie>(`/movie/${id}`, { append_to_response: 'credits,videos' });
+  fetchFromTMDB<Movie>(`/movie/${id}`, { append_to_response: 'credits,videos,similar' });
 
 export const getSimilarMovies = (id: number) => 
   fetchFromTMDB<PaginatedResponse<Movie>>(`/movie/${id}/similar`);
 
-// Basic implementation to find movie by slug, 
-// In a real app we might need to search and match or use ID inside the slug
 export const getMovieBySlug = async (slug: string): Promise<Movie | null> => {
-  // Try parsing out year/title or ID from slug if we encode it.
-  // For simplicity, search the title derived from the slug.
-  const query = slug.split('-').slice(0, -1).join(' '); // very naive extraction
-  const searchResults = await searchMovies(query);
-  if (searchResults.results.length > 0) {
-    return getMovieById(searchResults.results[0].id);
+  const parts = slug.split('-');
+  const idStr = parts[parts.length - 1];
+  const id = parseInt(idStr, 10);
+  
+  if (isNaN(id)) {
+    return null;
   }
-  return null;
+  
+  try {
+    return await getMovieById(id);
+  } catch (error) {
+    return null;
+  }
 }
 
 export const getMoviesByGenre = (genreId: number, page: number = 1) => 

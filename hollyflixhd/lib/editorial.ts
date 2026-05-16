@@ -20,3 +20,18 @@ export function getEditorial(slug: string): Editorial | null {
   }
   return null
 }
+
+export function getAllEditorialSlugs(): string[] {
+  try {
+    const dirPath = path.join(process.cwd(), 'data', 'editorials')
+    if (fs.existsSync(dirPath)) {
+      const files = fs.readdirSync(dirPath)
+      return files
+        .filter(file => file.endsWith('.json'))
+        .map(file => file.replace('.json', ''))
+    }
+  } catch (error) {
+    console.error('Error reading editorials directory:', error)
+  }
+  return []
+}

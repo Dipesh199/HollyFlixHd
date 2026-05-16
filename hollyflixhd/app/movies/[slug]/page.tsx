@@ -1,13 +1,23 @@
 import { Metadata } from 'next';
-import { getMovieBySlug, getSimilarMovies } from '@/lib/tmdb';
+import { getMovieBySlug } from '@/lib/tmdb';
 import { getMoviePosterUrl, getMovieBackdropUrl } from '@/lib/tmdb-image';
 import { slugify } from '@/lib/slugify';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
-import { getEditorial } from '@/lib/editorial';
+import { getEditorial, getAllEditorialSlugs } from '@/lib/editorial';
 import { EditorialSection } from '@/components/blog/EditorialSection';
+
+export const dynamicParams = false;
+export const revalidate = 86400;
+
+export async function generateStaticParams() {
+  const slugs = getAllEditorialSlugs();
+  return slugs.map((slug) => ({
+    slug,
+  }));
+}
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
   
@@ -78,9 +88,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
     notFound();
   }
 
-  const [similarMovies] = await Promise.all([
-    getSimilarMovies(movie.id)
-  ]);
+  const similarMovies = movie.similar;
 
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w500');
   const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
