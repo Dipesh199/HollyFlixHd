@@ -1,430 +1,299 @@
 {
-  "inception-2010": {
-    "editorial": "You should watch Inception for its mind-bending narrative and complex visuals; it challenges perception like few films do.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "mind-bending",
-      "rewatch-worthy"
-    ]
-  },
-  "the-dark-knight-2008": {
-    "editorial": "You must experience the psychological thrill of 'The Dark Knight'; it's a masterclass in storytelling that you'll want to revisit. It\u2019s not just about superhero movies\u2014it's an exploration of moral ambiguity and power that resonates beyond its genre.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "mind-bending",
-      "rewatch-worthy"
-    ]
-  },
-  "interstellar-2014": {
-    "editorial": "You'll be spellbound by Interstellar's profound exploration of time and love, making it a must-see. Its complex narrative and stunning visuals are unforgettable.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "mind-bending",
-      "rewatch-worthy"
-    ]
-  },
-  "tenet-2020": {
-    "editorial": "You must experience Tenet's mind-bending time-reversal concept and Nolan's intricate storytelling. Perfect for fans of complex narratives and visual spectacle.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "mind-bending",
-      "rewatch-worthy"
-    ]
-  },
-  "the-matrix-1999": {
-    "editorial": "You won't find a more groundbreaking blend of action and philosophy. Experience the Matrix\u2014must-see for anyone who loves deep, thought-provoking sci-fi. Unleash your inner philosopher while enjoying non-stop excitement.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "mind-bending",
-      "rewatch-worthy"
-    ]
-  },
-  "dunkirk-2017": {
-    "editorial": "Dive into the claustrophobic tension and breathtaking visuals of Christopher Nolan's Dunkirk for a unique war experience.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "mind-bending",
-      "rewatch-worthy"
-    ]
-  },
-  "a-marvel-television-special-presentation-the-punisher-one-last-kill-2026": {
-    "_movieNameForChatGPT": "A Marvel Television Special Presentation - The Punisher: One Last Kill (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "swapped-2026": {
-    "_movieNameForChatGPT": "Swapped (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "project-hail-mary-2026": {
-    "_movieNameForChatGPT": "Project Hail Mary (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "the-super-mario-galaxy-movie-2026": {
-    "_movieNameForChatGPT": "The Super Mario Galaxy Movie (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "the-devil-wears-prada-2006": {
-    "_movieNameForChatGPT": "The Devil Wears Prada (2006)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "apex-2026": {
-    "_movieNameForChatGPT": "Apex (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "your-heart-will-be-broken-2026": {
-    "_movieNameForChatGPT": "Your Heart Will Be Broken (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "my-dearest-assassin-2026": {
-    "_movieNameForChatGPT": "My Dearest Assassin (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "mortal-kombat-ii-2026": {
-    "_movieNameForChatGPT": "Mortal Kombat II (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "send-help-2026": {
-    "_movieNameForChatGPT": "Send Help (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "ready-or-not-here-i-come-2026": {
-    "_movieNameForChatGPT": "Ready or Not: Here I Come (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "avatar-fire-and-ash-2025": {
-    "_movieNameForChatGPT": "Avatar: Fire and Ash (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "beast-2026": {
-    "_movieNameForChatGPT": "Beast (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "hoppers-2026": {
-    "_movieNameForChatGPT": "Hoppers (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "michael-2026": {
-    "_movieNameForChatGPT": "Michael (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "remarkably-bright-creatures-2026": {
-    "_movieNameForChatGPT": "Remarkably Bright Creatures (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "rita-2024": {
-    "_movieNameForChatGPT": "Rita (2024)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "mortal-kombat-2021": {
-    "_movieNameForChatGPT": "Mortal Kombat (2021)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "mortal-game-2025": {
-    "_movieNameForChatGPT": "Mortal Game (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "tayuan-2-2026": {
-    "_movieNameForChatGPT": "Tayuan 2 (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "goat-2026": {
-    "_movieNameForChatGPT": "GOAT (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "vengeance-2026": {
-    "_movieNameForChatGPT": "Vengeance (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "avatar-aang-the-last-airbender-2026": {
-    "_movieNameForChatGPT": "Avatar Aang: The Last Airbender (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "the-sheep-detectives-2026": {
-    "_movieNameForChatGPT": "The Sheep Detectives (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "shelter-2026": {
-    "_movieNameForChatGPT": "Shelter (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "they-will-kill-you-2026": {
-    "_movieNameForChatGPT": "They Will Kill You (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "nymphomaniac-vol-ii-2013": {
-    "_movieNameForChatGPT": "Nymphomaniac: Vol. II (2013)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "demon-slayer-kimetsu-no-yaiba-infinity-castle-2025": {
-    "_movieNameForChatGPT": "Demon Slayer: Kimetsu no Yaiba Infinity Castle (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "zootopia-2-2025": {
-    "_movieNameForChatGPT": "Zootopia 2 (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "war-of-the-worlds-2025": {
-    "_movieNameForChatGPT": "War of the Worlds (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "magistrate-woman-prison-collection-ii-1995": {
-    "_movieNameForChatGPT": "Magistrate Woman Prison Collection II (1995)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "wormtown-2025": {
-    "_movieNameForChatGPT": "Wormtown (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "the-devil-wears-prada-2-2026": {
-    "_movieNameForChatGPT": "The Devil Wears Prada 2 (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "predator-badlands-2025": {
-    "_movieNameForChatGPT": "Predator: Badlands (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "faces-of-death-2026": {
-    "_movieNameForChatGPT": "Faces of Death (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "bodycam-2026": {
-    "_movieNameForChatGPT": "Bodycam (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "malena-2000": {
-    "_movieNameForChatGPT": "Malena (2000)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "the-shadow-s-edge-2025": {
-    "_movieNameForChatGPT": "The Shadow's Edge (2025)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "greenland-2-migration-2026": {
-    "_movieNameForChatGPT": "Greenland 2: Migration (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "brothers-under-fire-2026": {
-    "_movieNameForChatGPT": "Brothers Under Fire (2026)",
-    "editorial": "",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": []
-  },
-  "iron-man-2-2010": {
-    "editorial": "A massive escalation from the inaugural success, Iron Man 2 deepens the mythos, trading pure spectacle for intense, grounded conflict. When the stakes move from simple survival to global politics, Tony Stark is forced to confront not just his enemies, but his own moral limitations. It\u2019s a pivotal, emotionally charged entry that sets the stage for cinematic warfare.",
-    "worthWatching": true,
-    "editorRating": "Worth Watching",
-    "tags": [
-      "MCU",
-      "Sci-Fi Action",
-      "Character Study",
-      "Superheroes"
-    ]
-  },
-  "shutter-island-2010": {
-    "editorial": "Director Martin Scorsese crafts a mesmerizing psychological labyrinth in Shutter Island, leaving the audience constantly questioning reality and sanity. As U.S. Marshal Teddy Daniels investigates a peculiar disappearance at a notorious asylum, the film expertly builds suspense, blending elements of noir mystery with deeply unsettling introspection. This haunting journey is a masterful meditation on memory, guilt, and the true cost of sanity.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "Psychological Thriller",
-      "Mystery",
-      "Scorsese",
-      "Mind-Bender"
-    ]
-  },
-  "despicable-me-2010": {
-    "editorial": "The supervillain just got a side hustle\u2014and it involves a family. Despicable Me perfectly captures the heartwarming chaos of accidental fatherhood, proving that sometimes the biggest crimes committed are the acts of pure affection. It's a surprisingly sweet, hilarious blast that delivers big villainy and even bigger hugs.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "Animation",
-      "Family Comedy",
-      "Will Ferrell",
-      "Villainy"
-    ]
-  },
-  "harry-potter-and-the-deathly-hallows-part-1-2010": {
-    "editorial": "The magic no longer exists within the cozy walls of Hogwarts; this chapter violently thrusts the trio into a grueling, desperate quest for survival. With Dumbledore's loss and Voldemort's power at its peak, every step the heroes take is fraught with immediate danger. This tense, breathtaking installment raises the stakes to epic proportions, delivering pure, unrelenting high fantasy adventure.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "High Fantasy",
-      "Action",
-      "Adventure",
-      "Survival"
-    ]
-  },
-  "love-other-drugs-2010": {
-    "editorial": "This film brilliantly captures the volatile confluence of love, lust, and pharmacology, following Maggie and Jamie as they navigate a powerful relationship that is as intoxicating as any prescription drug. With powerhouse performances and a deeply emotional script, it's a passionate, bittersweet look at seizing the moment. It's a gorgeous cinematic experience that reminds us that some connections are dangerously real.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "Romance",
-      "Drama"
-    ]
-  },
-  "tangled-2010": {
-    "editorial": "Disney's Tangled is a dazzling celebration of finding your own light, combining infectious whimsy with genuinely exciting action. From the moment Rapunzel sets out on her grand adventure, the film delivers breathtaking visuals and a perfect blend of romance and rebellion. It's a joyful masterpiece that proves some stories are simply built to be seen on the biggest screen.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "Animation",
-      "Adventure"
-    ]
-  },
-  "grown-ups-2010": {
-    "editorial": "A nostalgic, laugh-out-loud celebration of male friendship and the simple pleasures of summer. Grown Ups successfully captures the spirit of reuniting with your best friends, promising endless belly laughs and prime barbecue vibes. It\u2019s the perfect, heartwarming, and utterly ridiculous holiday viewing experience.",
-    "worthWatching": true,
-    "editorRating": "Worth Watching",
-    "tags": [
-      "Comedy",
-      "Nostalgia",
-      "Friendship",
-      "Summer Fun"
-    ]
-  },
-  "toy-story-3-2010": {
-    "editorial": "This cinematic masterpiece transcends the realm of toys, delivering a deeply emotional exploration of growing up and letting go. As the beloved gang faces their greatest separation yet, Toy Story 3 crafts an unforgettable, heartwarming adventure. It's a perfect blend of nostalgia and gut-punch drama that will resonate with audiences of all ages.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "Nostalgia",
-      "Family",
-      "Animation",
-      "Emotional Rollercoaster"
-    ]
-  },
-  "the-servant-2010": {
-    "editorial": "The exquisite tension of desire permeates every frame of this masterful drama. It explores the dangerous collision between genuine affection and the oppressive weight of social ambition. A breathtaking study of class, longing, and the compromises we make for the life we feel we deserve.",
-    "worthWatching": true,
-    "editorRating": "Must Watch",
-    "tags": [
-      "Romantic Drama",
-      "Class Conflict",
-      "Period Piece"
-    ]
-  }
+    "inception-2010": {
+        "editorial": "You should watch Inception for its mind-bending narrative and complex visuals; it challenges perception like few films do.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "mind-bending",
+            "rewatch-worthy"
+        ]
+    },
+    "the-dark-knight-2008": {
+        "editorial": "You must experience the psychological thrill of 'The Dark Knight'; it's a masterclass in storytelling that you'll want to revisit. It\u2019s not just about superhero movies\u2014it's an exploration of moral ambiguity and power that resonates beyond its genre.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "mind-bending",
+            "rewatch-worthy"
+        ]
+    },
+    "interstellar-2014": {
+        "editorial": "You'll be spellbound by Interstellar's profound exploration of time and love, making it a must-see. Its complex narrative and stunning visuals are unforgettable.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "mind-bending",
+            "rewatch-worthy"
+        ]
+    },
+    "tenet-2020": {
+        "editorial": "You must experience Tenet's mind-bending time-reversal concept and Nolan's intricate storytelling. Perfect for fans of complex narratives and visual spectacle.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "mind-bending",
+            "rewatch-worthy"
+        ]
+    },
+    "the-matrix-1999": {
+        "editorial": "You won't find a more groundbreaking blend of action and philosophy. Experience the Matrix\u2014must-see for anyone who loves deep, thought-provoking sci-fi. Unleash your inner philosopher while enjoying non-stop excitement.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "mind-bending",
+            "rewatch-worthy"
+        ]
+    },
+    "dunkirk-2017": {
+        "editorial": "Dive into the claustrophobic tension and breathtaking visuals of Christopher Nolan's Dunkirk for a unique war experience.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "mind-bending",
+            "rewatch-worthy"
+        ]
+    },
+    "iron-man-2-2010": {
+        "editorial": "A massive escalation from the inaugural success, Iron Man 2 deepens the mythos, trading pure spectacle for intense, grounded conflict. When the stakes move from simple survival to global politics, Tony Stark is forced to confront not just his enemies, but his own moral limitations. It\u2019s a pivotal, emotionally charged entry that sets the stage for cinematic warfare.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "MCU",
+            "Sci-Fi Action",
+            "Character Study",
+            "Superheroes"
+        ]
+    },
+    "shutter-island-2010": {
+        "editorial": "Director Martin Scorsese crafts a mesmerizing psychological labyrinth in Shutter Island, leaving the audience constantly questioning reality and sanity. As U.S. Marshal Teddy Daniels investigates a peculiar disappearance at a notorious asylum, the film expertly builds suspense, blending elements of noir mystery with deeply unsettling introspection. This haunting journey is a masterful meditation on memory, guilt, and the true cost of sanity.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Psychological Thriller",
+            "Mystery",
+            "Scorsese",
+            "Mind-Bender"
+        ]
+    },
+    "despicable-me-2010": {
+        "editorial": "The supervillain just got a side hustle\u2014and it involves a family. Despicable Me perfectly captures the heartwarming chaos of accidental fatherhood, proving that sometimes the biggest crimes committed are the acts of pure affection. It's a surprisingly sweet, hilarious blast that delivers big villainy and even bigger hugs.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Animation",
+            "Family Comedy",
+            "Will Ferrell",
+            "Villainy"
+        ]
+    },
+    "harry-potter-and-the-deathly-hallows-part-1-2010": {
+        "editorial": "The magic no longer exists within the cozy walls of Hogwarts; this chapter violently thrusts the trio into a grueling, desperate quest for survival. With Dumbledore's loss and Voldemort's power at its peak, every step the heroes take is fraught with immediate danger. This tense, breathtaking installment raises the stakes to epic proportions, delivering pure, unrelenting high fantasy adventure.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "High Fantasy",
+            "Action",
+            "Adventure",
+            "Survival"
+        ]
+    },
+    "love-other-drugs-2010": {
+        "editorial": "This film brilliantly captures the volatile confluence of love, lust, and pharmacology, following Maggie and Jamie as they navigate a powerful relationship that is as intoxicating as any prescription drug. With powerhouse performances and a deeply emotional script, it's a passionate, bittersweet look at seizing the moment. It's a gorgeous cinematic experience that reminds us that some connections are dangerously real.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Romance",
+            "Drama"
+        ]
+    },
+    "tangled-2010": {
+        "editorial": "Disney's Tangled is a dazzling celebration of finding your own light, combining infectious whimsy with genuinely exciting action. From the moment Rapunzel sets out on her grand adventure, the film delivers breathtaking visuals and a perfect blend of romance and rebellion. It's a joyful masterpiece that proves some stories are simply built to be seen on the biggest screen.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Animation",
+            "Adventure"
+        ]
+    },
+    "grown-ups-2010": {
+        "editorial": "A nostalgic, laugh-out-loud celebration of male friendship and the simple pleasures of summer. Grown Ups successfully captures the spirit of reuniting with your best friends, promising endless belly laughs and prime barbecue vibes. It\u2019s the perfect, heartwarming, and utterly ridiculous holiday viewing experience.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "Comedy",
+            "Nostalgia",
+            "Friendship",
+            "Summer Fun"
+        ]
+    },
+    "toy-story-3-2010": {
+        "editorial": "This cinematic masterpiece transcends the realm of toys, delivering a deeply emotional exploration of growing up and letting go. As the beloved gang faces their greatest separation yet, Toy Story 3 crafts an unforgettable, heartwarming adventure. It's a perfect blend of nostalgia and gut-punch drama that will resonate with audiences of all ages.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Nostalgia",
+            "Family",
+            "Animation",
+            "Emotional Rollercoaster"
+        ]
+    },
+    "the-servant-2010": {
+        "editorial": "The exquisite tension of desire permeates every frame of this masterful drama. It explores the dangerous collision between genuine affection and the oppressive weight of social ambition. A breathtaking study of class, longing, and the compromises we make for the life we feel we deserve.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Romantic Drama",
+            "Class Conflict",
+            "Period Piece"
+        ]
+    },
+    "a-serbian-film-2010": {
+        "editorial": "What begins as a desperate attempt to secure a family's future quickly spirals into an unrelenting abyss of depravity. This uncompromising film is a savage and transgressive dive into human cruelty, demanding the viewer's full, uncomfortable attention. Be warned: the descent into cinematic madness is total.",
+        "worthWatching": true,
+        "editorRating": "Cult Classic",
+        "tags": [
+            "Transgressive",
+            "Shock Horror",
+            "Extreme Exploitation"
+        ]
+    },
+    "the-karate-kid-2010": {
+        "editorial": "The modern take on this martial arts classic successfully trades brute force for genuine heart, telling a deeply satisfying story of cultural collision. When a displaced American boy finds himself in a foreign land, his search for belonging leads him not to a fight, but to himself. This is a surprisingly thoughtful and highly emotional journey that redefines what true strength really means.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Action",
+            "Coming-of-Age",
+            "Cultural Clash",
+            "Martial Arts"
+        ]
+    },
+    "alice-in-wonderland-2010": {
+        "editorial": "The titular journey through Wonderland proves that some fairy tales are meant to echo into adulthood. This sequel takes the beloved premise and gives it a potent, mature twist, exploring themes of identity and fate with vibrant visual flair. It's a delightfully dizzying ride that reminds us of the wonder we sometimes lose track of.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Fantasy",
+            "Sequel",
+            "Whimsy",
+            "Alice"
+        ]
+    },
+    "how-to-train-your-dragon-2010": {
+        "editorial": "Before dragons were merely terrifying myths, they were majestic partners. This vibrant cinematic masterpiece defies every warrior trope, offering a deeply moving tale of unlikely friendship and self-discovery. The breathtaking animation paired with a heartwarming narrative makes this a modern animated classic that will capture hearts of all ages.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Animation",
+            "Fantasy"
+        ]
+    },
+    "room-in-rome-2010": {
+        "editorial": "Amidst the timeless beauty of Rome, *Room in Rome* offers a raw, electrifying journey of discovery. Following the magnetic connection between Alba and Natasha, this film transcends mere physical encounter, plumbing the depths of spiritual and emotional intimacy. It\u2019s a stylish, sensual ride that proves passion can be both a fleeting moment and a profound awakening.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Romance",
+            "Sensual",
+            "ItalianCinema",
+            "Intimacy"
+        ]
+    },
+    "percy-jackson-the-olympians-the-lightning-thief-2010": {
+        "editorial": "New York City just got mythological. When seemingly ordinary Percy Jackson discovers he's a demigod caught in a looming war between the Olympian Gods, this adaptation delivers high-stakes adventure and exhilarating action. It's a perfect blend of modern teen life and ancient Greek mythology, making it an irresistible read for genre fans.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Fantasy",
+            "Action",
+            "Mythology",
+            "YA Adventure"
+        ]
+    },
+    "megamind-2010": {
+        "editorial": "Megamind redefines the supervillain archetype, offering a genuinely hilarious and surprisingly heartfelt look at what happens after the curtain falls on a classic conflict. While it swaps the typical battle of good versus evil for a witty exploration of creative necessity, the result is a surprisingly emotional comedy that keeps you laughing until the very last frame.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Animation",
+            "Comedy"
+        ]
+    },
+    "shrek-forever-after-2010": {
+        "editorial": "Shrek Forever After manages to elevate its fairytale status, transforming a simple animated comedy into a surprisingly poignant exploration of growing up and finding your happily ever after. When a life-altering gamble throws Shrek into a nightmare version of Far Far Away, he must fight not only a sinister villain but also the crushing weight of disappointment. It\u2019s a heartfelt, action-packed adventure that proves the heart of the ogre never loses its magic.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Animation",
+            "Family Fun",
+            "Fairy Tales",
+            "Shrek"
+        ]
+    },
+    "i-spit-on-your-grave-2010": {
+        "editorial": "While its extreme content is undeniable, I Spit on Your Grave (2010) remains a brutal and transgressive piece of cinema. It delivers a relentless, visceral experience that is both horrifying and strangely cathartic to watch. Those looking for pure, uncompromising gore will find their dark desires satisfied here.",
+        "worthWatching": true,
+        "editorRating": "Cult Classic",
+        "tags": [
+            "Extreme Horror",
+            "Gore",
+            "Slasher",
+            "Revenge"
+        ]
+    },
+    "three-steps-above-heaven-2010": {
+        "editorial": "When privilege meets pavement, the stakes are life-and-death. Three Steps Above Heaven is a vibrant, breathless exploration of forbidden passion, pitting sheltered innocence against the roaring anarchy of the open road. It\u2019s a sizzling ride that delivers the kind of high-stakes romance you won't forget.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "forbidden romance",
+            "motorcycle",
+            "passion",
+            "neo-noir"
+        ]
+    },
+    "the-expendables-2010": {
+        "editorial": "This action-packed reunion delivers exactly what the title promises: relentless, over-the-top firepower. With a stellar ensemble cast delivering pure bravado, the film revels in its excessive violence and glorious nostalgia. It's a testosterone-soaked ride that feels bigger, louder, and more fun than any modern blockbuster should.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "action",
+            "explosions",
+            "nostalgia",
+            "mercenaries"
+        ]
+    },
+    "the-twilight-saga-eclipse-2010": {
+        "editorial": "The stakes feel astronomically high as Bella is forced into the ultimate love triangle, pitting Edward's immortal intensity against Jacob's raw, wild energy. While the dramatic beats are often overblown, the film successfully heightens the core conflict, culminating in a final, pivotal choice that shakes the foundations of the supernatural world. It's a breathless, vampire-and-werewolf showdown that delivers maximum adolescent melodrama.",
+        "worthWatching": true,
+        "editorRating": "Cult Classic",
+        "tags": [
+            "Supernatural",
+            "Romance",
+            "Vampires",
+            "Werewolves"
+        ]
+    },
+    "the-social-network-2010": {
+        "editorial": "Aaron Sorkin's razor-sharp dialogue perfectly captures the intoxicating brilliance and brutal collateral damage of modern technological ambition. It's a lightning-fast examination of genius, legal fallout, and the hidden costs of building a billion-dollar empire. This film is a mesmerizing, essential deep-dive into the early 21st-century tech dream.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Tech Drama",
+            "Harvard",
+            "Ambition",
+            "Dialogue-Driven"
+        ]
+    },
+    "tron-legacy-2010": {
+        "editorial": "TRON: Legacy is less a film and more a glowing portal into a stunning, neon-soaked digital myth. From the moment Sam Flynn steps into The Grid, the film establishes itself as a breathtaking visual spectacle. The blend of dazzling visuals and incredible sound design makes this a genuinely mesmerizing modern sci-fi experience.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Sci-Fi",
+            "Cyberpunk",
+            "Visual Spectacle",
+            "Nostalgia"
+        ]
+    }
 }
