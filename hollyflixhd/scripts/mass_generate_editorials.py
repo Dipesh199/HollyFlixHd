@@ -5,8 +5,9 @@ import urllib.parse
 import re
 import time
 
-MODEL = "gemma4" # Reverted back to the exact name you have!
+MODEL = "gemma4"
 TMDB_BASE = "https://api.themoviedb.org/3"
+BATCH_SIZE = 3
 
 def get_tmdb_key():
     env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env.local')
@@ -38,23 +39,34 @@ def fetch_movies_for_year(api_key, year, max_pages=1):
             print(f"Failed to fetch year {year}: {e}")
     return movies
 
-def ask_ollama(title, year, overview):
+def ask_ollama_batch(movies_batch):
     url = "http://localhost:11434/api/generate"
     
+    # Construct the movie list text for the prompt
+    movie_list_text = ""
+    for m in movies_batch:
+        movie_list_text += f"- Title: {m['title']} ({m['year']}) | Slug: {m['slug']} | Overview: {m['overview']}\n"
+
     prompt = f"""You are a professional movie critic for HollyFlixHD.
-Write a JSON editorial for the movie "{title} ({year})".
-Movie Overview: {overview}
+Write a JSON object containing editorial reviews for the following {len(movies_batch)} movies:
+
+{movie_list_text}
 
 Respond ONLY with valid JSON. Do not include markdown (no ```json). Do not include conversational text.
-Use this exact structure:
+Your response MUST be a single JSON object where the keys are the EXACT slugs provided above, and the values match this structure:
 {{
-  "editorial": "2-3 sentences of an engaging, spoiler-free, premium review with a strong hook.",
-  "worthWatching": true,
-  "editorRating": "Must Watch",
-  "tags": ["tag1", "tag2"]
+  "movie-slug-1": {{
+    "editorial": "2-3 sentences of an engaging, spoiler-free, premium review with a strong hook.",
+    "worthWatching": true,
+    "editorRating": "Must Watch",
+    "tags": ["tag1", "tag2"]
+  }},
+  "movie-slug-2": {{
+    ...
+  }}
 }}
 
-Note: editorRating MUST be one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic".
+Note: editorRating MUST be exactly one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic".
 """
     
     payload = {
@@ -67,7 +79,7 @@ Note: editorRating MUST be one of: "Must Watch", "Worth Watching", "Skip It", "C
     req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
     
     try:
-        with urllib.request.urlopen(req, timeout=120) as response:
+        with urllib.request.urlopen(req, timeout=300) as response:
             result = json.loads(response.read().decode())
             response_text = result.get('response', '')
             
@@ -101,39 +113,56 @@ def main():
             except json.JSONDecodeError:
                 pass
 
-    print(f"Starting Auto-Generation with local model: {MODEL}")
+    print(f"Starting Batch Auto-Generation with local model: {MODEL}")
     
-    # Iterate through years
-    for year in range(2010, 2026):
+    # Iterate through years in REVERSE (2026 down to 2010)
+    for year in range(2026, 2009, -1):
         print(f"\n=== Processing Year: {year} ===")
-        movies = fetch_movies_for_year(api_key, year, max_pages=20) # Top 20 per year
+        raw_movies = fetch_movies_for_year(api_key, year, max_pages=10) # Top 20 per year
         
-        for movie in movies:
+        # Filter out movies that already have editorials
+        movies_to_process = []
+        for movie in raw_movies:
             title = movie.get('title')
             overview = movie.get('overview', '')
             slug = f"{slugify(title)}-{year}"
             
-            # Check if we already have a valid editorial
             existing = existing_data.get(slug, {})
             if existing.get('editorial'):
                 print(f"⏩ Skipping {slug} (Already exists)")
-                continue
-                
-            print(f"✍️  Generating: {title} ({year})... ", end="", flush=True)
+            else:
+                movies_to_process.append({
+                    "title": title,
+                    "year": year,
+                    "slug": slug,
+                    "overview": overview
+                })
+        
+        # Process in batches of 5
+        for i in range(0, len(movies_to_process), BATCH_SIZE):
+            batch = movies_to_process[i:i + BATCH_SIZE]
+            
+            print(f"✍️  Generating batch of {len(batch)} movies... ", end="", flush=True)
             start_time = time.time()
             
-            generated_json = ask_ollama(title, year, overview)
+            generated_json = ask_ollama_batch(batch)
             
-            if generated_json:
-                existing_data[slug] = generated_json
-                elapsed = time.time() - start_time
-                print(f"Done! ({elapsed:.1f}s)")
+            if generated_json and isinstance(generated_json, dict):
+                success_count = 0
+                for slug, data in generated_json.items():
+                    # Validate the data looks somewhat correct
+                    if isinstance(data, dict) and "editorial" in data:
+                        existing_data[slug] = data
+                        success_count += 1
                 
-                # Save immediately so progress isn't lost if script is stopped
+                elapsed = time.time() - start_time
+                print(f"Done! Saved {success_count} movies. ({elapsed:.1f}s)")
+                
+                # Save immediately
                 with open(editorials_file, 'w', encoding='utf-8') as f:
-                    json.dump(existing_data, f, indent=2)
+                    json.dump(existing_data, f, indent=4)
             else:
-                print("Failed.")
+                print("Failed or returned invalid format.")
 
 if __name__ == "__main__":
     main()
