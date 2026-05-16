@@ -2223,5 +2223,125 @@
             "Thriller",
             "Adventure"
         ]
+    },
+    "iron-lung-2026": {
+        "editorial": "This is claustrophobic sci-fi at its finest, a deeply pressurized, visceral dive into human desperation. Amidst the cosmic decay, the film expertly uses its extreme setting to explore class warfare and the brutal cost of survival. The tension is unrelenting, delivering a genuinely disturbing, oceanic nightmare.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Sci-Fi Horror",
+            "Dystopian",
+            "Thriller"
+        ]
+    },
+    "the-red-line-2026": {
+        "editorial": "A razor-sharp, cathartic genre piece that combines the urgency of an action thriller with biting social commentary. The chemistry between the leads powers a satisfying revenge plot that feels both modern and timeless. It's a scream against digital exploitation, masterfully executed.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "Thriller",
+            "Crime",
+            "Female-Driven"
+        ]
+    },
+    "it-s-ok-2026": {
+        "editorial": "This delicate character drama is a tender and nuanced portrayal of maternal complexity, blending humor with genuine emotional weight. It navigates the difficult terrain between yearning for freedom and the enduring strength of family bonds. A beautiful, subtle meditation on healing.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "Drama",
+            "Romance",
+            "Family"
+        ]
+    },
+    "panda-plan-the-magical-tribe-2026": {
+        "editorial": "This animated adventure is a charming romp that balances slapstick comedy with genuine heart. From the thrilling chase sequences to the whimsical encounters with the mysterious tribe, the film delivers bright, family-friendly fun. It's a visually appealing, joyful watch that makes you root for every cuddly hero.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Animation",
+            "Family",
+            "Comedy"
+        ]
+    },
+    "salmokji-whispering-water-2026": {
+        "editorial": "A beautifully eerie and profoundly atmospheric thriller that excels in building dread. Directorially masterful, this film uses the claustrophobia of the deep water to create escalating tension. Those who enjoy slow-burn, mysterious horror will find much to obsess over here.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "Mystery",
+            "Horror",
+            "Thriller"
+        ]
+    },
+    "sex-trip-2026": {
+        "editorial": "Unfiltered, raunchy, and unapologetically raw, this flick is a wild ride into post-collegiate freedom. It captures the electric, hedonistic energy of discovery, pushing boundaries both physically and emotionally. Expect a viewing experience as uninhibited and memorable as the characters themselves.",
+        "worthWatching": true,
+        "editorRating": "Cult Classic",
+        "tags": [
+            "Comedy",
+            "Drama",
+            "Adult"
+        ]
+    },
+    "wasteman-2026": {
+        "editorial": "This visceral, tense drama excels in its claustrophobic setting, offering a raw look at the volatile bonds forged within incarceration. The chemistry between the leads is electric, propelling a narrative that balances threat with genuine, desperate humanity. An intense watch that leaves you questioning the definition of protection.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Prison Drama",
+            "Coming-of-Age",
+            "Thriller"
+        ]
+    },
+    "blue-film-2026": {
+        "editorial": "A tender, complex exploration of vulnerability set against the backdrop of transient desire. This film navigates the charged space between transaction and true connection with masterful subtlety. It's a poetic, emotionally devastating dive into modern queer relationships.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "LGBTQ+",
+            "Drama",
+            "Romance"
+        ]
+    },
+    "do-deewane-seher-mein-2026": {
+        "editorial": "Mumbai\u2019s chaotic energy gives way to the quiet warmth of connection in this beautifully shot romantic comedy. It captures the beautiful struggle of young adulthood, weaving humor and genuine emotional depth into every scene. A genuinely heartwarming and relatable journey of self-discovery.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "Romance",
+            "Comedy",
+            "Slice of Life"
+        ]
+    },
+    "karuppu-2026": {
+        "editorial": "Karuppu delivers a visceral adrenaline shot, delivering a stunning visual spectacle that feels both epic and deeply personal. The action sequences are brutal and flawlessly choreographed, anchored by a protagonist who is mesmerizing in his rage and power. It\u2019s a triumphant blend of superhero mythology and gritty social commentary.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Action",
+            "Superhero",
+            "Fantasy"
+        ]
+    },
+    "kissing-is-the-easy-part-2026": {
+        "editorial": "This romantic comedy masterfully navigates the turbulent waters of ambition and affection, giving us a relationship dynamic that feels incredibly genuine. The chemistry between the leads is electric, fueling a story that balances academic stress with blossoming, complicated love. It\u2019s heartwarming, sharp, and surprisingly funny.",
+        "worthWatching": true,
+        "editorRating": "Worth Watching",
+        "tags": [
+            "Romance",
+            "Coming-of-Age",
+            "Comedy"
+        ]
+    },
+    "people-we-meet-on-vacation-2026": {
+        "editorial": "A perfect blend of nostalgic longing and modern romance, this film captures the bittersweet beauty of a friendship that borders on love. The vacation setting is treated like a character itself, providing the perfect backdrop for emotional revelations. It\u2019s a delightful, sun-drenched portrayal of figuring out what 'forever' means.",
+        "worthWatching": true,
+        "editorRating": "Must Watch",
+        "tags": [
+            "Romance",
+            "Friendship",
+            "Drama"
+        ]
     }
 }
