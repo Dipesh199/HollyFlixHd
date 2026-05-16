@@ -85,7 +85,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w500');
   const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
-  const watchUrl = `https://www.123movies.com/search/${encodeURIComponent(movie.title)}`;
+  const watchUrl = `https://ww8.123moviesfree.net/search/?q=${encodeURIComponent(movie.title)}`;
   const director = movie.credits?.crew.find(c => c.job === 'Director');
   const url = `https://hollyflixhd.com/movies/${params.slug}/`;
   
