@@ -1,4 +1,5 @@
-import editorials from '@/data/editorials.json'
+import fs from 'fs'
+import path from 'path'
 
 export type Editorial = {
   editorial: string
@@ -8,5 +9,14 @@ export type Editorial = {
 }
 
 export function getEditorial(slug: string): Editorial | null {
-  return (editorials as Record<string, Editorial>)[slug] ?? null
+  try {
+    const filePath = path.join(process.cwd(), 'data', 'editorials', `${slug}.json`)
+    if (fs.existsSync(filePath)) {
+      const fileContents = fs.readFileSync(filePath, 'utf8')
+      return JSON.parse(fileContents) as Editorial
+    }
+  } catch (error) {
+    console.error(`Error reading editorial for ${slug}:`, error)
+  }
+  return null
 }

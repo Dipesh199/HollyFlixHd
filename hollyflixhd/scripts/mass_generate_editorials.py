@@ -102,16 +102,27 @@ def main():
         print("Error: TMDB_API_KEY not found in .env.local")
         return
 
-    editorials_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'editorials.json')
+    data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
+    editorials_dir = os.path.join(data_dir, 'editorials')
+    os.makedirs(editorials_dir, exist_ok=True)
     
-    # Load existing data
-    existing_data = {}
-    if os.path.exists(editorials_file):
-        with open(editorials_file, 'r', encoding='utf-8') as f:
-            try:
-                existing_data = json.load(f)
-            except json.JSONDecodeError:
-                pass
+    # Migrate existing editorials.json to individual files
+    old_editorials_file = os.path.join(data_dir, 'editorials.json')
+    if os.path.exists(old_editorials_file):
+        print("Migrating old editorials.json to individual files...")
+        try:
+            with open(old_editorials_file, 'r', encoding='utf-8') as f:
+                old_data = json.load(f)
+            for slug, data in old_data.items():
+                file_path = os.path.join(editorials_dir, f"{slug}.json")
+                if not os.path.exists(file_path):
+                    with open(file_path, 'w', encoding='utf-8') as f2:
+                        json.dump(data, f2, indent=4)
+            # Rename old file so we don't migrate again and it stops bloating the repo
+            os.rename(old_editorials_file, old_editorials_file + ".bak")
+            print("Migration complete! Old file renamed to editorials.json.bak")
+        except Exception as e:
+            print(f"Migration error: {e}")
 
     print(f"Starting Batch Auto-Generation with local model: {MODEL}")
     
@@ -127,9 +138,9 @@ def main():
             overview = movie.get('overview', '')
             slug = f"{slugify(title)}-{year}"
             
-            existing = existing_data.get(slug, {})
-            if existing.get('editorial'):
-                print(f"⏩ Skipping {slug} (Already exists)")
+            file_path = os.path.join(editorials_dir, f"{slug}.json")
+            if os.path.exists(file_path):
+                print(f"Skipping {slug} (Already exists)")
             else:
                 movies_to_process.append({
                     "title": title,
@@ -138,11 +149,11 @@ def main():
                     "overview": overview
                 })
         
-        # Process in batches of 5
+        # Process in batches
         for i in range(0, len(movies_to_process), BATCH_SIZE):
             batch = movies_to_process[i:i + BATCH_SIZE]
             
-            print(f"✍️  Generating batch of {len(batch)} movies... ", end="", flush=True)
+            print(f"Generating batch of {len(batch)} movies... ", end="", flush=True)
             start_time = time.time()
             
             generated_json = ask_ollama_batch(batch)
@@ -152,15 +163,13 @@ def main():
                 for slug, data in generated_json.items():
                     # Validate the data looks somewhat correct
                     if isinstance(data, dict) and "editorial" in data:
-                        existing_data[slug] = data
+                        file_path = os.path.join(editorials_dir, f"{slug}.json")
+                        with open(file_path, 'w', encoding='utf-8') as f:
+                            json.dump(data, f, indent=4)
                         success_count += 1
                 
                 elapsed = time.time() - start_time
-                print(f"Done! Saved {success_count} movies. ({elapsed:.1f}s)")
-                
-                # Save immediately
-                with open(editorials_file, 'w', encoding='utf-8') as f:
-                    json.dump(existing_data, f, indent=4)
+                print(f"Done! Saved {success_count} movies to individual files. ({elapsed:.1f}s)")
             else:
                 print("Failed or returned invalid format.")
 
