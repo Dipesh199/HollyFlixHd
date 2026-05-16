@@ -9,7 +9,7 @@ import MovieGrid from '@/components/movie/MovieGrid';
 import { getEditorial, getAllEditorialSlugs } from '@/lib/editorial';
 import { EditorialSection } from '@/components/blog/EditorialSection';
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 export const revalidate = 86400;
 
 export async function generateStaticParams() {
