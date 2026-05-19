@@ -4,6 +4,8 @@ import { generateMovieSlug, slugify } from '@/lib/slugify'
 import listsData from '@/data/lists.json'
 import endingExplainedData from '@/data/ending-explained.json'
 
+export const revalidate = 3600; // Regenerate every hour (3600 seconds)
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://hollyflixhd.com'
   

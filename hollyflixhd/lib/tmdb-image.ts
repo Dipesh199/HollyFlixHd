@@ -21,17 +21,17 @@ export const TMDB_IMAGE_SIZES = {
 };
 
 export const getMoviePosterUrl = (posterPath: string | null, size: string = TMDB_IMAGE_SIZES.poster.large): string => {
-  if (!posterPath) return '/images/no-poster.webp';
+  if (!posterPath) return '/images/no-poster.png';
   return `${TMDB_IMAGE_BASE_URL}/${size}${posterPath}`;
 };
 
 export const getMovieBackdropUrl = (backdropPath: string | null, size: string = TMDB_IMAGE_SIZES.backdrop.large): string => {
-  if (!backdropPath) return '/images/no-backdrop.webp';
+  if (!backdropPath) return '/images/no-backdrop.png';
   return `${TMDB_IMAGE_BASE_URL}/${size}${backdropPath}`;
 };
 
 export const getActorImageUrl = (profilePath: string | null, size: string = TMDB_IMAGE_SIZES.profile.medium): string => {
-  if (!profilePath) return '/images/no-actor.webp';
+  if (!profilePath) return '/images/no-actor.png';
   return `${TMDB_IMAGE_BASE_URL}/${size}${profilePath}`;
 };
 
