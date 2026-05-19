@@ -63,7 +63,7 @@ export default async function ActorPage({ params }: { params: { slug: string } }
           <div className="flex flex-col md:flex-row gap-8 mb-12">
             <div className="relative w-48 h-72 flex-shrink-0 rounded-lg overflow-hidden border border-gray-800">
               <Image 
-                src={actor.profile_path ? `https://image.tmdb.org/t/p/h632${actor.profile_path}` : '/images/no-actor.webp'}
+                src={actor.profile_path ? `https://image.tmdb.org/t/p/h632${actor.profile_path}` : '/images/no-actor.png'}
                 alt={`${actor.name} - Actor Profile Photo`}
                 fill
                 className="object-cover"

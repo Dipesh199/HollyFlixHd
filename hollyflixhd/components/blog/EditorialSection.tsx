@@ -31,7 +31,7 @@ export function EditorialSection({ data, movieTitle }: { data: Editorial, movieT
       </div>
 
       <div className="text-sm text-gray-500 text-right mt-4 pt-4 border-t border-gray-800/50">
-        — HollyFlixHD Editorial Team
+        -- HollyFlixHD Editorial Team
       </div>
     </section>
   )

@@ -17,7 +17,7 @@ export default async function TrendingPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 flex items-center gap-3">
-        <span className="text-red-600">🔥</span> Trending Movies
+        <span className="text-red-600">Hot</span> Trending Movies
       </h1>
       <MovieGrid movies={movies.results} />
     </div>

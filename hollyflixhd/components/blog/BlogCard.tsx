@@ -24,7 +24,7 @@ export default function BlogCard({ slug, title, category, publishedAt }: BlogCar
         {title}
       </h3>
       <div className="mt-auto pt-4 flex items-center text-sm font-semibold text-gray-400 group-hover:text-gray-300">
-        Read More <span className="ml-1 group-hover:translate-x-1 transition-transform">→</span>
+        Read More <span className="ml-1 group-hover:translate-x-1 transition-transform">-&gt;</span>
       </div>
     </Link>
   )

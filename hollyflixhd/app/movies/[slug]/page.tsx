@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
   const title = `${movie.title} (${year}) - Cast, Plot, Rating & Streaming | HollyFlixHD`;
-  const description = `Discover ${movie.title} (${year}) — ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, IMDb ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
+  const description = `Discover ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, IMDb ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
   const url = `https://hollyflixhd.com/movies/${params.slug}`;
 
   return {
@@ -250,7 +250,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                 
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-6">
                   <span className="bg-yellow-500 text-black px-3 py-1 rounded font-bold">
-                    ⭐ IMDb {movie.vote_average?.toFixed(1)}
+                    IMDb {movie.vote_average?.toFixed(1)}
                   </span>
                   {movie.runtime && (
                     <span className="text-gray-300">{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m</span>
@@ -269,7 +269,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                     rel="nofollow noopener noreferrer"
                     className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors flex items-center gap-2"
                   >
-                    🎬 Watch Online Free
+                    Watch Online Free
                   </a>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                     <Link prefetch={false} href={`/actors/${actor.id}-${slugify(actor.name)}`} key={actor.id} className="bg-[#1a1a1a] rounded-lg overflow-hidden border border-gray-800 hover:border-red-500 transition-colors group">
                       <div className="relative aspect-[2/3]">
                         <Image 
-                          src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/images/no-actor.webp'}
+                          src={actor.profile_path ? `https://image.tmdb.org/t/p/w185${actor.profile_path}` : '/images/no-actor.png'}
                           alt={`${actor.name} as ${actor.character} in ${movie.title} ${year}`}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform"
@@ -352,7 +352,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                   rel="nofollow noopener noreferrer"
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors inline-flex items-center gap-2"
                 >
-                  🎬 Watch {movie.title} Free
+                  Watch {movie.title} Free
                 </a>
               </div>
             </section>

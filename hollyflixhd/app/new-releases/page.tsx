@@ -23,7 +23,7 @@ export default async function NewReleasesPage({
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 flex items-center gap-3">
-        <span className="text-blue-500">🆕</span> New Releases
+        <span className="text-blue-500">New</span> New Releases
       </h1>
       <MovieGrid movies={movies.results} />
       <Pagination currentPage={page} totalPages={movies.total_pages} basePath="/new-releases" />

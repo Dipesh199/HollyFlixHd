@@ -41,7 +41,7 @@ export default function ListPost({ post }: { post: ListPostData }) {
                 href={`/movies/${movie.movieSlug}`}
                 className="inline-flex items-center text-red-500 hover:text-red-400 font-semibold"
               >
-                View Full Movie Details <span className="ml-2">→</span>
+                View Full Movie Details <span className="ml-2">-&gt;</span>
               </Link>
             </div>
           </div>

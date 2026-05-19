@@ -6,6 +6,8 @@ import endingExplainedData from '@/data/ending-explained.json'
 
 export const revalidate = 3600; // Regenerate every hour (3600 seconds)
 
+type SitemapEntry = MetadataRoute.Sitemap[number]
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://hollyflixhd.com'
   
@@ -85,8 +87,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // 5. Actors & Directors (fetching popular persons)
     const popularPersonsData = await getPopularPersons(1).catch(() => null);
-    let actorRoutes: any[] = [];
-    let directorRoutes: any[] = [];
+    let actorRoutes: SitemapEntry[] = [];
+    let directorRoutes: SitemapEntry[] = [];
     if (popularPersonsData) {
       actorRoutes = popularPersonsData.results.slice(0, 10).map((person) => ({
         url: `${baseUrl}/actors/${person.id}-${slugify(person.name)}`,

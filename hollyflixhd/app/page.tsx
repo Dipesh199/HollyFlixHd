@@ -47,7 +47,7 @@ export default async function Home() {
 
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-red-600">🔥</span> Trending Now
+            <span className="text-red-600">Hot</span> Trending Now
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
             {trendingMovies.results.slice(0, 12).map((movie) => (
@@ -61,7 +61,7 @@ export default async function Home() {
 
         <section className="mb-12">
           <h2 className="text-3xl font-bold mb-6 flex items-center gap-2">
-            <span className="text-red-600">⭐</span> Popular Movies
+            <span className="text-red-600">Top</span> Popular Movies
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
             {popularMovies.results.slice(0, 12).map((movie) => (

@@ -1,6 +1,7 @@
 import { getPopularMovies } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
 import Pagination from '@/components/ui/Pagination';
+import { generateMovieSlug } from '@/lib/slugify';
 
 export const revalidate = 3600;
 
