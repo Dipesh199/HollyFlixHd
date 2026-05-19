@@ -41,17 +41,27 @@ export const getMovieById = (id: number) =>
 export const getSimilarMovies = (id: number) => 
   fetchFromTMDB<PaginatedResponse<Movie>>(`/movie/${id}/similar`);
 
-export const getMovieBySlug = async (slug: string): Promise<Movie | null> => {
-  const parts = slug.split('-');
-  const idStr = parts[parts.length - 1];
-  const id = parseInt(idStr, 10);
-  
-  if (isNaN(id)) {
-    return null;
+export const searchMovieByTitleAndYear = (query: string, year?: string) => {
+  const params: Record<string, string> = { query, page: '1' };
+  if (year) {
+    params.primary_release_year = year;
   }
+  return fetchFromTMDB<PaginatedResponse<Movie>>('/search/movie', params);
+};
+
+export const getMovieBySlug = async (slug: string): Promise<Movie | null> => {
+  const match = slug.match(/-(\d{4})$/);
+  const year = match ? match[1] : undefined;
+  const titleSlug = match ? slug.substring(0, slug.length - 5) : slug;
+  
+  const query = titleSlug.replace(/-/g, ' ');
   
   try {
-    return await getMovieById(id);
+    const res = await searchMovieByTitleAndYear(query, year);
+    if (res.results && res.results.length > 0) {
+      return await getMovieById(res.results[0].id);
+    }
+    return null;
   } catch (error) {
     return null;
   }
@@ -72,3 +82,5 @@ export const getActorMovies = (actorId: number) =>
 export const getGenres = () => 
   fetchFromTMDB<{genres: {id: number, name: string}[]}>('/genre/movie/list');
 
+export const getPopularPersons = (page: number = 1) => 
+  fetchFromTMDB<PaginatedResponse<Actor>>('/person/popular', { page: page.toString() });

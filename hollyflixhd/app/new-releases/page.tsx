@@ -7,6 +7,9 @@ export const revalidate = 3600;
 export const metadata = {
   title: 'New Releases | HollyFlixHD',
   description: 'Browse the newest Hollywood movies currently in theaters or recently released.',
+  alternates: {
+    canonical: 'https://hollyflixhd.com/new-releases',
+  },
 };
 
 export default async function NewReleasesPage({

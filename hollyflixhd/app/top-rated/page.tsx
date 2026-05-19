@@ -7,6 +7,9 @@ export const revalidate = 3600;
 export const metadata = {
   title: 'Top Rated Movies | HollyFlixHD',
   description: 'Browse the highest rated Hollywood movies of all time.',
+  alternates: {
+    canonical: 'https://hollyflixhd.com/top-rated',
+  },
 };
 
 export default async function TopRatedPage({

@@ -13,10 +13,11 @@ export const dynamicParams = true;
 export const revalidate = 86400;
 
 export async function generateStaticParams() {
-  const slugs = getAllEditorialSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
+  // We return an empty array here because editorial files are named {title}-{id}.json
+  // but our new slug format is {title}-{year}. Fetching all 700+ movies from TMDB 
+  // at build time to get their years would hit rate limits. 
+  // With dynamicParams = true, Next.js will generate and cache pages on the first visit.
+  return [];
 }
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
   const title = `${movie.title} (${year}) - Cast, Plot, Rating & Streaming | HollyFlixHD`;
   const description = `Discover ${movie.title} (${year}) — ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, IMDb ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
-  const url = `https://hollyflixhd.com/movies/${params.slug}/`;
+  const url = `https://hollyflixhd.com/movies/${params.slug}`;
 
   return {
     title,
@@ -82,11 +83,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function MoviePage({ params }: { params: { slug: string } }) {
   const movie = await getMovieBySlug(params.slug);
-  const editorial = getEditorial(params.slug);
-
+  
   if (!movie) {
     notFound();
   }
+
+  const editorial = getEditorial(params.slug);
 
   const similarMovies = movie.similar;
 

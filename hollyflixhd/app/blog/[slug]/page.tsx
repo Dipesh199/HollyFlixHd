@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return { title: 'Post Not Found | HollyFlixHD' }
   }
 
-  const url = `https://hollyflixhd.com/blog/${params.slug}/`
+  const url = `https://hollyflixhd.com/blog/${params.slug}`
 
   return {
     title: `${post.title} | HollyFlixHD Blog`,
@@ -38,11 +38,20 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       url,
       siteName: 'HollyFlixHD',
       locale: 'en_US',
+      images: [
+        {
+          url: 'https://hollyflixhd.com/images/og-blog-default.jpg',
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        }
+      ]
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.metaDescription,
+      images: ['https://hollyflixhd.com/images/og-blog-default.jpg'],
     },
   }
 }
@@ -54,8 +63,61 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     notFound()
   }
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.metaDescription,
+    "image": "https://hollyflixhd.com/images/og-blog-default.jpg",
+    "datePublished": post.publishedAt,
+    "dateModified": post.publishedAt,
+    "author": {
+      "@type": "Organization",
+      "name": "HollyFlixHD Editorial Team"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "HollyFlixHD",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://hollyflixhd.com/icon.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://hollyflixhd.com/blog/${params.slug}`
+    }
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://hollyflixhd.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://hollyflixhd.com/blog/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": post.title,
+        "item": `https://hollyflixhd.com/blog/${params.slug}`
+      }
+    ]
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Breadcrumb */}
       <div className="bg-gradient-to-b from-black/80 to-transparent pt-4 pb-4">
         <div className="container mx-auto px-4 text-sm text-gray-300">

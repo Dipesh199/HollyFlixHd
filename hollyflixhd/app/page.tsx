@@ -2,7 +2,35 @@ import { getTrendingMovies, getPopularMovies } from '@/lib/tmdb';
 import MovieCard from '@/components/movie/MovieCard';
 import AdSlot from '@/components/ui/AdSlot';
 
+import { Metadata } from 'next';
+
 export const revalidate = 3600; // Revalidate every hour
+
+export const metadata: Metadata = {
+  title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
+  description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, IMDb ratings, and streaming information on HollyFlixHD.",
+  openGraph: {
+    title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
+    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, IMDb ratings, and streaming information on HollyFlixHD.",
+    type: "website",
+    url: "https://hollyflixhd.com/",
+    siteName: "HollyFlixHD",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://hollyflixhd.com/images/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: "HollyFlixHD - Movie Database",
+      }
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
+    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, IMDb ratings, and streaming information on HollyFlixHD.",
+  },
+};
 
 export default async function Home() {
   const [trendingMovies, popularMovies] = await Promise.all([
@@ -10,23 +38,10 @@ export default async function Home() {
     getPopularMovies(1)
   ]);
 
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "HollyFlixHD",
-    "url": "https://hollyflixhd.com/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://hollyflixhd.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
-      
       <div className="container mx-auto px-4 py-8">
+        <h1 className="sr-only">HollyFlixHD - Watch, Discover & Explore Movies Online</h1>
         {/* Banner Ad */}
         <AdSlot className="h-[90px] mb-8" />
 

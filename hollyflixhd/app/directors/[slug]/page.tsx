@@ -11,6 +11,24 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {
       title: `Movies Directed by ${director.name} | HollyFlixHD`,
       description: `Complete list of movies directed by ${director.name}.`,
+      alternates: {
+        canonical: `https://hollyflixhd.com/directors/${params.slug}`,
+      },
+      openGraph: {
+        title: `Movies Directed by ${director.name} | HollyFlixHD`,
+        description: `Complete list of movies directed by ${director.name}.`,
+        type: 'profile',
+        url: `https://hollyflixhd.com/directors/${params.slug}`,
+        images: director.profile_path ? [{ url: `https://image.tmdb.org/t/p/h632${director.profile_path}`, alt: director.name }] : [],
+        siteName: 'HollyFlixHD',
+        locale: 'en_US',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `Movies Directed by ${director.name} | HollyFlixHD`,
+        description: `Complete list of movies directed by ${director.name}.`,
+        images: director.profile_path ? [`https://image.tmdb.org/t/p/h632${director.profile_path}`] : [],
+      },
     };
   } catch {
     return { title: 'Director Not Found' };

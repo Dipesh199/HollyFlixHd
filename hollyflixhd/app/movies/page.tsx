@@ -7,6 +7,9 @@ export const revalidate = 3600;
 export const metadata = {
   title: 'All Movies | HollyFlixHD',
   description: 'Browse the latest and most popular Hollywood movies.',
+  alternates: {
+    canonical: 'https://hollyflixhd.com/movies',
+  },
 };
 
 export default async function MoviesPage({
@@ -20,11 +23,14 @@ export default async function MoviesPage({
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "itemListElement": movies.results.map((m, i) => ({
-      "@type": "ListItem",
-      "position": i + 1,
-      "url": `https://hollyflixhd.com/movies/${m.id}`
-    }))
+    "itemListElement": movies.results.map((m, i) => {
+      const year = m.release_date ? m.release_date.split('-')[0] : '';
+      return {
+        "@type": "ListItem",
+        "position": i + 1,
+        "url": `https://hollyflixhd.com/movies/${generateMovieSlug(m.title, year)}`
+      };
+    })
   };
 
   return (

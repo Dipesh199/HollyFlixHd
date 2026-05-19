@@ -9,16 +9,16 @@ interface Props {
 }
 
 export default function MovieCard({ movie }: Props) {
-  const slug = generateMovieSlug(movie.title, movie.id);
-  const posterUrl = getMoviePosterUrl(movie.poster_path, 'w342');
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
+  const slug = generateMovieSlug(movie.title, year);
+  const posterUrl = getMoviePosterUrl(movie.poster_path, 'w342');
 
   return (
     <Link prefetch={false} href={`/movies/${slug}`} className="group flex flex-col bg-[#1a1a1a] rounded-lg overflow-hidden hover:scale-105 transition-transform duration-300 shadow-lg">
       <div className="relative aspect-[2/3] w-full bg-gray-800">
         <Image 
           src={posterUrl} 
-          alt={`${movie.title} poster`}
+          alt={`${movie.title} (${year}) poster`}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 50vw, 33vw"

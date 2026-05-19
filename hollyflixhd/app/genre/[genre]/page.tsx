@@ -10,9 +10,24 @@ export async function generateMetadata({ params }: { params: { genre: string } }
   const data = await getGenres();
   const genreName = data.genres.find(g => g.id === genreId)?.name || 'Genre';
 
+  const title = `${genreName} Movies | HollyFlixHD`;
+  const description = `Explore the best ${genreName} movies of all time. Find top-rated ${genreName} films, new releases, cast details and more on HollyFlixHD.`;
+  const url = `https://hollyflixhd.com/genre/${params.genre}`;
+
   return {
-    title: `${genreName} Movies | HollyFlixHD`,
-    description: `Browse the best ${genreName} movies.`,
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url,
+      siteName: 'HollyFlixHD',
+      locale: 'en_US',
+    },
   };
 }
 

@@ -6,6 +6,9 @@ export const revalidate = 3600;
 export const metadata = {
   title: 'Trending Movies | HollyFlixHD',
   description: 'Browse movies trending this week.',
+  alternates: {
+    canonical: 'https://hollyflixhd.com/trending',
+  },
 };
 
 export default async function TrendingPage() {

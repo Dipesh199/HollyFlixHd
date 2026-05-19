@@ -13,6 +13,24 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return {
       title: `${actor.name} Movies, Bio & Profile | HollyFlixHD`,
       description: `Complete list of movies starring ${actor.name}. Bio, character names, and where to watch.`,
+      alternates: {
+        canonical: `https://hollyflixhd.com/actors/${params.slug}`,
+      },
+      openGraph: {
+        title: `${actor.name} Movies, Bio & Profile | HollyFlixHD`,
+        description: `Complete list of movies starring ${actor.name}. Bio, character names, and where to watch.`,
+        type: 'profile',
+        url: `https://hollyflixhd.com/actors/${params.slug}`,
+        images: actor.profile_path ? [{ url: `https://image.tmdb.org/t/p/h632${actor.profile_path}`, alt: actor.name }] : [],
+        siteName: 'HollyFlixHD',
+        locale: 'en_US',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${actor.name} Movies, Bio & Profile | HollyFlixHD`,
+        description: `Complete list of movies starring ${actor.name}. Bio, character names, and where to watch.`,
+        images: actor.profile_path ? [`https://image.tmdb.org/t/p/h632${actor.profile_path}`] : [],
+      },
     };
   } catch {
     return { title: 'Actor Not Found' };
@@ -46,7 +64,7 @@ export default async function ActorPage({ params }: { params: { slug: string } }
             <div className="relative w-48 h-72 flex-shrink-0 rounded-lg overflow-hidden border border-gray-800">
               <Image 
                 src={actor.profile_path ? `https://image.tmdb.org/t/p/h632${actor.profile_path}` : '/images/no-actor.webp'}
-                alt={actor.name}
+                alt={`${actor.name} - Actor Profile Photo`}
                 fill
                 className="object-cover"
               />
