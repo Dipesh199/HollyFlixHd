@@ -26,6 +26,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return { title: 'Movie Not Found | HollyFlixHD' };
   }
 
+  const editorial = getEditorial(params.slug);
+  const shouldIndex = !!editorial;
+
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
   const title = `${movie.title} (${year}) - Cast, Plot, Rating & Streaming | HollyFlixHD`;
   const description = `Discover ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, IMDb ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
@@ -68,10 +71,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       images: [getMovieBackdropUrl(movie.backdrop_path, 'w1280')],
     },
     robots: {
-      index: true,
+      index: shouldIndex,
       follow: true,
       googleBot: {
-        index: true,
+        index: shouldIndex,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
@@ -95,7 +98,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w500');
   const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
-  const watchUrl = `https://ww8.123moviesfree.net/search/?q=${encodeURIComponent(movie.title)}`;
+  const watchUrl = `https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.title)}`;
   const director = movie.credits?.crew.find(c => c.job === 'Director');
   const url = `https://hollyflixhd.com/movies/${params.slug}/`;
   
@@ -269,7 +272,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                     rel="nofollow noopener noreferrer"
                     className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors flex items-center gap-2"
                   >
-                    Watch Online Free
+                    Find Where to Stream
                   </a>
                 </div>
               </div>
@@ -352,7 +355,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                   rel="nofollow noopener noreferrer"
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors inline-flex items-center gap-2"
                 >
-                  Watch {movie.title} Free
+                  Find {movie.title} Streaming
                 </a>
               </div>
             </section>
