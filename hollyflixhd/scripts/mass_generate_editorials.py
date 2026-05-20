@@ -83,6 +83,7 @@ EDITORIAL RULES:
 - Write in second person, addressing the reader as "you"
 - Naturally include the movie's title, genre, and tone within the editorial text
 - Do not use markdown or HTML inside any field values
+- Do not include any emojis or special characters in the text and also no dashes. 
 
 OUTPUT RULES:
 - Respond ONLY with valid JSON. No markdown, no ```json, no explanation.
