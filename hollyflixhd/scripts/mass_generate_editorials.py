@@ -4,6 +4,7 @@ import urllib.request
 import urllib.parse
 import re
 import time
+import gzip
 
 MODEL = "gemma4"
 TMDB_BASE = "https://api.themoviedb.org/3"
@@ -30,7 +31,11 @@ def fetch_movies_for_year(api_key, year, max_pages=1):
         try:
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             with urllib.request.urlopen(req) as response:
-                data = json.loads(response.read().decode())
+                content = response.read()
+                # If the content is gzipped (starts with gzip magic bytes 0x1f 0x8b)
+                if content.startswith(b'\x1f\x8b'):
+                    content = gzip.decompress(content)
+                data = json.loads(content.decode('utf-8'))
                 for item in data.get('results', []):
                     title = item.get('title')
                     if title:
