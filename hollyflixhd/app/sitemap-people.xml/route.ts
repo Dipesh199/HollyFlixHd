@@ -4,13 +4,21 @@ import { absoluteUrl, sitemapResponse, SitemapUrl, today } from '@/lib/sitemap'
 
 export const revalidate = 3600
 
-const PERSON_PAGES = 5
+const PERSON_PAGES = 250
+const TMDB_BATCH_SIZE = 10
 
 export async function GET() {
   const lastmod = today()
-  const personResults = await Promise.all(
-    Array.from({ length: PERSON_PAGES }, (_, i) => getPopularPersons(i + 1).catch(() => null))
-  )
+  
+  const pages = Array.from({ length: PERSON_PAGES }, (_, i) => i + 1)
+  const personResults = []
+
+  for (let i = 0; i < pages.length; i += TMDB_BATCH_SIZE) {
+    const batch = pages.slice(i, i + TMDB_BATCH_SIZE)
+    const batchResults = await Promise.all(batch.map((page) => getPopularPersons(page).catch(() => null)))
+    personResults.push(...batchResults)
+  }
+  
   const people = personResults
     .filter((res): res is NonNullable<typeof res> => res !== null)
     .flatMap((res) => res.results)

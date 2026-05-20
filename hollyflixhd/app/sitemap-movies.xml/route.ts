@@ -4,7 +4,7 @@ import { absoluteUrl, sitemapResponse, SitemapUrl, today } from '@/lib/sitemap'
 
 export const revalidate = 3600
 
-const MOVIE_PAGES = 125
+const MOVIE_PAGES = 500
 const TMDB_BATCH_SIZE = 10
 
 async function getMovieSitemapUrls(lastmod: string): Promise<SitemapUrl[]> {
