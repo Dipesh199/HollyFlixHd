@@ -47,26 +47,48 @@ def ask_ollama_batch(movies_batch):
     for m in movies_batch:
         movie_list_text += f"- Title: {m['title']} ({m['year']}) | Slug: {m['slug']} | Overview: {m['overview']}\n"
 
-    prompt = f"""You are a professional movie critic for HollyFlixHD.
-Write a JSON object containing editorial reviews for the following {len(movies_batch)} movies:
+    prompt = f"""You are a senior movie critic and editorial writer for HollyFlixHD — a premium streaming platform.
+Write editorial reviews for the following {len(movies_batch)} movies:
 
 {movie_list_text}
 
-Respond ONLY with valid JSON. Do not include markdown (no ```json). Do not include conversational text.
-Your response MUST be a single JSON object where the keys are the EXACT slugs provided above, and the values match this structure:
+EDITORIAL RULES:
+- Write 4-6 sentences structured as: hook → what makes it unique → one standout element → who it's for
+- Be specific — not "great acting" but "Joaquin Phoenix carries every scene with almost no dialogue"
+- Be honest — briefly mention a flaw if it exists (pacing issues, weak third act, etc.). This builds reader trust.
+- Avoid plot summary — focus on the experience and feeling of watching it
+- Do not use superlatives like "masterpiece" or "stunning" unless editorRating is "Must Watch"
+- Do not start with "I", "This movie", or the movie title
+- Write in second person, addressing the reader as "you"
+- Naturally include the movie's title, genre, and tone within the editorial text
+- Do not use markdown or HTML inside any field values
+
+OUTPUT RULES:
+- Respond ONLY with valid JSON. No markdown, no ```json, no explanation.
+- The response MUST be a single JSON object where keys are the EXACT slugs provided above
+- Each value must match this structure EXACTLY:
+
 {{
-  "movie-slug-1": {{
-    "editorial": "2-3 sentences of an engaging, spoiler-free, premium review with a strong hook.",
+  "movie-slug": {{
+    "editorial": "4-6 sentence engaging, spoiler-free editorial review with a strong hook.",
     "worthWatching": true,
     "editorRating": "Must Watch",
-    "tags": ["tag1", "tag2"]
-  }},
-  "movie-slug-2": {{
-    ...
+    "tags": ["mood-tag", "genre-tag", "audience-tag", "optional-4th-tag"],
+    "toneAndPace": "slow-burn, cerebral, visually intense",
+    "targetAudience": "Ideal for fans of psychological thrillers who enjoy non-linear storytelling.",
+    "similarMovies": ["Movie A", "Movie B", "Movie C"],
+    "watchReasons": ["career-best performance", "unpredictable narrative", "stunning practical effects"]
   }}
 }}
 
-Note: editorRating MUST be exactly one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic".
+FIELD RULES:
+- editorRating: MUST be exactly one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic"
+- tags: 3-4 short lowercase strings. Must include one mood/tone tag (e.g. "slow-burn"), one genre tag (e.g. "sci-fi"), one audience tag (e.g. "date-night", "solo-watch", "film-buffs")
+- toneAndPace: 2-4 hyphenated descriptors only, comma-separated
+- targetAudience: one sentence starting with "Ideal for..."
+- similarMovies: 2-3 real, well-known titles in the same genre and tone
+- watchReasons: 2-3 short specific phrases — avoid generic praise like "great story"
+- worthWatching: true if editorRating is "Must Watch", "Worth Watching", or "Cult Classic" — false only for "Skip It"
 """
     
     payload = {

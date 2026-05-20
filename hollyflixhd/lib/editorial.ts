@@ -6,7 +6,12 @@ export type Editorial = {
   worthWatching: boolean
   editorRating: 'Must Watch' | 'Worth Watching' | 'Skip It' | 'Cult Classic'
   tags: string[]
+  toneAndPace?: string
+  targetAudience?: string
+  similarMovies?: string[]
+  watchReasons?: string[]
 }
+
 
 export function getEditorial(slug: string): Editorial | null {
   try {
