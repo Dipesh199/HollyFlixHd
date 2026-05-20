@@ -19,6 +19,15 @@ def get_tmdb_key():
                     return line.strip().split('=')[1]
     return None
 
+def get_ollama_key():
+    env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env.local')
+    if os.path.exists(env_path):
+        with open(env_path, 'r') as f:
+            for line in f:
+                if line.startswith('OLLAMA_API_KEY='):
+                    return line.strip().split('=')[1]
+    return None
+
 def slugify(text):
     text = text.lower()
     text = re.sub(r'[^a-z0-9]+', '-', text)
@@ -44,8 +53,15 @@ def fetch_movies_for_year(api_key, year, max_pages=1):
             print(f"Failed to fetch year {year}: {e}")
     return movies
 
-def ask_ollama_batch(movies_batch):
-    url = "http://localhost:11434/api/generate"
+def ask_ollama_batch(movies_batch, api_key=None):
+    if api_key:
+        url = "https://ollama.com/api/generate"
+        headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'}
+        target_model = "gpt-oss:20b-cloud"
+    else:
+        url = "http://localhost:11434/api/generate"
+        headers = {'Content-Type': 'application/json'}
+        target_model = MODEL
     
     # Construct the movie list text for the prompt
     movie_list_text = ""
@@ -97,13 +113,13 @@ FIELD RULES:
 """
     
     payload = {
-        "model": MODEL,
+        "model": target_model,
         "prompt": prompt,
         "stream": False
     }
     
     data = json.dumps(payload).encode('utf-8')
-    req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
+    req = urllib.request.Request(url, data=data, headers=headers)
     
     try:
         with urllib.request.urlopen(req, timeout=300) as response:
@@ -128,6 +144,12 @@ def main():
     if not api_key:
         print("Error: TMDB_API_KEY not found in .env.local")
         return
+        
+    ollama_key = get_ollama_key()
+    if ollama_key:
+        print("Using Ollama Cloud Endpoint with API Key.")
+    else:
+        print("Using local Ollama Endpoint.")
 
     data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
     editorials_dir = os.path.join(data_dir, 'editorials')
@@ -183,7 +205,7 @@ def main():
             print(f"Generating batch of {len(batch)} movies... ", end="", flush=True)
             start_time = time.time()
             
-            generated_json = ask_ollama_batch(batch)
+            generated_json = ask_ollama_batch(batch, ollama_key)
             
             if generated_json and isinstance(generated_json, dict):
                 success_count = 0

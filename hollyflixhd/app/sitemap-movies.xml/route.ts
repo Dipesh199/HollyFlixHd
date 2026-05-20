@@ -1,6 +1,8 @@
 import { getPopularMovies } from '@/lib/tmdb'
 import { generateMovieSlug } from '@/lib/slugify'
 import { absoluteUrl, sitemapResponse, SitemapUrl, today } from '@/lib/sitemap'
+import fs from 'fs'
+import path from 'path'
 
 export const revalidate = 3600
 
@@ -34,6 +36,27 @@ async function getMovieSitemapUrls(lastmod: string): Promise<SitemapUrl[]> {
   })
 }
 
+function getEditorialSitemapUrls(lastmod: string): SitemapUrl[] {
+  try {
+    const editorialsDir = path.join(process.cwd(), 'data', 'editorials')
+    if (!fs.existsSync(editorialsDir)) return []
+    
+    const files = fs.readdirSync(editorialsDir).filter(f => f.endsWith('.json'))
+    return files.map(file => {
+      const slug = file.replace('.json', '')
+      return {
+        loc: absoluteUrl(`/movies/${slug}`),
+        lastmod,
+        changefreq: 'weekly',
+        priority: 1.0, // Give editorials highest priority
+      }
+    })
+  } catch (error) {
+    console.error("Error reading editorials for sitemap:", error)
+    return []
+  }
+}
+
 export async function GET() {
   const lastmod = today()
   const currentYear = new Date().getFullYear()
@@ -52,6 +75,10 @@ export async function GET() {
   ]
 
   const movieUrls = await getMovieSitemapUrls(lastmod)
+  const editorialUrls = getEditorialSitemapUrls(lastmod)
 
-  return sitemapResponse([...baseMovieUrls, ...movieUrls])
+  // Combine and deduplicate URLs (in case popular movies already includes the editorial)
+  const allUrls = [...baseMovieUrls, ...editorialUrls, ...movieUrls]
+  
+  return sitemapResponse(allUrls)
 }

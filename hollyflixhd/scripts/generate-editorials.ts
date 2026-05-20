@@ -7,7 +7,7 @@ config({ path: path.resolve(__dirname, '../.env') })
 
 
 const EDITORIALS_PATH = path.join(__dirname, '../data/editorials.json')
-const OLLAMA_URL = 'http://localhost:11434/api/generate'
+const OLLAMA_URL = process.env.OLLAMA_API_KEY ? 'https://ollama.com/api/generate' : 'http://localhost:11434/api/generate'
 
 // Example slugs if none provided
 const DEFAULT_SLUGS = [
@@ -57,11 +57,18 @@ JSON format:
   "tags": ["mind-bending", "rewatch-worthy"]
 }`
 
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+    let targetModel = 'qwen2.5:7b'
+    if (process.env.OLLAMA_API_KEY) {
+      headers['Authorization'] = `Bearer ${process.env.OLLAMA_API_KEY}`
+      targetModel = 'gpt-oss:20b-cloud'
+    }
+
     const response = await fetch(OLLAMA_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
-        model: 'qwen2.5:7b',
+        model: targetModel,
         prompt: prompt,
         stream: false
       })
