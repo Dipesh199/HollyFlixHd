@@ -3,8 +3,10 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import CookieBanner from "@/components/layout/CookieBanner";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -62,6 +64,14 @@ export default function RootLayout({
             })
           }}
         />
+        {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </head>
       <body className={`${inter.className} bg-black text-white min-h-screen flex flex-col`}>
         <Header />
@@ -69,6 +79,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <CookieBanner />
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
         <SpeedInsights />
       </body>

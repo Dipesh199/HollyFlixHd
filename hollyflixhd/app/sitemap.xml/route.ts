@@ -7,6 +7,7 @@ export async function GET() {
 
   return sitemapIndexResponse([
     { loc: absoluteUrl('/sitemap-movies.xml'), lastmod },
+    { loc: absoluteUrl('/sitemap-editorials.xml'), lastmod },
     { loc: absoluteUrl('/sitemap-blog.xml'), lastmod },
     { loc: absoluteUrl('/sitemap-genres.xml'), lastmod },
     { loc: absoluteUrl('/sitemap-people.xml'), lastmod },
