@@ -8,7 +8,7 @@ import gzip
 
 MODEL = "gemma4"
 TMDB_BASE = "https://api.themoviedb.org/3"
-BATCH_SIZE = 3
+BATCH_SIZE = 1
 
 def get_tmdb_key():
     env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env.local')
