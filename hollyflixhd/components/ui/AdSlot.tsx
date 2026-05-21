@@ -1,8 +1,7 @@
 export default function AdSlot({ className = '' }: { className?: string }) {
-  // Mock ad component. In reality, you'd integrate Google AdSense via NEXT_PUBLIC_ADSENSE_ID.
+  // We rely on Google Auto Ads (injected via layout.tsx) to automatically populate ad spaces.
+  // We leave this as an empty div so Auto Ads can potentially hook into it, but without dummy styles.
   return (
-    <div className={`w-full bg-[#1a1a1a] border border-gray-800 flex items-center justify-center text-gray-500 text-sm overflow-hidden ${className}`}>
-      <span>Advertisement</span>
-    </div>
+    <div className={`ad-container ${className}`}></div>
   );
 }

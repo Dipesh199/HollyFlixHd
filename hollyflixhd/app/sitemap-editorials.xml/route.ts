@@ -2,7 +2,7 @@ import { absoluteUrl, sitemapResponse, SitemapUrl, today } from '@/lib/sitemap'
 import fs from 'fs'
 import path from 'path'
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 export async function GET() {
   const lastmod = today()

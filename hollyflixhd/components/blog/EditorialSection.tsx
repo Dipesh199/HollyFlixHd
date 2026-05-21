@@ -29,7 +29,7 @@ export function EditorialSection({ data, movieTitle }: { data: Editorial, movieT
           </h2>
           <p className="text-xs text-gray-500 mt-0.5">Expert, independent review by the HollyFlixHD Editorial Team</p>
         </div>
-        <span className={`self-start sm:self-center px-4.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r ${ratingColors[data.editorRating] || 'from-gray-700 to-gray-800 text-gray-300'} shadow-md`}>
+        <span className={`self-start sm:self-center px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-gradient-to-r ${ratingColors[data.editorRating] || 'from-gray-700 to-gray-800 text-gray-300'} shadow-md`}>
           {data.editorRating}
         </span>
       </div>
