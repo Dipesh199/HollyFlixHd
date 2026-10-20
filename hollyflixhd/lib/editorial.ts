@@ -12,6 +12,7 @@ export type Editorial = {
   watchReasons?: string[]
 }
 
+const inFlightGenerations = new Map<string, Promise<Editorial | null>>()
 
 export function getEditorial(slug: string): Editorial | null {
   try {
@@ -24,6 +25,21 @@ export function getEditorial(slug: string): Editorial | null {
     console.error(`Error reading editorial for ${slug}:`, error)
   }
   return null
+}
+
+export function saveEditorial(slug: string, editorial: Editorial): boolean {
+  try {
+    const dirPath = path.join(process.cwd(), 'data', 'editorials')
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true })
+    }
+    const filePath = path.join(dirPath, `${slug}.json`)
+    fs.writeFileSync(filePath, JSON.stringify(editorial, null, 2), 'utf8')
+    return true
+  } catch (error) {
+    console.error(`Error saving editorial for ${slug}:`, error)
+    return false
+  }
 }
 
 export function getAllEditorialSlugs(): string[] {
@@ -39,4 +55,147 @@ export function getAllEditorialSlugs(): string[] {
     console.error('Error reading editorials directory:', error)
   }
   return []
+}
+
+export function getRecentEditorialSlugs(limit: number = 6): string[] {
+  try {
+    const dirPath = path.join(process.cwd(), 'data', 'editorials')
+    if (fs.existsSync(dirPath)) {
+      const files = fs.readdirSync(dirPath)
+        .filter(file => file.endsWith('.json'))
+        .map(file => {
+          const fullPath = path.join(dirPath, file)
+          return {
+            slug: file.replace('.json', ''),
+            mtime: fs.statSync(fullPath).mtime.getTime()
+          }
+        })
+        .sort((a, b) => b.mtime - a.mtime)
+        .slice(0, limit)
+        .map(item => item.slug)
+      return files
+    }
+  } catch (error) {
+    console.error('Error reading recent editorials:', error)
+  }
+  return []
+}
+
+export async function getOrGenerateEditorial(
+  slug: string,
+  context?: {
+    title: string
+    year?: string
+    overview?: string
+    genres?: string[]
+    director?: string
+  }
+): Promise<Editorial | null> {
+  // 1. Fast path: check local disk
+  const existing = getEditorial(slug)
+  if (existing) {
+    return existing
+  }
+
+  // 2. Prevent duplicate in-flight requests for the same slug
+  if (inFlightGenerations.has(slug)) {
+    return inFlightGenerations.get(slug)!
+  }
+
+  const apiKey = process.env.OLLAMA_API_KEY
+  if (!apiKey && !process.env.ENABLE_LOCAL_OLLAMA) {
+    return null
+  }
+
+  const generationPromise = (async (): Promise<Editorial | null> => {
+    try {
+      const movieTitle = context?.title || slug.replace(/-(\d{4})$/, '').replace(/-/g, ' ')
+      const movieYear = context?.year || (slug.match(/-(\d{4})$/)?.[1] || '')
+      const overview = context?.overview || 'Plot synopsis not available.'
+      const genres = context?.genres?.join(', ') || 'Drama, Cinema'
+      const director = context?.director || 'Unknown'
+
+      const prompt = `You are a senior movie critic and editorial writer for HollyFlixHD — a premium movie database.
+Write an authentic, punchy editorial review for the movie:
+Title: ${movieTitle} (${movieYear})
+Genre: ${genres}
+Director: ${director}
+Overview: ${overview}
+
+EDITORIAL RULES:
+- Write 4-6 sentences structured as: hook -> what makes it unique -> one standout element -> who it's for.
+- Be specific, honest, and focus on the watching experience.
+- Write in second person, addressing the reader as "you".
+- Do not start with "I", "This movie", or the movie title.
+- Do not include emojis or markdown inside JSON string values.
+
+OUTPUT JSON FORMAT ONLY:
+{
+  "editorial": "4-6 sentence engaging, spoiler-free editorial review.",
+  "worthWatching": true,
+  "editorRating": "Must Watch",
+  "tags": ["mood-tag", "genre-tag", "audience-tag"],
+  "toneAndPace": "slow-burn, cerebral, visually intense",
+  "targetAudience": "Ideal for fans of...",
+  "similarMovies": ["Movie 1", "Movie 2", "Movie 3"],
+  "watchReasons": ["standout acting", "gripping atmosphere", "unpredictable twist"]
+}
+FIELD CONSTRAINTS:
+- editorRating must be exactly one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic"
+- worthWatching must be true if editorRating is "Must Watch", "Worth Watching", or "Cult Classic", false only for "Skip It"
+- tags: 3-4 lowercase strings
+- similarMovies: 2-3 well-known real movies with similar vibe`
+
+      const url = apiKey ? 'https://ollama.com/api/generate' : 'http://localhost:11434/api/generate'
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+      if (apiKey) {
+        headers['Authorization'] = `Bearer ${apiKey}`
+      }
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          model: apiKey ? 'gpt-oss:20b-cloud' : 'gemma4',
+          prompt,
+          stream: false,
+          format: 'json'
+        }),
+        signal: AbortSignal.timeout(30000)
+      })
+
+      if (!res.ok) {
+        console.error(`[HollyFlixHD] Ollama API error (${res.status}): ${res.statusText}`)
+        return null
+      }
+
+      const data = await res.json()
+      let rawText = (data.response || '').trim()
+
+      const firstBrace = rawText.indexOf('{')
+      const lastBrace = rawText.lastIndexOf('}')
+      if (firstBrace !== -1 && lastBrace !== -1 && lastBrace >= firstBrace) {
+        rawText = rawText.substring(firstBrace, lastBrace + 1)
+      }
+
+      const parsed = JSON.parse(rawText) as Editorial
+
+      if (parsed.editorial && parsed.editorRating) {
+        if (!Array.isArray(parsed.tags)) parsed.tags = ['movie', 'hollywood']
+        if (typeof parsed.worthWatching !== 'boolean') parsed.worthWatching = parsed.editorRating !== 'Skip It'
+
+        saveEditorial(slug, parsed)
+        console.log(`[HollyFlixHD] Dynamically generated and saved editorial for: ${slug}`)
+        return parsed
+      }
+    } catch (err) {
+      console.error(`[HollyFlixHD] On-demand editorial generation failed for ${slug}:`, err)
+    } finally {
+      inFlightGenerations.delete(slug)
+    }
+    return null
+  })()
+
+  inFlightGenerations.set(slug, generationPromise)
+  return generationPromise
 }

@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
 import { getEditorial, getAllEditorialSlugs } from '@/lib/editorial';
-import { EditorialSection } from '@/components/blog/EditorialSection';
+import { EditorialContainer } from '@/components/blog/EditorialContainer';
 
 export const dynamicParams = true;
 export const revalidate = 86400;
@@ -26,10 +26,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     return { title: 'Movie Not Found | HollyFlixHD' };
   }
 
-  const editorial = getEditorial(params.slug);
-  const shouldIndex = !!editorial;
-
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
+  const shouldIndex = true;
+
   const title = `${movie.title} (${year}) - Cast, Plot, Rating & Streaming | HollyFlixHD`;
   const description = `Discover ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, IMDb ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
   const url = `https://hollyflixhd.com/movies/${params.slug}`;
@@ -91,15 +90,14 @@ export default async function MoviePage({ params }: { params: { slug: string } }
     notFound();
   }
 
-  const editorial = getEditorial(params.slug);
+  const year = movie.release_date ? movie.release_date.split('-')[0] : '';
+  const director = movie.credits?.crew.find(c => c.job === 'Director');
 
   const similarMovies = movie.similar;
 
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w500');
   const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
-  const year = movie.release_date ? movie.release_date.split('-')[0] : '';
   const watchUrl = `https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.title)}`;
-  const director = movie.credits?.crew.find(c => c.job === 'Director');
   const url = `https://hollyflixhd.com/movies/${params.slug}/`;
   
   // JSON-LD Schemas
@@ -288,7 +286,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
               <p className="text-gray-300 leading-relaxed text-lg">{movie.overview}</p>
             </section>
 
-            {editorial && <EditorialSection data={editorial} movieTitle={movie.title} />}
+            <EditorialContainer slug={params.slug} movie={movie} initialEditorial={getEditorial(params.slug)} />
 
             {/* Cast */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (

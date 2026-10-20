@@ -1,13 +1,26 @@
 import { Movie, PaginatedResponse, Actor } from '@/types/movie';
+import { cache } from 'react';
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY || 'dummy_key';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+
+// In-memory cache for fast local responses and zero duplicate network hits
+const apiCache = new Map<string, { data: unknown; expiry: number }>();
+const slugCache = new Map<string, { movie: Movie | null; expiry: number }>();
 
 async function fetchFromTMDB<T>(endpoint: string, params: Record<string, string> = {}): Promise<T> {
   const queryParams = new URLSearchParams({
     api_key: TMDB_API_KEY,
     ...params,
   });
+
+  const cacheKey = `${endpoint}?${queryParams.toString()}`;
+  const now = Date.now();
+
+  const cached = apiCache.get(cacheKey);
+  if (cached && cached.expiry > now) {
+    return cached.data as T;
+  }
 
   const res = await fetch(`${TMDB_BASE_URL}${endpoint}?${queryParams.toString()}`, {
     next: { revalidate: 3600 }
@@ -17,7 +30,10 @@ async function fetchFromTMDB<T>(endpoint: string, params: Record<string, string>
     throw new Error(`Failed to fetch from TMDB: ${res.statusText}`);
   }
 
-  return res.json();
+  const data = await res.json();
+  // Cache in RAM for 1 hour
+  apiCache.set(cacheKey, { data, expiry: now + 3600 * 1000 });
+  return data as T;
 }
 
 export const getPopularMovies = (page: number = 1) => 
@@ -49,7 +65,13 @@ export const searchMovieByTitleAndYear = (query: string, year?: string) => {
   return fetchFromTMDB<PaginatedResponse<Movie>>('/search/movie', params);
 };
 
-export const getMovieBySlug = async (slug: string): Promise<Movie | null> => {
+export const getMovieBySlug = cache(async (slug: string): Promise<Movie | null> => {
+  const now = Date.now();
+  const cached = slugCache.get(slug);
+  if (cached && cached.expiry > now) {
+    return cached.movie;
+  }
+
   const match = slug.match(/-(\d{4})$/);
   const year = match ? match[1] : undefined;
   const titleSlug = match ? slug.substring(0, slug.length - 5) : slug;
@@ -59,13 +81,16 @@ export const getMovieBySlug = async (slug: string): Promise<Movie | null> => {
   try {
     const res = await searchMovieByTitleAndYear(query, year);
     if (res.results && res.results.length > 0) {
-      return await getMovieById(res.results[0].id);
+      const movie = await getMovieById(res.results[0].id);
+      slugCache.set(slug, { movie, expiry: now + 3600 * 1000 });
+      return movie;
     }
+    slugCache.set(slug, { movie: null, expiry: now + 300 * 1000 });
     return null;
   } catch (error) {
     return null;
   }
-}
+});
 
 export const getMoviesByGenre = (genreId: number, page: number = 1) => 
   fetchFromTMDB<PaginatedResponse<Movie>>('/discover/movie', { with_genres: genreId.toString(), page: page.toString() });
