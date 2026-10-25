@@ -11,6 +11,7 @@ export type Editorial = {
   targetAudience?: string
   similarMovies?: string[]
   watchReasons?: string[]
+  endingExplained?: string
 }
 
 const inFlightGenerations = new Map<string, Promise<Editorial | null>>()
@@ -133,35 +134,43 @@ export async function getOrGenerateEditorial(
       const genres = context?.genres?.join(', ') || 'Drama, Cinema'
       const director = context?.director || 'Unknown'
 
-      const prompt = `You are a senior movie critic and editorial writer for HollyFlixHD — a premium movie database.
-Write an authentic, punchy editorial review for the movie:
+      const prompt = `You are a movie guide writer for HollyFlixHD.
+Write a clear, casual, and detailed movie review for everyday viewers.
 Title: ${movieTitle} (${movieYear})
 Genre: ${genres}
 Director: ${director}
 Overview: ${overview}
 
-EDITORIAL RULES:
-- Write 4-6 sentences structured as: hook -> what makes it unique -> one standout element -> who it's for.
-- Be specific, honest, and focus on the watching experience.
-- Write in second person, addressing the reader as "you".
+LANGUAGE & LENGTH RULES:
+- Use simple, natural, conversational English (8th-grade reading level). Talk like a friend recommending a movie.
+- NO fancy, pretentious, or academic words (DO NOT use: visceral, claustrophobic, cerebral, juxtaposition, tour-de-force, metaphor, descent, haunting, tapestry).
+- LENGTH REQUIREMENT FOR EDITORIAL: The "editorial" review MUST be at least 150 to 200 words long (2 detailed paragraphs). Do not make it a short summary.
+  * Paragraph 1: An engaging hook about the setup, the main characters, and the overall vibe of the movie.
+  * Paragraph 2: What stood out (acting, twists, action, pacing), honest pros and cons, and exactly who should watch it.
+- LENGTH REQUIREMENT FOR ENDING: The "endingExplained" MUST be at least 60 to 90 words long. Clearly explain what happens in the final scenes, the twist, and how things wrap up in plain, simple English (spoilers allowed).
+- Write in second person, speaking directly to "you".
 - Do not start with "I", "This movie", or the movie title.
-- Do not include emojis or markdown inside JSON string values.
+- Do not include emojis or markdown in JSON values.
 
 OUTPUT JSON FORMAT ONLY:
 {
-  "editorial": "4-6 sentence engaging, spoiler-free editorial review.",
+  "editorial": "A detailed 150-200 word review written in simple, natural English across 2 paragraphs.",
+  "endingExplained": "A detailed 60-90 word plain English breakdown of the ending, final twist, and conclusion (spoilers allowed).",
   "worthWatching": true,
   "editorRating": "Must Watch",
   "tags": ["mood-tag", "genre-tag", "audience-tag"],
-  "toneAndPace": "slow-burn, cerebral, visually intense",
-  "targetAudience": "Ideal for fans of...",
+  "toneAndPace": "fast-paced, exciting, funny",
+  "targetAudience": "Ideal for anyone who loves...",
   "similarMovies": ["Movie 1", "Movie 2", "Movie 3"],
-  "watchReasons": ["standout acting", "gripping atmosphere", "unpredictable twist"]
+  "watchReasons": ["fun storyline", "great acting", "kept me hooked"]
 }
 FIELD CONSTRAINTS:
+- editorial: MUST be at least 150-200 words long in simple, clear English
+- endingExplained: MUST be at least 60-90 words long clearly explaining the ending in plain words
 - editorRating must be exactly one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic"
 - worthWatching must be true if editorRating is "Must Watch", "Worth Watching", or "Cult Classic", false only for "Skip It"
-- tags: 3-4 lowercase strings
+- toneAndPace: simple everyday words separated by commas
+- tags: 3-4 simple lowercase words
 - similarMovies: 2-3 well-known real movies with similar vibe`
 
       const url = apiKey ? 'https://ollama.com/api/generate' : 'http://localhost:11434/api/generate'
@@ -178,7 +187,7 @@ FIELD CONSTRAINTS:
           prompt,
           stream: false,
           format: 'json',
-          options: { num_predict: 1000 }
+          options: { num_predict: 1500 }
         }),
         signal: AbortSignal.timeout(90000)
       })

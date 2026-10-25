@@ -68,22 +68,21 @@ def ask_ollama_batch(movies_batch, api_key=None):
     for m in movies_batch:
         movie_list_text += f"- Title: {m['title']} ({m['year']}) | Slug: {m['slug']} | Overview: {m['overview']}\n"
 
-    prompt = f"""You are a senior movie critic and editorial writer for HollyFlixHD — a premium streaming platform.
-Write editorial reviews for the following {len(movies_batch)} movies:
+    prompt = f"""You are a movie guide writer for HollyFlixHD.
+Write simple, casual, and easy-to-read reviews for the following {len(movies_batch)} movies:
 
 {movie_list_text}
 
 EDITORIAL RULES:
-- Write 4-6 sentences structured as: hook → what makes it unique → one standout element → who it's for
-- Be specific — not "great acting" but "Joaquin Phoenix carries every scene with almost no dialogue"
-- Be honest — briefly mention a flaw if it exists (pacing issues, weak third act, etc.). This builds reader trust.
-- Avoid plot summary — focus on the experience and feeling of watching it
-- Do not use superlatives like "masterpiece" or "stunning" unless editorRating is "Must Watch"
-- Do not start with "I", "This movie", or the movie title
-- Write in second person, addressing the reader as "you"
-- Naturally include the movie's title, genre, and tone within the editorial text
-- Do not use markdown or HTML inside any field values
-- Do not include any emojis or special characters in the text and also no dashes. 
+- Use simple, natural, conversational English. Write like you are recommending a movie to a friend.
+- NO fancy, pretentious, or academic words (DO NOT use words like: visceral, claustrophobic, cerebral, juxtaposition, tour-de-force, metaphor, descent, haunting, tapestry).
+- LENGTH FOR EDITORIAL: The "editorial" review MUST be at least 150 to 200 words long (2 detailed paragraphs).
+  * Paragraph 1: Catchy hook about the setup, main characters, and the overall vibe.
+  * Paragraph 2: Standout elements (acting, action, suspense), honest pros and cons, and who should watch it.
+- LENGTH FOR ENDING: The "endingExplained" MUST be at least 60 to 90 words long clearly breaking down the climax, ending twist, and how things wrap up in plain English (spoilers allowed).
+- Write in second person, speaking directly to "you".
+- Do not start with "I", "This movie", or the movie title.
+- Do not include any emojis, markdown, or dashes in field values. 
 
 OUTPUT RULES:
 - Respond ONLY with valid JSON. No markdown, no ```json, no explanation.
@@ -93,6 +92,7 @@ OUTPUT RULES:
 {{
   "movie-slug": {{
     "editorial": "4-6 sentence engaging, spoiler-free editorial review with a strong hook.",
+    "endingExplained": "2-3 insightful sentences explaining the conclusion, final scene, or main thematic resolution of the film (spoilers allowed).",
     "worthWatching": true,
     "editorRating": "Must Watch",
     "tags": ["mood-tag", "genre-tag", "audience-tag", "optional-4th-tag"],
@@ -105,6 +105,7 @@ OUTPUT RULES:
 
 FIELD RULES:
 - editorRating: MUST be exactly one of: "Must Watch", "Worth Watching", "Skip It", "Cult Classic"
+- endingExplained: 2-3 sentences breaking down the ending, resolution, or final twist of the movie
 - tags: 3-4 short lowercase strings. Must include one mood/tone tag (e.g. "slow-burn"), one genre tag (e.g. "sci-fi"), one audience tag (e.g. "date-night", "solo-watch", "film-buffs")
 - toneAndPace: 2-4 hyphenated descriptors only, comma-separated
 - targetAudience: one sentence starting with "Ideal for..."

@@ -39,9 +39,9 @@ export function EditorialSection({ data, movieTitle }: { data: Editorial, movieT
         <svg className="absolute -top-4 -left-3 h-10 w-10 text-gray-800 opacity-50 transform -scale-x-100 pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
           <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 10.014-10.479l.411.929c-4.793.985-6.76 3.766-6.76 7.479h5.318v9.462h-9v-.001zm-13.017 0v-7.391c0-5.704 3.748-9.57 10.016-10.479l.409.929c-4.79.985-6.76 3.766-6.76 7.479h5.32v9.462h-8.985v-.001z" />
         </svg>
-        <p className="relative z-10 text-gray-100 leading-relaxed text-lg font-medium italic pl-6 pr-4">
+        <div className="relative z-10 text-gray-100 leading-relaxed text-base md:text-lg font-normal pl-6 pr-4 whitespace-pre-line space-y-4">
           {data.editorial}
-        </p>
+        </div>
       </div>
 
       {/* Secondary Metadatas (Grid layout) */}
@@ -107,6 +107,28 @@ export function EditorialSection({ data, movieTitle }: { data: Editorial, movieT
             </div>
           )}
 
+        </div>
+      )}
+
+      {/* Ending Explained / Final Climax Analysis */}
+      {data.endingExplained && (
+        <div className="mt-8 pt-6 border-t border-gray-800/80">
+          <div className="bg-red-950/20 border border-red-900/40 rounded-xl p-5 md:p-6 relative overflow-hidden">
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <h3 className="text-sm font-bold uppercase tracking-wider text-red-400 flex items-center gap-2">
+                <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Ending & Conclusion Explained
+              </h3>
+              <span className="bg-red-900/60 text-red-300 text-[10px] font-bold px-2.5 py-0.5 rounded border border-red-800/60 tracking-wider uppercase">
+                Spoiler
+              </span>
+            </div>
+            <div className="text-gray-300 text-sm md:text-base leading-relaxed whitespace-pre-line space-y-3">
+              {data.endingExplained}
+            </div>
+          </div>
         </div>
       )}
 

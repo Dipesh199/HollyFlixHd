@@ -19,6 +19,7 @@ export async function generateStaticParams() {
 }
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
+  const editorial = getEditorial(params.slug);
   
   if (!movie) {
     return { title: 'Movie Not Found | HollyFlixHD' };
@@ -41,6 +42,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       `${movie.title} rating`,
       `${movie.title} streaming`,
       `${movie.title} where to watch`,
+      ...(editorial?.endingExplained ? [`${movie.title} ending explained`, `${movie.title} ending breakdown`] : []),
     ],
     alternates: {
       canonical: url,
@@ -83,6 +85,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function MoviePage({ params }: { params: { slug: string } }) {
   const movie = await getMovieBySlug(params.slug);
+  const editorial = getEditorial(params.slug);
   
   if (!movie) {
     notFound();
@@ -197,7 +200,15 @@ export default async function MoviePage({ params }: { params: { slug: string } }
           "@type": "Answer",
           "text": movie.runtime ? `${movie.title} has a runtime of ${Math.floor(movie.runtime / 60)} hours and ${movie.runtime % 60} minutes.` : `The runtime of ${movie.title} is not available.`
         }
-      }
+      },
+      ...(editorial?.endingExplained ? [{
+        "@type": "Question",
+        "name": `How does ${movie.title} end? (Ending Explained)`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": editorial.endingExplained
+        }
+      }] : [])
     ]
   };
 
@@ -287,7 +298,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
             <EditorialContainer
               slug={params.slug}
               movie={movie}
-              initialEditorial={getEditorial(params.slug)}
+              initialEditorial={editorial}
             />
 
             {/* Cast */}
