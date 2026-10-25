@@ -22,8 +22,6 @@ const xmlEscape = (value: string) =>
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path}`
 
-export const today = () => new Date().toISOString()
-
 export const uniqueUrls = (urls: SitemapUrl[]) =>
   Array.from(new Map(urls.map((url) => [url.loc, url])).values())
 

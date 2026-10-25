@@ -6,18 +6,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
-import { getEditorial, getAllEditorialSlugs } from '@/lib/editorial';
+import { getEditorial, getAllEditorialSlugs, PUBLISHED_EDITORIAL_SLUGS } from '@/lib/editorial';
 import { EditorialContainer } from '@/components/blog/EditorialContainer';
 
 export const dynamicParams = true;
-export const revalidate = 86400;
+// Movie slugs are unbounded; caching every rendered page fills the server disk.
+export const revalidate = 0;
 
 export async function generateStaticParams() {
-  // We return an empty array here because editorial files are named {title}-{id}.json
-  // but our new slug format is {title}-{year}. Fetching all 700+ movies from TMDB 
-  // at build time to get their years would hit rate limits. 
-  // With dynamicParams = true, Next.js will generate and cache pages on the first visit.
-  return [];
+  // Statically pre-render the curated set of 26 published movie pages at build time
+  return PUBLISHED_EDITORIAL_SLUGS.map((slug) => ({ slug }));
 }
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
@@ -30,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const shouldIndex = true;
 
   const title = `${movie.title} (${year}) - Cast, Plot, Rating & Streaming | HollyFlixHD`;
-  const description = `Discover ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, IMDb ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
+  const description = `Discover ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, TMDB ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
   const url = `https://hollyflixhd.com/movies/${params.slug}`;
 
   return {
@@ -98,7 +96,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w500');
   const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
   const watchUrl = `https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.title)}`;
-  const url = `https://hollyflixhd.com/movies/${params.slug}/`;
+  const url = `https://hollyflixhd.com/movies/${params.slug}`;
   
   // JSON-LD Schemas
   const movieSchema = {
@@ -116,12 +114,12 @@ export default async function MoviePage({ params }: { params: { slug: string } }
     "director": director ? {
       "@type": "Person",
       "name": director.name,
-      "url": `https://hollyflixhd.com/directors/${director.id}-${slugify(director.name)}/`
+      "url": `https://hollyflixhd.com/directors/${director.id}-${slugify(director.name)}`
     } : undefined,
     "actor": movie.credits?.cast.slice(0, 5).map(a => ({
       "@type": "Person",
       "name": a.name,
-      "url": `https://hollyflixhd.com/actors/${a.id}-${slugify(a.name)}/`
+      "url": `https://hollyflixhd.com/actors/${a.id}-${slugify(a.name)}`
     })),
     "aggregateRating": movie.vote_average ? {
       "@type": "AggregateRating",
@@ -147,13 +145,13 @@ export default async function MoviePage({ params }: { params: { slug: string } }
         "@type": "ListItem",
         "position": 2,
         "name": "Movies",
-        "item": "https://hollyflixhd.com/movies/"
+        "item": "https://hollyflixhd.com/movies"
       },
       ...(movie.genres && movie.genres.length > 0 ? [{
         "@type": "ListItem",
         "position": 3,
         "name": movie.genres[0].name,
-        "item": `https://hollyflixhd.com/genre/${movie.genres[0].id}-${slugify(movie.genres[0].name)}/`
+        "item": `https://hollyflixhd.com/genre/${movie.genres[0].id}-${slugify(movie.genres[0].name)}`
       }] : []),
       {
         "@type": "ListItem",
@@ -178,10 +176,10 @@ export default async function MoviePage({ params }: { params: { slug: string } }
       },
       {
         "@type": "Question",
-        "name": `What is the IMDb rating of ${movie.title}?`,
+        "name": `What is the TMDB rating of ${movie.title}?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `It has an IMDb rating of ${movie.vote_average?.toFixed(1)}/10 based on ${movie.vote_count} votes.`
+          "text": `It has a TMDB rating of ${movie.vote_average?.toFixed(1)}/10 based on ${movie.vote_count} votes.`
         }
       },
       ...(director ? [{
@@ -251,7 +249,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                 
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-6">
                   <span className="bg-yellow-500 text-black px-3 py-1 rounded font-bold">
-                    IMDb {movie.vote_average?.toFixed(1)}
+                    TMDB {movie.vote_average?.toFixed(1)}
                   </span>
                   {movie.runtime && (
                     <span className="text-gray-300">{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m</span>

@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "HollyFlixHD - Movie Database, Cast, Reviews & Streaming Info",
-  description: "Your ultimate destination for Hollywood movies. Discover the latest releases, top-rated classics, full cast details, IMDb ratings, and where to stream online.",
+  description: "Your ultimate destination for Hollywood movies. Discover the latest releases, top-rated classics, full cast details, TMDB ratings, and where to stream online.",
   twitter: {
     site: "@hollyflixhd",
     creator: "@hollyflixhd",

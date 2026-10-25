@@ -13,8 +13,10 @@ export type Editorial = {
 }
 
 const inFlightGenerations = new Map<string, Promise<Editorial | null>>()
+export const isValidEditorialSlug = (slug: string) => /^[a-z0-9_]+(?:-[a-z0-9_]+)*$/.test(slug)
 
 export function getEditorial(slug: string): Editorial | null {
+  if (!isValidEditorialSlug(slug)) return null
   try {
     const filePath = path.join(process.cwd(), 'data', 'editorials', `${slug}.json`)
     if (fs.existsSync(filePath)) {
@@ -28,6 +30,7 @@ export function getEditorial(slug: string): Editorial | null {
 }
 
 export function saveEditorial(slug: string, editorial: Editorial): boolean {
+  if (!isValidEditorialSlug(slug)) return false
   try {
     const dirPath = path.join(process.cwd(), 'data', 'editorials')
     if (!fs.existsSync(dirPath)) {
@@ -41,6 +44,8 @@ export function saveEditorial(slug: string, editorial: Editorial): boolean {
     return false
   }
 }
+
+export { PUBLISHED_EDITORIAL_SLUGS } from './published-editorial-slugs'
 
 export function getAllEditorialSlugs(): string[] {
   try {
@@ -103,6 +108,7 @@ export async function getOrGenerateEditorial(
   }
 
   const apiKey = process.env.OLLAMA_API_KEY
+  const cloudModel = process.env.OLLAMA_MODEL || 'gemma4:31b'
   if (!apiKey && !process.env.ENABLE_LOCAL_OLLAMA) {
     return null
   }
@@ -156,12 +162,13 @@ FIELD CONSTRAINTS:
         method: 'POST',
         headers,
         body: JSON.stringify({
-          model: apiKey ? 'gpt-oss:20b-cloud' : 'gemma4',
+          model: apiKey ? cloudModel : 'gemma4',
           prompt,
           stream: false,
-          format: 'json'
+          format: 'json',
+          options: { num_predict: 1000 }
         }),
-        signal: AbortSignal.timeout(30000)
+        signal: AbortSignal.timeout(90000)
       })
 
       if (!res.ok) {
@@ -184,7 +191,7 @@ FIELD CONSTRAINTS:
         if (!Array.isArray(parsed.tags)) parsed.tags = ['movie', 'hollywood']
         if (typeof parsed.worthWatching !== 'boolean') parsed.worthWatching = parsed.editorRating !== 'Skip It'
 
-        saveEditorial(slug, parsed)
+        if (!saveEditorial(slug, parsed)) return null
         console.log(`[HollyFlixHD] Dynamically generated and saved editorial for: ${slug}`)
         return parsed
       }

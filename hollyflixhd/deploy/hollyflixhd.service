@@ -1,0 +1,18 @@
+[Unit]
+Description=HollyFlixHD Next.js server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/hollyflixhd/HollyFlixHd/hollyflixhd
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/hollyflixhd.env
+ExecStart=/usr/local/bin/node node_modules/next/dist/bin/next start -H 127.0.0.1 -p 3000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

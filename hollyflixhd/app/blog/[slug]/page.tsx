@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       locale: 'en_US',
       images: [
         {
-          url: 'https://hollyflixhd.com/images/og-blog-default.jpg',
+          url: 'https://hollyflixhd.com/images/og-default.png',
           width: 1200,
           height: 630,
           alt: post.title,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       card: 'summary_large_image',
       title: post.title,
       description: post.metaDescription,
-      images: ['https://hollyflixhd.com/images/og-blog-default.jpg'],
+      images: ['https://hollyflixhd.com/images/og-default.png'],
     },
   }
 }
@@ -68,7 +68,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.metaDescription,
-    "image": "https://hollyflixhd.com/images/og-blog-default.jpg",
+    "image": "https://hollyflixhd.com/images/og-default.png",
     "datePublished": post.publishedAt,
     "dateModified": post.publishedAt,
     "author": {

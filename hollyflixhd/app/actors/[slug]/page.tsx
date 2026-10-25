@@ -51,7 +51,7 @@ export default async function ActorPage({ params }: { params: { slug: string } }
       "@context": "https://schema.org",
       "@type": "Person",
       "name": actor.name,
-      "url": `https://hollyflixhd.com/actors/${params.slug}/`,
+      "url": `https://hollyflixhd.com/actors/${params.slug}`,
       "image": actor.profile_path ? `https://image.tmdb.org/t/p/h632${actor.profile_path}` : undefined,
       "jobTitle": "Actor"
     };

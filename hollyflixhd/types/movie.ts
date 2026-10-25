@@ -36,6 +36,7 @@ export interface Actor {
   profile_path: string | null;
   order: number;
   department?: string;
+  known_for_department?: string;
 }
 
 export interface Crew {

@@ -22,9 +22,17 @@ async function fetchFromTMDB<T>(endpoint: string, params: Record<string, string>
     return cached.data as T;
   }
 
-  const res = await fetch(`${TMDB_BASE_URL}${endpoint}?${queryParams.toString()}`, {
-    next: { revalidate: 3600 }
+  let res = await fetch(`${TMDB_BASE_URL}${endpoint}?${queryParams.toString()}`, {
+    cache: 'no-store'
   });
+
+  if (res.status === 429) {
+    // TMDB rate limit hit: pause briefly and retry
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    res = await fetch(`${TMDB_BASE_URL}${endpoint}?${queryParams.toString()}`, {
+      cache: 'no-store'
+    });
+  }
 
   if (!res.ok) {
     throw new Error(`Failed to fetch from TMDB: ${res.statusText}`);
@@ -103,6 +111,11 @@ export const getActorById = (actorId: number) =>
 
 export const getActorMovies = (actorId: number) => 
   fetchFromTMDB<{cast: Movie[]}>(`/person/${actorId}/movie_credits`);
+
+export const getDirectorMovies = async (directorId: number) => {
+  const credits = await fetchFromTMDB<{crew: (Movie & {job: string})[]}>(`/person/${directorId}/movie_credits`);
+  return credits.crew.filter((movie) => movie.job === 'Director');
+};
 
 export const getGenres = () => 
   fetchFromTMDB<{genres: {id: number, name: string}[]}>('/genre/movie/list');
