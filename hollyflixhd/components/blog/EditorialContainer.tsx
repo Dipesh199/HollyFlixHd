@@ -10,9 +10,10 @@ interface Props {
   slug: string;
   movie: Movie;
   initialEditorial?: Editorial | null;
+  published?: boolean;
 }
 
-export function EditorialContainer({ slug, movie, initialEditorial = null }: Props) {
+export function EditorialContainer({ slug, movie, initialEditorial = null, published = true }: Props) {
   const [editorial, setEditorial] = useState<Editorial | null>(initialEditorial);
   const [isGenerating, setIsGenerating] = useState<boolean>(!initialEditorial);
 
@@ -31,8 +32,8 @@ export function EditorialContainer({ slug, movie, initialEditorial = null }: Pro
       .then((data) => {
         if (isMounted && data.editorial) {
           setEditorial(data.editorial);
-          setIsGenerating(false);
         }
+        if (isMounted) setIsGenerating(false);
       })
       .catch((err) => {
         console.error('Failed to load editorial:', err);
@@ -43,6 +44,8 @@ export function EditorialContainer({ slug, movie, initialEditorial = null }: Pro
       isMounted = false;
     };
   }, [slug, editorial]);
+
+  if (!published) return null;
 
   if (editorial) {
     return <EditorialSection data={editorial} movieTitle={movie.title} />;

@@ -284,9 +284,12 @@ export default async function MoviePage({ params }: { params: { slug: string } }
               <p className="text-gray-300 leading-relaxed text-lg">{movie.overview}</p>
             </section>
 
-            {isPublishedEditorialSlug(params.slug) && (
-              <EditorialContainer slug={params.slug} movie={movie} initialEditorial={getEditorial(params.slug)} />
-            )}
+            <EditorialContainer
+              slug={params.slug}
+              movie={movie}
+              initialEditorial={getEditorial(params.slug)}
+              published={isPublishedEditorialSlug(params.slug)}
+            />
 
             {/* Cast */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (

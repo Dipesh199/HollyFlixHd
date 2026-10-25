@@ -18,18 +18,29 @@ const publishedEditorialSlugs = new Set<string>(PUBLISHED_EDITORIAL_SLUGS)
 export const isValidEditorialSlug = (slug: string) => /^[a-z0-9_]+(?:-[a-z0-9_]+)*$/.test(slug)
 export const isPublishedEditorialSlug = (slug: string) => publishedEditorialSlugs.has(slug)
 
-export function getEditorial(slug: string): Editorial | null {
-  if (!isValidEditorialSlug(slug) || !isPublishedEditorialSlug(slug)) return null
+function readEditorial(slug: string, includeArchive = false): Editorial | null {
+  if (!isValidEditorialSlug(slug)) return null
   try {
-    const filePath = path.join(process.cwd(), 'data', 'editorials', `${slug}.json`)
-    if (fs.existsSync(filePath)) {
-      const fileContents = fs.readFileSync(filePath, 'utf8')
-      return JSON.parse(fileContents) as Editorial
+    const directories = includeArchive ? ['editorials', 'editorials_archive'] : ['editorials']
+    for (const directory of directories) {
+      const filePath = path.join(process.cwd(), 'data', directory, `${slug}.json`)
+      if (fs.existsSync(filePath)) {
+        const fileContents = fs.readFileSync(filePath, 'utf8')
+        return JSON.parse(fileContents) as Editorial
+      }
     }
   } catch (error) {
     console.error(`Error reading editorial for ${slug}:`, error)
   }
   return null
+}
+
+export function getEditorial(slug: string): Editorial | null {
+  return isPublishedEditorialSlug(slug) ? readEditorial(slug) : null
+}
+
+export function hasEditorialDraft(slug: string): boolean {
+  return readEditorial(slug, true) !== null
 }
 
 export function saveEditorial(slug: string, editorial: Editorial): boolean {
@@ -106,9 +117,8 @@ export async function getOrGenerateEditorial(
     director?: string
   }
 ): Promise<Editorial | null> {
-  if (!isPublishedEditorialSlug(slug)) return null
   // 1. Fast path: check local disk
-  const existing = getEditorial(slug)
+  const existing = readEditorial(slug, true)
   if (existing) {
     return existing
   }
