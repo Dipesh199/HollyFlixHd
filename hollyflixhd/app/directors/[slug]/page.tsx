@@ -1,4 +1,4 @@
-import { getActorById, getActorMovies } from '@/lib/tmdb';
+import { getActorById, getDirectorMovies } from '@/lib/tmdb';
 import MovieGrid from '@/components/movie/MovieGrid';
 import { notFound } from 'next/navigation';
 
@@ -42,14 +42,16 @@ export default async function DirectorPage({ params }: { params: { slug: string 
   try {
     const [director, movies] = await Promise.all([
       getActorById(directorId),
-      getActorMovies(directorId) // In real world we fetch crew credits for directors, using cast for fallback in this MVP
+      getDirectorMovies(directorId)
     ]);
+
+    if (movies.length === 0) notFound();
 
     const personSchema = {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": director.name,
-      "url": `https://hollyflixhd.com/directors/${params.slug}/`,
+      "url": `https://hollyflixhd.com/directors/${params.slug}`,
       "image": director.profile_path ? `https://image.tmdb.org/t/p/h632${director.profile_path}` : undefined,
       "jobTitle": "Director"
     };
@@ -62,7 +64,7 @@ export default async function DirectorPage({ params }: { params: { slug: string 
           <p className="text-gray-400 mb-8">Director Profile</p>
           
           <h2 className="text-2xl font-bold mb-6 border-b border-gray-800 pb-2">Filmography</h2>
-          <MovieGrid movies={movies.cast} />
+          <MovieGrid movies={movies} />
         </div>
       </>
     );

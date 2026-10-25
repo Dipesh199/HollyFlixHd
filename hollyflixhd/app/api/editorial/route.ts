@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getEditorial, getOrGenerateEditorial } from '@/lib/editorial';
+import { getEditorial, getOrGenerateEditorial, isValidEditorialSlug } from '@/lib/editorial';
 import { getMovieBySlug } from '@/lib/tmdb';
+import { revalidatePath } from 'next/cache';
 
 export const dynamic = 'force-dynamic';
 
@@ -12,6 +13,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Missing slug' }, { status: 400 });
   }
 
+  if (!isValidEditorialSlug(slug)) {
+    return NextResponse.json({ error: 'Invalid slug' }, { status: 400 });
+  }
+
   // 1. Fast check if already exists
   const existing = getEditorial(slug);
   if (existing) {
@@ -21,14 +26,17 @@ export async function GET(request: NextRequest) {
   // 2. Fetch movie details to provide rich context to Ollama
   try {
     const movie = await getMovieBySlug(slug);
-    const year = movie?.release_date ? movie.release_date.split('-')[0] : '';
-    const director = movie?.credits?.crew?.find(c => c.job === 'Director')?.name;
+    if (!movie) {
+      return NextResponse.json({ error: 'Movie not found' }, { status: 404 });
+    }
+    const year = movie.release_date ? movie.release_date.split('-')[0] : '';
+    const director = movie.credits?.crew?.find(c => c.job === 'Director')?.name;
 
     const editorial = await getOrGenerateEditorial(slug, {
-      title: movie?.title || slug,
+      title: movie.title,
       year,
-      overview: movie?.overview,
-      genres: movie?.genres?.map(g => g.name),
+      overview: movie.overview,
+      genres: movie.genres?.map(g => g.name),
       director,
     });
 
@@ -36,6 +44,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Generation failed' }, { status: 500 });
     }
 
+    revalidatePath(`/movies/${slug}`);
     return NextResponse.json({ editorial });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Internal error';

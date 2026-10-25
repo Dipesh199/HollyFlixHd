@@ -30,7 +30,7 @@ export default function MovieCard({ movie, editorialBadge }: Props) {
           </div>
         )}
         <div className="absolute top-2 right-2 bg-yellow-500 text-black font-bold text-xs px-2 py-1 rounded z-10">
-          IMDb {movie.vote_average ? movie.vote_average.toFixed(1) : 'NR'}
+          TMDB {movie.vote_average ? movie.vote_average.toFixed(1) : 'NR'}
         </div>
       </div>
       <div className="p-4">

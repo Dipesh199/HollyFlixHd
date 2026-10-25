@@ -1,24 +1,25 @@
-import { absoluteUrl, sitemapResponse, SitemapUrl, today } from '@/lib/sitemap'
+import { absoluteUrl, sitemapResponse, SitemapUrl } from '@/lib/sitemap'
 import fs from 'fs'
 import path from 'path'
+import { PUBLISHED_EDITORIAL_SLUGS } from '@/lib/published-editorial-slugs'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const lastmod = today()
   let urls: SitemapUrl[] = []
 
   try {
     const editorialsDir = path.join(process.cwd(), 'data', 'editorials')
     if (fs.existsSync(editorialsDir)) {
-      const files = fs.readdirSync(editorialsDir).filter(f => f.endsWith('.json'))
-      urls = files.map(file => {
-        const slug = file.replace('.json', '')
+      urls = PUBLISHED_EDITORIAL_SLUGS.filter(slug =>
+        fs.existsSync(path.join(editorialsDir, `${slug}.json`))
+      ).map(slug => {
+        const file = `${slug}.json`
         return {
           loc: absoluteUrl(`/movies/${slug}`),
-          lastmod,
+          lastmod: fs.statSync(path.join(editorialsDir, file)).mtime.toISOString(),
           changefreq: 'weekly',
-          priority: 1.0, // Give editorials highest priority
+          priority: 0.9,
         }
       })
     }

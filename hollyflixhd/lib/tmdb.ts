@@ -23,7 +23,7 @@ async function fetchFromTMDB<T>(endpoint: string, params: Record<string, string>
   }
 
   const res = await fetch(`${TMDB_BASE_URL}${endpoint}?${queryParams.toString()}`, {
-    next: { revalidate: 3600 }
+    cache: 'no-store'
   });
 
   if (!res.ok) {
@@ -103,6 +103,11 @@ export const getActorById = (actorId: number) =>
 
 export const getActorMovies = (actorId: number) => 
   fetchFromTMDB<{cast: Movie[]}>(`/person/${actorId}/movie_credits`);
+
+export const getDirectorMovies = async (directorId: number) => {
+  const credits = await fetchFromTMDB<{crew: (Movie & {job: string})[]}>(`/person/${directorId}/movie_credits`);
+  return credits.crew.filter((movie) => movie.job === 'Director');
+};
 
 export const getGenres = () => 
   fetchFromTMDB<{genres: {id: number, name: string}[]}>('/genre/movie/list');

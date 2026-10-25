@@ -9,17 +9,18 @@ export const revalidate = 3600; // Revalidate every hour
 
 export const metadata: Metadata = {
   title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
-  description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, IMDb ratings, and streaming information on HollyFlixHD.",
+  description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, TMDB ratings, and streaming information on HollyFlixHD.",
+  alternates: { canonical: 'https://hollyflixhd.com/' },
   openGraph: {
     title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
-    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, IMDb ratings, and streaming information on HollyFlixHD.",
+    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, TMDB ratings, and streaming information on HollyFlixHD.",
     type: "website",
     url: "https://hollyflixhd.com/",
     siteName: "HollyFlixHD",
     locale: "en_US",
     images: [
       {
-        url: "https://hollyflixhd.com/images/og-default.jpg",
+        url: "https://hollyflixhd.com/images/og-default.png",
         width: 1200,
         height: 630,
         alt: "HollyFlixHD - Movie Database",
@@ -29,7 +30,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
-    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, IMDb ratings, and streaming information on HollyFlixHD.",
+    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, TMDB ratings, and streaming information on HollyFlixHD.",
+    images: ['https://hollyflixhd.com/images/og-default.png'],
   },
 };
 
