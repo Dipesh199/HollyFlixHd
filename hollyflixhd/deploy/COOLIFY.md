@@ -11,7 +11,7 @@ Deploy `main` from `https://github.com/Dipesh199/HollyFlixHd` using the Dockerfi
 | Public domain | `https://hollyflixhd.com` |
 | Persistent directory mount | `/data/hollyflixhd/editorials` on the host to `/app/data/editorials` in the container |
 
-Create the host directory before the first deploy and give UID/GID `1001` write access. The container copies repository editorials into the mount at startup; reviews generated later remain in the mount across redeploys. Back up the host directory separately. A persistent mount does not push new reviews to GitHub by itself.
+Create the host directory before the first deploy and give UID/GID `1001` write access. The container copies repository editorials into the mount at startup; reviews generated later remain in the mount across redeploys. Back up the host directory separately. The host runs `deploy/sync-editorials.py` daily with a repository-specific write deploy key to commit newly generated, valid reviews to GitHub. Keep that key outside the application container.
 
 Set these production environment variables in Coolify, copying values from the existing server environment file rather than committing them:
 
