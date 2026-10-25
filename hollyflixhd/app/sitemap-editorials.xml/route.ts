@@ -1,7 +1,7 @@
 import { absoluteUrl, sitemapResponse, SitemapUrl } from '@/lib/sitemap'
 import fs from 'fs'
 import path from 'path'
-import { getAllEditorialSlugs, isPublicEditorialSlug } from '@/lib/editorial'
+import { getAllEditorialSlugs, isValidEditorialSlug } from '@/lib/editorial'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,7 +12,7 @@ export async function GET() {
     const editorialsDir = path.join(process.cwd(), 'data', 'editorials')
     if (fs.existsSync(editorialsDir)) {
       urls = getAllEditorialSlugs().filter(slug =>
-        isPublicEditorialSlug(slug) && /-(?:19|20)\d{2}$/.test(slug)
+        isValidEditorialSlug(slug) && /-(?:19|20)\d{2}$/.test(slug)
       ).map(slug => {
         const file = `${slug}.json`
         return {

@@ -32,7 +32,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/data/editorials ./editorials-seed
-COPY --from=builder --chown=nextjs:nodejs /app/data/editorials_archive ./data/editorials_archive
 COPY --chown=nextjs:nodejs deploy/container-entrypoint.sh ./container-entrypoint.sh
 USER nextjs
 EXPOSE 3000

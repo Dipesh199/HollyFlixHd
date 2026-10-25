@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getEditorial, getOrGenerateEditorial, hasEditorialDraft, isPublicEditorialSlug, isValidEditorialSlug } from '@/lib/editorial';
+import { getEditorial, getOrGenerateEditorial, isValidEditorialSlug } from '@/lib/editorial';
 import { getMovieBySlug } from '@/lib/tmdb';
 import { revalidatePath } from 'next/cache';
 
@@ -17,16 +17,10 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 });
   }
 
-  const published = isPublicEditorialSlug(slug);
-
   // 1. Fast check if already exists
-  const existing = published ? getEditorial(slug) : null;
+  const existing = getEditorial(slug);
   if (existing) {
     return NextResponse.json({ editorial: existing });
-  }
-
-  if (!published && hasEditorialDraft(slug)) {
-    return NextResponse.json({ status: 'draft' }, { status: 202 });
   }
 
   // 2. Fetch movie details to provide rich context to Ollama
@@ -48,10 +42,6 @@ export async function GET(request: NextRequest) {
 
     if (!editorial) {
       return NextResponse.json({ error: 'Generation failed' }, { status: 500 });
-    }
-
-    if (!published) {
-      return NextResponse.json({ status: 'draft' }, { status: 202 });
     }
 
     revalidatePath(`/movies/${slug}`);

@@ -10,7 +10,6 @@ from pathlib import Path
 SOURCE = Path('/data/hollyflixhd/editorials')
 CHECKOUT = Path('/opt/hollyflixhd-editorial-sync')
 DESTINATION = CHECKOUT / 'hollyflixhd/data/editorials'
-ARCHIVE = CHECKOUT / 'hollyflixhd/data/editorials_archive'
 REMOTE = 'git@github.com:Dipesh199/HollyFlixHd.git'
 SSH_KEY = '/root/.ssh/hollyflixhd-editorial-sync'
 VALID_RATINGS = {'Must Watch', 'Worth Watching', 'Skip It', 'Cult Classic'}
@@ -49,7 +48,7 @@ def main():
                 skipped += 1
                 continue
             destination = DESTINATION / source.name
-            if not (ARCHIVE / source.name).exists() and not destination.exists():
+            if not destination.exists():
                 shutil.copy2(source, destination)
                 added += 1
         git('add', '--', 'hollyflixhd/data/editorials')

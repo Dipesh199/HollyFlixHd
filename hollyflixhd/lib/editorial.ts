@@ -14,23 +14,15 @@ export type Editorial = {
 }
 
 const inFlightGenerations = new Map<string, Promise<Editorial | null>>()
-const publishedEditorialSlugs = new Set<string>(PUBLISHED_EDITORIAL_SLUGS)
 export const isValidEditorialSlug = (slug: string) => /^[a-z0-9_]+(?:-[a-z0-9_]+)*$/.test(slug)
-export const isPublishedEditorialSlug = (slug: string) => publishedEditorialSlugs.has(slug)
-export const isPublicEditorialSlug = (slug: string) =>
-  isValidEditorialSlug(slug) && (isPublishedEditorialSlug(slug) ||
-    !fs.existsSync(path.join(process.cwd(), 'data', 'editorials_archive', `${slug}.json`)))
 
-function readEditorial(slug: string, includeArchive = false): Editorial | null {
+function readEditorial(slug: string): Editorial | null {
   if (!isValidEditorialSlug(slug)) return null
   try {
-    const directories = includeArchive ? ['editorials', 'editorials_archive'] : ['editorials']
-    for (const directory of directories) {
-      const filePath = path.join(process.cwd(), 'data', directory, `${slug}.json`)
-      if (fs.existsSync(filePath)) {
-        const fileContents = fs.readFileSync(filePath, 'utf8')
-        return JSON.parse(fileContents) as Editorial
-      }
+    const filePath = path.join(process.cwd(), 'data', 'editorials', `${slug}.json`)
+    if (fs.existsSync(filePath)) {
+      const fileContents = fs.readFileSync(filePath, 'utf8')
+      return JSON.parse(fileContents) as Editorial
     }
   } catch (error) {
     console.error(`Error reading editorial for ${slug}:`, error)
@@ -39,11 +31,7 @@ function readEditorial(slug: string, includeArchive = false): Editorial | null {
 }
 
 export function getEditorial(slug: string): Editorial | null {
-  return isPublicEditorialSlug(slug) ? readEditorial(slug) : null
-}
-
-export function hasEditorialDraft(slug: string): boolean {
-  return readEditorial(slug, true) !== null
+  return readEditorial(slug)
 }
 
 export function saveEditorial(slug: string, editorial: Editorial): boolean {
@@ -91,7 +79,7 @@ export function getRecentEditorialSlugs(limit: number = 6): string[] {
     if (fs.existsSync(dirPath)) {
       const files = fs.readdirSync(dirPath)
         .filter(file => file.endsWith('.json'))
-        .filter(file => isPublicEditorialSlug(file.replace('.json', '')))
+        .filter(file => isValidEditorialSlug(file.replace('.json', '')))
         .map(file => {
           const fullPath = path.join(dirPath, file)
           return {
@@ -121,7 +109,7 @@ export async function getOrGenerateEditorial(
   }
 ): Promise<Editorial | null> {
   // 1. Fast path: check local disk
-  const existing = readEditorial(slug, true)
+  const existing = readEditorial(slug)
   if (existing) {
     return existing
   }

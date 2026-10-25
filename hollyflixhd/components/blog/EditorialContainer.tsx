@@ -10,10 +10,9 @@ interface Props {
   slug: string;
   movie: Movie;
   initialEditorial?: Editorial | null;
-  published?: boolean;
 }
 
-export function EditorialContainer({ slug, movie, initialEditorial = null, published = true }: Props) {
+export function EditorialContainer({ slug, movie, initialEditorial = null }: Props) {
   const [editorial, setEditorial] = useState<Editorial | null>(initialEditorial);
   const [isGenerating, setIsGenerating] = useState<boolean>(!initialEditorial);
 
@@ -44,8 +43,6 @@ export function EditorialContainer({ slug, movie, initialEditorial = null, publi
       isMounted = false;
     };
   }, [slug, editorial]);
-
-  if (!published) return null;
 
   if (editorial) {
     return <EditorialSection data={editorial} movieTitle={movie.title} />;
