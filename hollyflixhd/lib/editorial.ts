@@ -17,6 +17,9 @@ const inFlightGenerations = new Map<string, Promise<Editorial | null>>()
 const publishedEditorialSlugs = new Set<string>(PUBLISHED_EDITORIAL_SLUGS)
 export const isValidEditorialSlug = (slug: string) => /^[a-z0-9_]+(?:-[a-z0-9_]+)*$/.test(slug)
 export const isPublishedEditorialSlug = (slug: string) => publishedEditorialSlugs.has(slug)
+export const isPublicEditorialSlug = (slug: string) =>
+  isValidEditorialSlug(slug) && (isPublishedEditorialSlug(slug) ||
+    !fs.existsSync(path.join(process.cwd(), 'data', 'editorials_archive', `${slug}.json`)))
 
 function readEditorial(slug: string, includeArchive = false): Editorial | null {
   if (!isValidEditorialSlug(slug)) return null
@@ -36,7 +39,7 @@ function readEditorial(slug: string, includeArchive = false): Editorial | null {
 }
 
 export function getEditorial(slug: string): Editorial | null {
-  return isPublishedEditorialSlug(slug) ? readEditorial(slug) : null
+  return isPublicEditorialSlug(slug) ? readEditorial(slug) : null
 }
 
 export function hasEditorialDraft(slug: string): boolean {
@@ -88,7 +91,7 @@ export function getRecentEditorialSlugs(limit: number = 6): string[] {
     if (fs.existsSync(dirPath)) {
       const files = fs.readdirSync(dirPath)
         .filter(file => file.endsWith('.json'))
-        .filter(file => isPublishedEditorialSlug(file.replace('.json', '')))
+        .filter(file => isPublicEditorialSlug(file.replace('.json', '')))
         .map(file => {
           const fullPath = path.join(dirPath, file)
           return {

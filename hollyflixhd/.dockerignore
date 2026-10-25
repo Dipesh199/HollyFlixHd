@@ -4,5 +4,4 @@ node_modules
 npm-debug.log*
 .env*
 !.env.local.example
-data/editorials_archive
 *.tsbuildinfo

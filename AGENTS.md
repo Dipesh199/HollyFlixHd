@@ -10,14 +10,14 @@ These instructions apply to this repository. Follow the user's global instructio
 
 ## Editorials and data
 
-- Only slugs in `hollyflixhd/lib/published-editorial-slugs.ts` are published as reviews. Their JSON files live in `hollyflixhd/data/editorials/`; other saved reviews remain in `hollyflixhd/data/editorials_archive/`. Follow the `Editorial` type and slug validation in `hollyflixhd/lib/editorial.ts`. Keep editorial text nonempty and `editorRating` one of the supported values.
-- Production retains editorial JSON in the persistent `/data/hollyflixhd/editorials` host directory, mounted at `/app/data/editorials`. Do not delete, replace, or move this directory during a deploy. The public API, movie pages, homepage, and editorial sitemap must respect the published list even when the volume contains archived reviews.
-- The daily `hollyflixhd-editorial-sync` service commits newly generated valid reviews to the GitHub archive, without publishing them; see `hollyflixhd/deploy/sync-editorials.py`. To publish a reviewed editorial, move its JSON into `data/editorials/` and add its slug to the published list. Check the persistent directory against GitHub before claiming the archive is current.
+- `hollyflixhd/lib/published-editorial-slugs.ts` selects the 26 featured reviews shown in the editorial hub. New movies still generate reviews on demand and display them on their movie pages. Older files in `hollyflixhd/data/editorials_archive/` remain private; the archive is included in the runtime image to identify them. Follow the `Editorial` type and slug validation in `hollyflixhd/lib/editorial.ts`.
+- Production retains editorial JSON in the persistent `/data/hollyflixhd/editorials` host directory, mounted at `/app/data/editorials`. Do not delete, replace, or move this directory during a deploy. The public API, movie pages, homepage, and editorial sitemap must exclude archived slugs even when the volume still contains their files.
+- The daily `hollyflixhd-editorial-sync` service commits newly generated valid reviews to `hollyflixhd/data/editorials/` on GitHub, skipping files already in the archive; see `hollyflixhd/deploy/sync-editorials.py`. Check the persistent directory against GitHub before claiming the repository is current.
 
 ## Search and URLs
 
 - Use `https://hollyflixhd.com/` as the canonical origin. Preserve the existing redirects, canonical metadata, `robots.txt`, XML sitemaps, and structured data when editing routes.
-- Keep sitemap URLs limited to live, canonical, indexable pages. The editorial sitemap lists only the published reviews. Do not submit search results, API routes, redirect variants, or missing movie pages as indexable URLs.
+- Keep sitemap URLs limited to live, canonical, indexable pages. The editorial sitemap lists featured and newly generated public reviews, excluding archived slugs. Do not submit search results, API routes, redirect variants, or missing movie pages as indexable URLs.
 - Search Console reports can lag behind a deployment. Check the exact canonical URL with URL Inspection and compare the live response before changing code for an indexing issue. Indexability does not guarantee that Google will index a page.
 
 ## Production and secrets

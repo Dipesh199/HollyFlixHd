@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
-import { getEditorial, isPublishedEditorialSlug } from '@/lib/editorial';
+import { getEditorial, isPublicEditorialSlug } from '@/lib/editorial';
 import { EditorialContainer } from '@/components/blog/EditorialContainer';
 
 export const dynamicParams = true;
@@ -288,7 +288,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
               slug={params.slug}
               movie={movie}
               initialEditorial={getEditorial(params.slug)}
-              published={isPublishedEditorialSlug(params.slug)}
+              published={isPublicEditorialSlug(params.slug)}
             />
 
             {/* Cast */}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Archive valid, newly generated reviews from the persistent volume in GitHub."""
+"""Copy valid, newly generated reviews from the persistent volume to GitHub."""
 
 import json
 import os
@@ -41,24 +41,24 @@ def main():
     for attempt in range(3):
         git('fetch', 'origin', 'main')
         git('checkout', '-B', 'main', 'origin/main')
-        ARCHIVE.mkdir(parents=True, exist_ok=True)
+        DESTINATION.mkdir(parents=True, exist_ok=True)
         added = 0
         skipped = 0
         for source in SOURCE.glob('*.json'):
             if not valid_review(source):
                 skipped += 1
                 continue
-            destination = ARCHIVE / source.name
-            if not (DESTINATION / source.name).exists() and not destination.exists():
+            destination = DESTINATION / source.name
+            if not (ARCHIVE / source.name).exists() and not destination.exists():
                 shutil.copy2(source, destination)
                 added += 1
-        git('add', '--', 'hollyflixhd/data/editorials_archive')
+        git('add', '--', 'hollyflixhd/data/editorials')
         staged = git('diff', '--cached', '--name-only').stdout.strip()
         if not staged:
             print(f'No new reviews; skipped {skipped} invalid files')
             return
         git('-c', 'user.name=HollyFlixHD Editorial Sync', '-c', 'user.email=editorials@hollyflixhd.com',
-            'commit', '-m', 'chore: archive generated editorials')
+            'commit', '-m', 'chore: sync generated editorials')
         pushed = subprocess.run(['git', 'push', 'origin', 'HEAD:main'], cwd=CHECKOUT, env=GIT_ENV, capture_output=True, text=True)
         if pushed.returncode == 0:
             print(f'Pushed {added} new reviews; skipped {skipped} invalid files')
