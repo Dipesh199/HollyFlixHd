@@ -8,7 +8,8 @@ import { PUBLISHED_EDITORIAL_SLUGS, getEditorial } from '@/lib/editorial'
 import { getMovieBySlug } from '@/lib/tmdb'
 import MovieCard from '@/components/movie/MovieCard'
 
-export const revalidate = 3600
+// TMDB credentials are available at runtime, not during the Coolify image build.
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Movie Editorials, Deep Dives & Reviews | HollyFlixHD',

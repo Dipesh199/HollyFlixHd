@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { PUBLISHED_EDITORIAL_SLUGS } from './published-editorial-slugs'
 
 export type Editorial = {
   editorial: string
@@ -13,10 +14,12 @@ export type Editorial = {
 }
 
 const inFlightGenerations = new Map<string, Promise<Editorial | null>>()
+const publishedEditorialSlugs = new Set<string>(PUBLISHED_EDITORIAL_SLUGS)
 export const isValidEditorialSlug = (slug: string) => /^[a-z0-9_]+(?:-[a-z0-9_]+)*$/.test(slug)
+export const isPublishedEditorialSlug = (slug: string) => publishedEditorialSlugs.has(slug)
 
 export function getEditorial(slug: string): Editorial | null {
-  if (!isValidEditorialSlug(slug)) return null
+  if (!isValidEditorialSlug(slug) || !isPublishedEditorialSlug(slug)) return null
   try {
     const filePath = path.join(process.cwd(), 'data', 'editorials', `${slug}.json`)
     if (fs.existsSync(filePath)) {
@@ -31,21 +34,27 @@ export function getEditorial(slug: string): Editorial | null {
 
 export function saveEditorial(slug: string, editorial: Editorial): boolean {
   if (!isValidEditorialSlug(slug)) return false
+  let tempPath: string | undefined
   try {
     const dirPath = path.join(process.cwd(), 'data', 'editorials')
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true })
     }
     const filePath = path.join(dirPath, `${slug}.json`)
-    fs.writeFileSync(filePath, JSON.stringify(editorial, null, 2), 'utf8')
+    tempPath = path.join(dirPath, `.${slug}.${process.pid}.${Math.random().toString(36).slice(2)}.tmp`)
+    fs.writeFileSync(tempPath, JSON.stringify(editorial, null, 2), 'utf8')
+    fs.renameSync(tempPath, filePath)
     return true
   } catch (error) {
+    if (tempPath) {
+      try { fs.unlinkSync(tempPath) } catch { /* Nothing to clean up. */ }
+    }
     console.error(`Error saving editorial for ${slug}:`, error)
     return false
   }
 }
 
-export { PUBLISHED_EDITORIAL_SLUGS } from './published-editorial-slugs'
+export { PUBLISHED_EDITORIAL_SLUGS }
 
 export function getAllEditorialSlugs(): string[] {
   try {
@@ -68,6 +77,7 @@ export function getRecentEditorialSlugs(limit: number = 6): string[] {
     if (fs.existsSync(dirPath)) {
       const files = fs.readdirSync(dirPath)
         .filter(file => file.endsWith('.json'))
+        .filter(file => isPublishedEditorialSlug(file.replace('.json', '')))
         .map(file => {
           const fullPath = path.join(dirPath, file)
           return {
@@ -96,6 +106,7 @@ export async function getOrGenerateEditorial(
     director?: string
   }
 ): Promise<Editorial | null> {
+  if (!isPublishedEditorialSlug(slug)) return null
   // 1. Fast path: check local disk
   const existing = getEditorial(slug)
   if (existing) {

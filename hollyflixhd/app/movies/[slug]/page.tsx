@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import MovieGrid from '@/components/movie/MovieGrid';
-import { getEditorial, getAllEditorialSlugs, PUBLISHED_EDITORIAL_SLUGS } from '@/lib/editorial';
+import { getEditorial, isPublishedEditorialSlug } from '@/lib/editorial';
 import { EditorialContainer } from '@/components/blog/EditorialContainer';
 
 export const dynamicParams = true;
@@ -14,8 +14,8 @@ export const dynamicParams = true;
 export const revalidate = 0;
 
 export async function generateStaticParams() {
-  // Statically pre-render the curated set of 26 published movie pages at build time
-  return PUBLISHED_EDITORIAL_SLUGS.map((slug) => ({ slug }));
+  // Movie data needs a runtime-only TMDB key; render movie slugs on demand.
+  return [];
 }
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const movie = await getMovieBySlug(params.slug);
@@ -284,7 +284,9 @@ export default async function MoviePage({ params }: { params: { slug: string } }
               <p className="text-gray-300 leading-relaxed text-lg">{movie.overview}</p>
             </section>
 
-            <EditorialContainer slug={params.slug} movie={movie} initialEditorial={getEditorial(params.slug)} />
+            {isPublishedEditorialSlug(params.slug) && (
+              <EditorialContainer slug={params.slug} movie={movie} initialEditorial={getEditorial(params.slug)} />
+            )}
 
             {/* Cast */}
             {movie.credits?.cast && movie.credits.cast.length > 0 && (

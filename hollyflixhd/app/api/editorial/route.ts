@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getEditorial, getOrGenerateEditorial, isValidEditorialSlug } from '@/lib/editorial';
+import { getEditorial, getOrGenerateEditorial, isPublishedEditorialSlug, isValidEditorialSlug } from '@/lib/editorial';
 import { getMovieBySlug } from '@/lib/tmdb';
 import { revalidatePath } from 'next/cache';
 
@@ -15,6 +15,10 @@ export async function GET(request: NextRequest) {
 
   if (!isValidEditorialSlug(slug)) {
     return NextResponse.json({ error: 'Invalid slug' }, { status: 400 });
+  }
+
+  if (!isPublishedEditorialSlug(slug)) {
+    return NextResponse.json({ error: 'Editorial not published' }, { status: 404 });
   }
 
   // 1. Fast check if already exists
