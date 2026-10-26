@@ -100,6 +100,14 @@ export default async function MoviePage({ params }: { params: { slug: string } }
   const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
   const watchUrl = `https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.title)}`;
   const url = `https://hollyflixhd.com/movies/${params.slug}`;
+
+  // TMDB Watch Providers (US)
+  const usProviders = movie['watch/providers']?.results?.US;
+  const streamProviders = usProviders?.flatrate || [];
+  const freeProviders = [...(usProviders?.free || []), ...(usProviders?.ads || [])];
+  const rentProviders = usProviders?.rent || [];
+  const hasProviders = streamProviders.length > 0 || freeProviders.length > 0 || rentProviders.length > 0;
+  const primaryWatchLink = usProviders?.link || watchUrl;
   
   // JSON-LD Schemas
   const movieSchema = {
@@ -174,7 +182,11 @@ export default async function MoviePage({ params }: { params: { slug: string } }
         "name": `Where can I watch ${movie.title} online?`,
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": `${movie.title} (${year}) is available to stream on various platforms. You can also watch it online via our Watch Online button.`
+          "text": streamProviders.length > 0
+            ? `${movie.title} (${year}) is currently streaming on ${streamProviders.map(p => p.provider_name).slice(0, 3).join(', ')}. You can also rent or buy it on digital platforms.`
+            : freeProviders.length > 0
+            ? `${movie.title} (${year}) is currently available to watch for free with ads on ${freeProviders.map(p => p.provider_name).slice(0, 2).join(', ')}.`
+            : `${movie.title} (${year}) is available to stream or rent online on major digital platforms.`
         }
       },
       {
@@ -272,15 +284,81 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                   ))}
                 </div>
 
-                <div className="flex gap-4 justify-center md:justify-start">
-                  <a
-                    href={watchUrl}
-                    target="_blank"
-                    rel="nofollow noopener noreferrer"
-                    className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors flex items-center gap-2"
-                  >
-                    Find Where to Stream
-                  </a>
+                <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                  {streamProviders.length > 0 ? (
+                    <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm border border-gray-800 rounded-full px-4 py-2">
+                      <span className="text-xs uppercase tracking-wider text-gray-400 font-bold">Stream on:</span>
+                      <div className="flex items-center gap-2">
+                        {streamProviders.slice(0, 3).map(p => (
+                          <a
+                            key={p.provider_id}
+                            href={primaryWatchLink}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                            title={`Stream ${movie.title} on ${p.provider_name}`}
+                            className="relative w-8 h-8 rounded-lg overflow-hidden border border-gray-700 hover:scale-110 transition-transform shadow-md"
+                          >
+                            {p.logo_path ? (
+                              <Image
+                                src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
+                                alt={p.provider_name}
+                                fill
+                                className="object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-red-600 flex items-center justify-center text-[10px] font-bold">
+                                {p.provider_name.slice(0, 3)}
+                              </div>
+                            )}
+                          </a>
+                        ))}
+                      </div>
+                      <a
+                        href="#where-to-watch"
+                        className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-4 rounded-full text-xs transition-colors flex items-center gap-1 shadow-md ml-1"
+                      >
+                        All Platforms
+                      </a>
+                    </div>
+                  ) : freeProviders.length > 0 ? (
+                    <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm border border-emerald-900/60 rounded-full px-4 py-2">
+                      <span className="text-xs uppercase tracking-wider text-emerald-400 font-bold">Watch Free:</span>
+                      <div className="flex items-center gap-2">
+                        {freeProviders.slice(0, 2).map(p => (
+                          <a
+                            key={p.provider_id}
+                            href={primaryWatchLink}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                            title={`Watch free on ${p.provider_name}`}
+                            className="relative w-8 h-8 rounded-lg overflow-hidden border border-emerald-600 hover:scale-110 transition-transform shadow-md"
+                          >
+                            {p.logo_path && (
+                              <Image
+                                src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
+                                alt={p.provider_name}
+                                fill
+                                className="object-cover"
+                              />
+                            )}
+                          </a>
+                        ))}
+                      </div>
+                      <a
+                        href="#where-to-watch"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-1.5 px-4 rounded-full text-xs transition-colors shadow-md ml-1"
+                      >
+                        Free Options
+                      </a>
+                    </div>
+                  ) : (
+                    <a
+                      href="#where-to-watch"
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors flex items-center gap-2"
+                    >
+                      Where to Watch
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -289,6 +367,167 @@ export default async function MoviePage({ params }: { params: { slug: string } }
 
         <div className="container mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="md:col-span-2 space-y-12">
+            {/* Where to Watch */}
+            <section id="where-to-watch" className="scroll-mt-24">
+              <h2 className="text-2xl font-bold mb-4 border-b border-gray-800 pb-2">Where to Watch {movie.title} Online</h2>
+              
+              <div className="bg-[#1a1a1a] rounded-xl p-6 border border-gray-800 space-y-6">
+                {hasProviders ? (
+                  <>
+                    {/* Subscription Streaming */}
+                    {streamProviders.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                          <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300">
+                            Subscription Streaming
+                          </h3>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                          {streamProviders.map(p => (
+                            <a
+                              key={p.provider_id}
+                              href={primaryWatchLink}
+                              target="_blank"
+                              rel="nofollow noopener noreferrer"
+                              className="bg-gray-900/90 hover:bg-gray-800 border border-gray-800 hover:border-red-500/60 rounded-xl p-3 flex items-center gap-3 transition-all group shadow-sm"
+                            >
+                              <div className="relative w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-950 border border-gray-800">
+                                {p.logo_path ? (
+                                  <Image
+                                    src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
+                                    alt={p.provider_name}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform"
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-red-600 flex items-center justify-center text-[10px] font-bold">
+                                    {p.provider_name.slice(0, 3)}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="truncate min-w-0">
+                                <p className="text-xs font-semibold text-white truncate">{p.provider_name}</p>
+                                <span className="text-[10px] text-emerald-400 font-medium">Stream</span>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Free with Ads */}
+                    {freeProviders.length > 0 && (
+                      <div className="pt-4 border-t border-gray-800/60">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                          <h3 className="text-sm font-bold uppercase tracking-wider text-yellow-400">
+                            Watch Free (With Ads)
+                          </h3>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                          {freeProviders.map(p => (
+                            <a
+                              key={p.provider_id}
+                              href={primaryWatchLink}
+                              target="_blank"
+                              rel="nofollow noopener noreferrer"
+                              className="bg-gray-900/90 hover:bg-gray-800 border border-gray-800 hover:border-yellow-500/60 rounded-xl p-3 flex items-center gap-3 transition-all group shadow-sm"
+                            >
+                              <div className="relative w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-950 border border-gray-800">
+                                {p.logo_path ? (
+                                  <Image
+                                    src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
+                                    alt={p.provider_name}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform"
+                                  />
+                                ) : null}
+                              </div>
+                              <div className="truncate min-w-0">
+                                <p className="text-xs font-semibold text-white truncate">{p.provider_name}</p>
+                                <span className="text-[10px] text-yellow-400 font-medium">Free</span>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Rent & Buy */}
+                    {rentProviders.length > 0 && (
+                      <div className="pt-4 border-t border-gray-800/60">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
+                          <h3 className="text-sm font-bold uppercase tracking-wider text-gray-300">
+                            Rent or Buy (Digital VOD)
+                          </h3>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                          {rentProviders.slice(0, 8).map(p => (
+                            <a
+                              key={p.provider_id}
+                              href={primaryWatchLink}
+                              target="_blank"
+                              rel="nofollow noopener noreferrer"
+                              className="bg-gray-900/90 hover:bg-gray-800 border border-gray-800 hover:border-blue-500/60 rounded-xl p-3 flex items-center gap-3 transition-all group shadow-sm"
+                            >
+                              <div className="relative w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-gray-950 border border-gray-800">
+                                {p.logo_path ? (
+                                  <Image
+                                    src={`https://image.tmdb.org/t/p/w92${p.logo_path}`}
+                                    alt={p.provider_name}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform"
+                                  />
+                                ) : null}
+                              </div>
+                              <div className="truncate min-w-0">
+                                <p className="text-xs font-semibold text-white truncate">{p.provider_name}</p>
+                                <span className="text-[10px] text-gray-400 font-medium">Rent / Buy</span>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Attribution & JustWatch link */}
+                    <div className="pt-4 border-t border-gray-800/60 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-2">
+                      <span>Streaming data for United States region.</span>
+                      <a
+                        href={primaryWatchLink}
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                        className="text-red-400 hover:underline inline-flex items-center gap-1 font-medium"
+                      >
+                        <span>Check all options on JustWatch</span>
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center py-6">
+                    <p className="text-gray-400 mb-4 text-sm">
+                      {movie.release_date && new Date(movie.release_date) > new Date()
+                        ? `${movie.title} is currently scheduled for cinema release and not yet streaming.`
+                        : `Streaming platforms for ${movie.title} are updated regularly. Check availability on JustWatch.`}
+                    </p>
+                    <a
+                      href={primaryWatchLink}
+                      target="_blank"
+                      rel="nofollow noopener noreferrer"
+                      className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors inline-flex items-center gap-2"
+                    >
+                      Find Where to Stream
+                    </a>
+                  </div>
+                )}
+              </div>
+            </section>
+
             {/* Plot */}
             <section>
               <h2 className="text-2xl font-bold mb-4 border-b border-gray-800 pb-2">Plot Summary</h2>
@@ -354,22 +593,6 @@ export default async function MoviePage({ params }: { params: { slug: string } }
                 </div>
               </section>
             )}
-
-            {/* Where to Watch */}
-            <section>
-              <h2 className="text-2xl font-bold mb-4 border-b border-gray-800 pb-2">Where to Watch {movie.title} Online</h2>
-              <div className="bg-[#1a1a1a] rounded-lg p-6 border border-gray-800 text-center">
-                <p className="mb-6 text-gray-300">You can currently stream {movie.title} online or watch it in HD via the link below.</p>
-                <a
-                  href={watchUrl}
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition-colors inline-flex items-center gap-2"
-                >
-                  Find {movie.title} Streaming
-                </a>
-              </div>
-            </section>
             
             {/* Similar Movies */}
             {similarMovies && similarMovies.results.length > 0 && (

@@ -60,7 +60,7 @@ export const searchMovies = (query: string, page: number = 1) =>
   fetchFromTMDB<PaginatedResponse<Movie>>('/search/movie', { query, page: page.toString() });
 
 export const getMovieById = (id: number) => 
-  fetchFromTMDB<Movie>(`/movie/${id}`, { append_to_response: 'credits,videos,similar' });
+  fetchFromTMDB<Movie>(`/movie/${id}`, { append_to_response: 'credits,videos,similar,watch/providers' });
 
 export const getSimilarMovies = (id: number) => 
   fetchFromTMDB<PaginatedResponse<Movie>>(`/movie/${id}/similar`);

@@ -26,6 +26,30 @@ export interface Movie {
     results: Video[];
   };
   similar?: PaginatedResponse<Movie>;
+  'watch/providers'?: WatchProvidersResponse;
+}
+
+export interface WatchProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path: string | null;
+  display_priority?: number;
+}
+
+export interface WatchProviderCountry {
+  link?: string;
+  flatrate?: WatchProvider[];
+  rent?: WatchProvider[];
+  buy?: WatchProvider[];
+  ads?: WatchProvider[];
+  free?: WatchProvider[];
+}
+
+export interface WatchProvidersResponse {
+  results?: {
+    US?: WatchProviderCountry;
+    [countryCode: string]: WatchProviderCountry | undefined;
+  };
 }
 
 export interface Actor {
