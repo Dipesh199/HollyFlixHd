@@ -5,7 +5,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CookieBanner from "@/components/layout/CookieBanner";
 import { GoogleAnalytics } from '@next/third-parties/google'
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -81,7 +80,6 @@ export default function RootLayout({
         <Footer />
         <CookieBanner />
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
-        <SpeedInsights />
       </body>
     </html>
   );
