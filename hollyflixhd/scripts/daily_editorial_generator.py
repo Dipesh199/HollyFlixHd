@@ -153,94 +153,99 @@ def tmdb_request(endpoint: str, params: dict | None = None) -> dict | None:
         return None
 
 
-def fetch_candidate_movies(target_count: int = 50) -> list[dict]:
+def fetch_candidate_movies(target_count: int = 400) -> list[dict]:
     """
     Collect movie candidates prioritizing:
       1. Trending today (/trending/movie/day)
       2. Now playing in theaters/streaming (/movie/now_playing)
-      3. Top popular releases of the current year (/discover/movie)
+      3. Trending this week (/trending/movie/week)
       4. Upcoming releases (/movie/upcoming)
+      5. Top popular releases by year (from current year back to 2010)
     """
     candidates = []
     seen_ids = set()
     current_year = datetime.now().year
 
-    endpoints = [
-        # (endpoint, params_fn, label)
-        ("/trending/movie/day", lambda p: {"page": p}, "Trending Today"),
-        ("/movie/now_playing", lambda p: {"page": p, "region": "US"}, "Now Playing (US)"),
-        (
-            "/discover/movie",
-            lambda p: {
-                "page": p,
-                "primary_release_year": current_year,
-                "sort_by": "popularity.desc",
-            },
-            f"Popular {current_year}",
-        ),
-        (
-            "/discover/movie",
-            lambda p: {
-                "page": p,
-                "primary_release_year": current_year - 1,
-                "sort_by": "popularity.desc",
-            },
-            f"Popular {current_year - 1}",
-        ),
-        ("/movie/upcoming", lambda p: {"page": p, "region": "US"}, "Upcoming (US)"),
-    ]
+    def process_results(results: list, source_label: str) -> bool:
+        nonlocal candidates, seen_ids
+        for item in results:
+            movie_id = item.get("id")
+            title = item.get("title")
+            release_date = item.get("release_date") or ""
+            overview = item.get("overview") or ""
 
-    print("\n[1/3] Discovering candidates from TMDB...")
-    for endpoint, param_fn, label in endpoints:
-        for page in range(1, 4):  # Check up to 3 pages per category
-            data = tmdb_request(endpoint, param_fn(page))
-            if not data or "results" not in data:
-                break
+            if not movie_id or not title or not release_date:
+                continue
 
-            for item in data["results"]:
-                movie_id = item.get("id")
-                title = item.get("title")
-                release_date = item.get("release_date") or ""
-                overview = item.get("overview") or ""
+            if movie_id in seen_ids:
+                continue
+            seen_ids.add(movie_id)
 
-                if not movie_id or not title or not release_date:
-                    continue
+            year_match = re.match(r"^(\d{4})", release_date)
+            if not year_match:
+                continue
+            year = year_match.group(1)
 
-                if movie_id in seen_ids:
-                    continue
-                seen_ids.add(movie_id)
+            slug = generate_movie_slug(title, year)
+            if not is_valid_editorial_slug(slug):
+                continue
 
-                # Extract release year
-                year_match = re.match(r"^(\d{4})", release_date)
-                if not year_match:
-                    continue
-                year = year_match.group(1)
+            if editorial_exists(slug):
+                continue
 
-                slug = generate_movie_slug(title, year)
-                if not is_valid_editorial_slug(slug):
-                    continue
-
-                if editorial_exists(slug):
-                    continue
-
-                candidates.append({
-                    "id": movie_id,
-                    "title": title,
-                    "year": year,
-                    "slug": slug,
-                    "overview": overview,
-                    "source": label,
-                    "popularity": item.get("popularity", 0),
-                    "vote_average": item.get("vote_average", 0),
-                })
-
-                if len(candidates) >= target_count:
-                    break
+            candidates.append({
+                "id": movie_id,
+                "title": title,
+                "year": year,
+                "slug": slug,
+                "overview": overview,
+                "source": source_label,
+                "popularity": item.get("popularity", 0),
+                "vote_average": item.get("vote_average", 0),
+            })
 
             if len(candidates) >= target_count:
-                break
+                return True
+        return False
+
+    print("\n[1/3] Discovering candidates from TMDB...")
+
+    # Phase 1: High priority feeds
+    priority_endpoints = [
+        ("/trending/movie/day", lambda p: {"page": p}, "Trending Today", 5),
+        ("/movie/now_playing", lambda p: {"page": p, "region": "US"}, "Now Playing (US)", 5),
+        ("/trending/movie/week", lambda p: {"page": p}, "Trending This Week", 5),
+        ("/movie/upcoming", lambda p: {"page": p, "region": "US"}, "Upcoming (US)", 5),
+    ]
+
+    for endpoint, param_fn, label, max_pages in priority_endpoints:
         if len(candidates) >= target_count:
             break
+        for page in range(1, max_pages + 1):
+            data = tmdb_request(endpoint, param_fn(page))
+            if not data or not data.get("results"):
+                break
+            if process_results(data["results"], label):
+                break
+
+    # Phase 2: Popular movies by year (from current year down to 2010)
+    if len(candidates) < target_count:
+        for year in range(current_year, 2009, -1):
+            if len(candidates) >= target_count:
+                break
+            for page in range(1, 10):  # Up to 10 pages per year
+                data = tmdb_request(
+                    "/discover/movie",
+                    {
+                        "page": page,
+                        "primary_release_year": year,
+                        "sort_by": "popularity.desc",
+                    },
+                )
+                if not data or not data.get("results"):
+                    break
+                if process_results(data["results"], f"Popular {year}"):
+                    break
 
     print(f"  Found {len(candidates)} new candidate movies without editorials.")
     return candidates
@@ -342,37 +347,45 @@ FIELD CONSTRAINTS:
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers=headers)
 
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            result = json.loads(resp.read().decode("utf-8"))
-            response_text = result.get("response", "").strip()
+    for attempt in range(2):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                result = json.loads(resp.read().decode("utf-8"))
+                response_text = result.get("response", "").strip()
 
-            # Robust JSON extraction
-            first_brace = response_text.find("{")
-            last_brace = response_text.rfind("}")
-            if first_brace != -1 and last_brace != -1:
-                clean_json = response_text[first_brace : last_brace + 1]
-                parsed = json.loads(clean_json)
+                # Robust JSON extraction
+                first_brace = response_text.find("{")
+                last_brace = response_text.rfind("}")
+                if first_brace != -1 and last_brace != -1:
+                    clean_json = response_text[first_brace : last_brace + 1]
+                    parsed = json.loads(clean_json)
 
-                # Validate essential fields
-                if not isinstance(parsed, dict):
+                    # Validate essential fields
+                    if not isinstance(parsed, dict):
+                        return None
+                    if not isinstance(parsed.get("editorial"), str) or not parsed["editorial"].strip():
+                        return None
+                    if parsed.get("editorRating") not in VALID_RATINGS:
+                        parsed["editorRating"] = "Must Watch"
+                    if "worthWatching" not in parsed:
+                        parsed["worthWatching"] = parsed["editorRating"] != "Skip It"
+                    if not isinstance(parsed.get("tags"), list):
+                        parsed["tags"] = ["movie-night", "featured"]
+
+                    return parsed
+                else:
+                    print(f"    [LLM Format Error] Could not find JSON braces in response.")
                     return None
-                if not isinstance(parsed.get("editorial"), str) or not parsed["editorial"].strip():
-                    return None
-                if parsed.get("editorRating") not in VALID_RATINGS:
-                    parsed["editorRating"] = "Must Watch"
-                if "worthWatching" not in parsed:
-                    parsed["worthWatching"] = parsed["editorRating"] != "Skip It"
-                if not isinstance(parsed.get("tags"), list):
-                    parsed["tags"] = ["movie-night", "featured"]
-
-                return parsed
-            else:
-                print(f"    [LLM Format Error] Could not find JSON braces in response.")
-                return None
-    except Exception as e:
-        print(f"    [LLM Request Error]: {e}")
-        return None
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt == 0:
+                print(f"    [Rate Limited (429)] Pausing 15s before retrying...")
+                time.sleep(15)
+                continue
+            print(f"    [LLM HTTP Error {e.code}]: {e.reason}")
+            return None
+        except Exception as e:
+            print(f"    [LLM Request Error]: {e}")
+            return None
 
 
 def save_editorial_atomically(slug: str, editorial_data: dict) -> bool:
@@ -399,13 +412,13 @@ def save_editorial_atomically(slug: str, editorial_data: dict) -> bool:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Daily Editorial Generator for HollyFlixHD (Generates 20 new movie editorials daily)."
+        description="Daily Editorial Generator for HollyFlixHD (Generates 200-300 new movie editorials daily)."
     )
     parser.add_argument(
         "--limit",
         type=int,
-        default=20,
-        help="Number of new editorials to generate (default: 20)",
+        default=250,
+        help="Number of new editorials to generate (default: 250, typical range: 200-300)",
     )
     parser.add_argument(
         "--model",
@@ -439,21 +452,24 @@ def main():
     print("==========================================================")
 
     # 1. Fetch candidate movies
-    candidates = fetch_candidate_movies(target_count=max(args.limit * 3, 50))
+    candidates = fetch_candidate_movies(target_count=max(args.limit * 2, 400))
     if not candidates:
         print("No new candidate movies found. Everything discovered already has an editorial.")
         return
 
     if args.dry_run:
-        print("\n[DRY RUN] Found the following candidate movies:")
-        for idx, m in enumerate(candidates[: args.limit], 1):
+        print(f"\n[DRY RUN] Discovered {len(candidates)} candidate movies. Showing first {min(args.limit, 25)}:")
+        for idx, m in enumerate(candidates[: min(args.limit, 25)], 1):
             print(f"  {idx:02d}. [{m['source']}] {m['title']} ({m['year']}) -> {m['slug']}")
-        print(f"\nDry run complete. No files written.")
+        if len(candidates) > 25:
+            print(f"  ... and {len(candidates) - 25} more candidate movies available for generation.")
+        print(f"\nDry run complete. Ready to generate up to {min(args.limit, len(candidates))} new editorials.")
         return
 
     # 2. Generate editorials
     print(f"\n[2/3] Generating {args.limit} new editorials...")
     success_count = 0
+    consecutive_failures = 0
     generated_movies = []
 
     for idx, movie in enumerate(candidates):
@@ -479,6 +495,7 @@ def main():
             if saved:
                 duration = time.time() - start_time
                 success_count += 1
+                consecutive_failures = 0
                 generated_movies.append({
                     "title": movie["title"],
                     "year": movie["year"],
@@ -487,12 +504,17 @@ def main():
                 })
                 print(f"       [+] Successfully saved {slug}.json ({duration:.1f}s)")
             else:
+                consecutive_failures += 1
                 print(f"       [-] Failed to save file.")
         else:
-            print(f"       [!] Generation failed or returned invalid JSON. Skipping.")
+            consecutive_failures += 1
+            print(f"       [!] Generation failed or returned invalid JSON ({consecutive_failures}/5). Skipping.")
+            if consecutive_failures >= 5:
+                print("\n[Warning] 5 consecutive failures encountered. Pausing run to protect API.")
+                break
 
         # Respectful delay between LLM calls
-        time.sleep(1)
+        time.sleep(0.4)
 
     # 3. Summary & Links to submit
     print("\n==========================================================")
