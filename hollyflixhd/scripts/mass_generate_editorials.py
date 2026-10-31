@@ -77,8 +77,8 @@ EDITORIAL RULES:
 - Use simple, natural, conversational English. Write like you are recommending a movie to a friend.
 - NO fancy, pretentious, or academic words (DO NOT use words like: visceral, claustrophobic, cerebral, juxtaposition, tour-de-force, metaphor, descent, haunting, tapestry).
 - LENGTH FOR EDITORIAL: The "editorial" review MUST be at least 150 to 200 words long (2 detailed paragraphs).
-  * Paragraph 1: Catchy hook about the setup, main characters, and the overall vibe.
-  * Paragraph 2: Standout elements (acting, action, suspense), honest pros and cons, who should watch it, and naturally include viewing advice (e.g. streaming in 4K Ultra HD on Prime Video, renting on Apple TV, or adding the 4K Blu-ray to your physical collection). Make it flow as friendly advice.
+  * Paragraph 1: Catchy hook about the setup, main characters, and the overall vibe. Avoid repetitive opening formulas like "Imagine you are...".
+  * Paragraph 2: Standout elements (acting performances, pacing, suspense), honest strengths and weaknesses, and who will enjoy it most. Do NOT invent or specify streaming platforms or physical disc formats (e.g., do not mention Prime Video, Apple TV, or 4K Blu-ray).
 - LENGTH FOR ENDING: The "endingExplained" MUST be at least 60 to 90 words long clearly breaking down the climax, ending twist, and how things wrap up in plain English (spoilers allowed).
 - Write in second person, speaking directly to "you".
 - Do not start with "I", "This movie", or the movie title.

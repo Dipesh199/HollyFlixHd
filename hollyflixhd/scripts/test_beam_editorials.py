@@ -155,8 +155,8 @@ LANGUAGE & LENGTH RULES:
 - Use simple, natural, conversational English (8th-grade reading level). Talk like a friend recommending a movie.
 - NO fancy, pretentious, or academic words (DO NOT use: visceral, claustrophobic, cerebral, juxtaposition, tour-de-force, metaphor, descent, haunting, tapestry).
 - LENGTH REQUIREMENT FOR EDITORIAL: The "editorial" review MUST be at least 150 to 200 words long (2 detailed paragraphs).
-  * Paragraph 1: An engaging hook about the setup, main characters, and the overall vibe.
-  * Paragraph 2: Standout elements (acting, twists, action, pacing), honest pros and cons, who should watch it, and viewing advice (streaming in 4K Ultra HD on Prime Video, renting on Apple TV, or adding 4K Blu-ray to physical collection).
+  * Paragraph 1: An engaging hook about the setup, main characters, and the overall vibe. Avoid repetitive opening formulas like "Imagine you are...".
+  * Paragraph 2: Standout elements (acting performances, pacing, twists), honest strengths and weaknesses, and who will enjoy it most. Do NOT invent or specify streaming platforms or physical disc formats (e.g., do not mention Prime Video, Apple TV, or 4K Blu-ray).
 - LENGTH REQUIREMENT FOR ENDING: The "endingExplained" MUST be at least 60 to 90 words long clearly explaining what happens in the final scenes and twist (spoilers allowed).
 - Write in second person, speaking directly to "you".
 - Do not start with "I", "This movie", or the movie title.

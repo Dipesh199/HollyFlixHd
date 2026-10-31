@@ -246,7 +246,7 @@ def generate_editorial_llm(movie: dict, api_key: str, model: str) -> tuple[dict 
     genres = movie.get("genres") or "Drama, Cinema"
     director = movie.get("director") or "Acclaimed Director"
 
-    thinking_directive = "Keep internal thinking very brief and output the JSON immediately.\n" if model == "beam" else ""
+    thinking_directive = "Do NOT overthink. Keep internal thinking very brief (under 50 words) and output the JSON immediately.\n" if model == "beam" else ""
 
     prompt = f"""You are a movie guide writer for HollyFlixHD.
 Write a clear, casual, and detailed movie review for everyday viewers.
@@ -259,8 +259,8 @@ Overview: {overview}
 - Use simple, natural, conversational English (8th-grade reading level). Talk like a friend recommending a movie.
 - NO fancy, pretentious, or academic words (DO NOT use: visceral, claustrophobic, cerebral, juxtaposition, tour-de-force, metaphor, descent, haunting, tapestry).
 - LENGTH REQUIREMENT FOR EDITORIAL: The "editorial" review MUST be at least 150 to 200 words long (2 detailed paragraphs).
-  * Paragraph 1: An engaging hook about the setup, main characters, and overall vibe.
-  * Paragraph 2: Standout elements (acting, action, pacing), honest pros and cons, who should watch it, and viewing advice (streaming in 4K Ultra HD on Prime Video, renting on Apple TV, or 4K Blu-ray).
+  * Paragraph 1: An engaging hook about the setup, main characters, and overall vibe. Avoid repetitive opening formulas like "Imagine you are...".
+  * Paragraph 2: Standout elements (acting performances, pacing, twists), honest strengths and weaknesses, and who will enjoy it most. Do NOT invent or specify streaming platforms or physical disc formats (e.g., do not mention Prime Video, Apple TV, or 4K Blu-ray).
 - LENGTH REQUIREMENT FOR ENDING: The "endingExplained" MUST be at least 60 to 90 words long clearly explaining what happens in the final scenes and twist (spoilers allowed).
 - Write in second person, speaking directly to "you".
 - Do not start with "I", "This movie", or the movie title.
@@ -291,8 +291,8 @@ FIELD CONSTRAINTS:
         "Authorization": f"Bearer {api_key}",
     }
 
-    num_predict = 4096 if model == "beam" else 1500
-    temperature = 0.5 if model == "beam" else 0.7
+    num_predict = 8192 if model == "beam" else 1500
+    temperature = 0.3 if model == "beam" else 0.7
 
     payload = {
         "model": model,
@@ -427,10 +427,10 @@ def worker_loop(
     }
 
     while not stop_event.is_set():
-        # Check global limit
+        # Check global limit (0 = endless)
         with COUNTER_LOCK:
             current_total = stats["_total_success"]
-            if current_total >= target_limit:
+            if target_limit > 0 and current_total >= target_limit:
                 stop_event.set()
                 break
 
@@ -478,8 +478,9 @@ def worker_loop(
                     completed = stats["_total_success"]
                     active_now = active_workers_tracker["count"]
 
+                limit_label = f"{target_limit}" if target_limit > 0 else "∞"
                 safe_print(
-                    f"[{completed:03d}/{target_limit}] [Worker #{worker_id:02d} | {key_masked}] "
+                    f"[{completed:04d}/{limit_label}] [Worker #{worker_id:02d} | {key_masked}] "
                     f"[+] Saved {slug}.json ({duration:.1f}s) | Active Workers: {active_now}"
                 )
             else:
@@ -487,9 +488,14 @@ def worker_loop(
                 movie_queue.put(movie)
         else:
             stats[worker_id]["failed"] += 1
-            safe_print(
-                f"    [Worker #{worker_id:02d} | {key_masked}] [!] Format error for {movie['title']} ({movie['year']}). Skipping."
-            )
+            retries = movie.get("retry_count", 0)
+            if retries < 1:
+                movie["retry_count"] = retries + 1
+                movie_queue.put(movie)
+            else:
+                safe_print(
+                    f"    [Worker #{worker_id:02d} | {key_masked}] [!] Format error for {movie['title']} ({movie['year']}). Skipping."
+                )
 
         movie_queue.task_done()
         time.sleep(0.3)
@@ -519,8 +525,8 @@ def main():
     parser.add_argument(
         "--limit",
         type=int,
-        default=250,
-        help="Target number of new editorials to generate (default: 250)",
+        default=0,
+        help="Target number of new editorials to generate (default: 0 for endless generation)",
     )
     parser.add_argument(
         "--model",
@@ -545,10 +551,12 @@ def main():
     candidate_queue = load_candidate_queue(Path(args.candidates), args.limit)
     total_candidates = candidate_queue.qsize()
 
+    target_desc = f"{args.limit} new editorials" if args.limit > 0 else "Endless / Continuous (Runs until stopped or all keys exhausted)"
+
     safe_print("=" * 66)
     safe_print("🚀 HollyFlixHD - Multi-Key Concurrent Editorial Generator")
     safe_print("=" * 66)
-    safe_print(f"Target Count        : {args.limit} new editorials")
+    safe_print(f"Target Mode         : {target_desc}")
     safe_print(f"Available API Keys  : {len(api_keys)} keys (Spawning {len(api_keys)} parallel workers)")
     safe_print(f"Model               : {args.model}")
     safe_print(f"Existing Editorials : {existing_count} indexed (guaranteed 0 duplicates)")
@@ -595,7 +603,7 @@ def main():
     try:
         while any(t.is_alive() for t in threads):
             with COUNTER_LOCK:
-                if stats["_total_success"] >= args.limit:
+                if args.limit > 0 and stats["_total_success"] >= args.limit:
                     stop_event.set()
                     break
                 if active_workers_tracker["count"] == 0:
@@ -619,7 +627,8 @@ def main():
     safe_print("\n" + "=" * 66)
     safe_print("📊 GENERATION SUMMARY REPORT")
     safe_print("=" * 66)
-    safe_print(f"Total Editorials Generated : {total_generated} / {args.limit}")
+    limit_str = f"/ {args.limit}" if args.limit > 0 else "(Endless Mode)"
+    safe_print(f"Total Editorials Generated : {total_generated} {limit_str}")
     safe_print(f"Total Run Time             : {total_duration:.1f}s ({total_duration/60:.1f} min)")
     if total_duration > 0 and total_generated > 0:
         rate = total_generated / (total_duration / 60)
