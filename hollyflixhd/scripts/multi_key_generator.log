@@ -1,0 +1,328 @@
+==================================================================
+🚀 HollyFlixHD - Multi-Key Concurrent Editorial Generator
+==================================================================
+Target Count        : 1 new editorials
+Available API Keys  : 1 keys (Spawning 1 parallel workers)
+Model               : beam
+Existing Editorials : 8626 indexed (guaranteed 0 duplicates)
+Candidate Queue     : 246 unreviewed movies ready
+Storage Directory   : E:\HollyFlixHd\HollyFlixHd\hollyflixhd\data\editorials
+Log File            : E:\HollyFlixHd\HollyFlixHd\hollyflixhd\scripts\multi_key_generator.log
+------------------------------------------------------------------
+Active Keys Loaded:
+  Worker #01 -> d05159..._Gls
+==================================================================
+
+[001/1] [Worker #01 | d05159..._Gls] [+] Saved obsess-2026.json (8.9s) | Active Workers: 1
+
+==================================================================
+📊 GENERATION SUMMARY REPORT
+==================================================================
+Total Editorials Generated : 1 / 1
+Total Run Time             : 9.2s (0.2 min)
+Generation Rate            : 6.5 editorials / minute
+------------------------------------------------------------------
+API Key Breakdown & Quota Status:
+  Worker #01 (d05159..._Gls):   1 generated | ✅ ACTIVE
+------------------------------------------------------------------
+Keys Still Active   : 1 / 1
+Keys Limit Reached  : 0 / 1
+
+✨ All API keys remained healthy and within quota!
+==================================================================
+
+==================================================================
+🚀 HollyFlixHD - Multi-Key Concurrent Editorial Generator
+==================================================================
+Target Count        : 250 new editorials
+Available API Keys  : 10 keys (Spawning 10 parallel workers)
+Model               : beam
+Existing Editorials : 8627 indexed (guaranteed 0 duplicates)
+Candidate Queue     : 245 unreviewed movies ready
+Storage Directory   : E:\HollyFlixHd\HollyFlixHd\hollyflixhd\data\editorials
+Log File            : E:\HollyFlixHd\HollyFlixHd\hollyflixhd\scripts\multi_key_generator.log
+------------------------------------------------------------------
+Active Keys Loaded:
+  Worker #01 -> d05159..._Gls
+  Worker #02 -> b2b393...ZLOo
+  Worker #03 -> f6d883...TEQ9
+  Worker #04 -> b63e6c...VElh
+  Worker #05 -> eea7ce...uZ1b
+  Worker #06 -> 6cfd0c...mQ4g
+  Worker #07 -> b5e9a7...BSPg
+  Worker #08 -> 439b96...LF7U
+  Worker #09 -> 69c5c5...melx
+  Worker #10 -> 3914f1...Zhcc
+==================================================================
+
+[001/250] [Worker #01 | d05159..._Gls] [+] Saved michael-2026.json (7.8s) | Active Workers: 10
+[002/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved my-best-friend-2026.json (9.4s) | Active Workers: 10
+[003/250] [Worker #09 | 69c5c5...melx] [+] Saved blades-of-the-guardians-2026.json (11.4s) | Active Workers: 10
+[004/250] [Worker #02 | b2b393...ZLOo] [+] Saved mama-bear-2026.json (12.9s) | Active Workers: 10
+[005/250] [Worker #05 | eea7ce...uZ1b] [+] Saved ice-age-boiling-point-2027.json (18.5s) | Active Workers: 10
+[006/250] [Worker #08 | 439b96...LF7U] [+] Saved pressure-2026.json (18.7s) | Active Workers: 10
+[007/250] [Worker #10 | 3914f1...Zhcc] [+] Saved beat-luke-littler-2026.json (20.0s) | Active Workers: 10
+[008/250] [Worker #03 | f6d883...TEQ9] [+] Saved prelude-to-the-end-2026.json (28.7s) | Active Workers: 10
+[009/250] [Worker #07 | b5e9a7...BSPg] [+] Saved man-of-war-2026.json (29.0s) | Active Workers: 10
+[010/250] [Worker #04 | b63e6c...VElh] [+] Saved creature-fear-2026.json (34.5s) | Active Workers: 10
+[011/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved kraken-2026.json (30.4s) | Active Workers: 10
+[012/250] [Worker #01 | d05159..._Gls] [+] Saved passenger-2026.json (32.9s) | Active Workers: 10
+[013/250] [Worker #05 | eea7ce...uZ1b] [+] Saved shelter-2026.json (27.1s) | Active Workers: 10
+[014/250] [Worker #09 | 69c5c5...melx] [+] Saved narnia-the-magicians-nephew-2027.json (38.8s) | Active Workers: 10
+[015/250] [Worker #10 | 3914f1...Zhcc] [+] Saved vishwanath-sons-2026.json (41.8s) | Active Workers: 10
+[016/250] [Worker #04 | b63e6c...VElh] [+] Saved dhoomakethu-2026.json (39.2s) | Active Workers: 10
+[017/250] [Worker #07 | b5e9a7...BSPg] [+] Saved beware-boiuna-2026.json (46.3s) | Active Workers: 10
+[018/250] [Worker #01 | d05159..._Gls] [+] Saved thella-kaagitham-2026.json (37.1s) | Active Workers: 10
+[019/250] [Worker #05 | eea7ce...uZ1b] [+] Saved double-trouble-2026.json (37.2s) | Active Workers: 10
+[020/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved always-yours-never-mine-2026.json (44.6s) | Active Workers: 10
+[021/250] [Worker #02 | b2b393...ZLOo] [+] Saved rl-stines-pumpkinhead-2-2026.json (76.1s) | Active Workers: 10
+[022/250] [Worker #08 | 439b96...LF7U] [+] Saved in-the-grey-2026.json (73.8s) | Active Workers: 10
+[023/250] [Worker #03 | f6d883...TEQ9] [+] Saved aadarsha-kutumbam-house-no-47-ak47-2026.json (70.1s) | Active Workers: 10
+[024/250] [Worker #04 | b63e6c...VElh] [+] Saved dont-trouble-the-trouble-2026.json (28.6s) | Active Workers: 10
+[025/250] [Worker #07 | b5e9a7...BSPg] [+] Saved jinx-2026.json (32.3s) | Active Workers: 10
+[026/250] [Worker #01 | d05159..._Gls] [+] Saved 5-centimeters-per-second-2026.json (30.8s) | Active Workers: 10
+[027/250] [Worker #05 | eea7ce...uZ1b] [+] Saved linkin-park-unshatter-2026.json (29.3s) | Active Workers: 10
+[028/250] [Worker #02 | b2b393...ZLOo] [+] Saved devour-2026.json (28.7s) | Active Workers: 10
+[029/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved the-infinite-2026.json (33.0s) | Active Workers: 10
+[030/250] [Worker #09 | 69c5c5...melx] [+] Saved tu-hai-meri-kiran-2026.json (74.6s) | Active Workers: 10
+[031/250] [Worker #03 | f6d883...TEQ9] [+] Saved orion-2026.json (28.7s) | Active Workers: 10
+[032/250] [Worker #08 | 439b96...LF7U] [+] Saved 418-2026.json (41.3s) | Active Workers: 10
+[033/250] [Worker #04 | b63e6c...VElh] [+] Saved center-stage-for-murder-2026.json (32.5s) | Active Workers: 10
+[034/250] [Worker #01 | d05159..._Gls] [+] Saved you-cant-leave-2026.json (33.8s) | Active Workers: 10
+[035/250] [Worker #10 | 3914f1...Zhcc] [+] Saved ninja-scroll-1996.json (82.4s) | Active Workers: 10
+[036/250] [Worker #07 | b5e9a7...BSPg] [+] Saved fallen-angels-by-noel-coward-2026.json (42.8s) | Active Workers: 10
+[037/250] [Worker #05 | eea7ce...uZ1b] [+] Saved the-metropolitan-opera-macbeth-2026.json (39.2s) | Active Workers: 10
+[038/250] [Worker #02 | b2b393...ZLOo] [+] Saved hellbilly-hollow-2026.json (37.9s) | Active Workers: 10
+[039/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved the-bridge-2026.json (44.1s) | Active Workers: 10
+[040/250] [Worker #09 | 69c5c5...melx] [+] Saved the-influencer-project-2026.json (40.3s) | Active Workers: 10
+[041/250] [Worker #03 | f6d883...TEQ9] [+] Saved tchotchke-2026.json (38.1s) | Active Workers: 10
+[042/250] [Worker #08 | 439b96...LF7U] [+] Saved bohurupi-the-golden-daku-2026.json (37.0s) | Active Workers: 10
+[043/250] [Worker #04 | b63e6c...VElh] [+] Saved capturing-bigfoot-2026.json (41.9s) | Active Workers: 10
+[044/250] [Worker #10 | 3914f1...Zhcc] [+] Saved the-sixty-year-mission-how-star-trek-changed-television-and-the-world-2026.json (35.1s) | Active Workers: 10
+[045/250] [Worker #07 | b5e9a7...BSPg] [+] Saved nickels-2026.json (33.0s) | Active Workers: 10
+[046/250] [Worker #02 | b2b393...ZLOo] [+] Saved anbil-avan-2026.json (32.5s) | Active Workers: 10
+[047/250] [Worker #05 | eea7ce...uZ1b] [+] Saved hybe-cheering-party-2026.json (37.1s) | Active Workers: 10
+[048/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved pulp-what-do-you-do-for-an-encore-2026.json (29.4s) | Active Workers: 10
+[049/250] [Worker #09 | 69c5c5...melx] [+] Saved april-x-2026.json (32.4s) | Active Workers: 10
+[050/250] [Worker #03 | f6d883...TEQ9] [+] Saved camp-duval-2026.json (38.6s) | Active Workers: 10
+[051/250] [Worker #08 | 439b96...LF7U] [+] Saved banshee-2026.json (38.7s) | Active Workers: 10
+[052/250] [Worker #04 | b63e6c...VElh] [+] Saved cathexis-2026.json (36.3s) | Active Workers: 10
+[053/250] [Worker #10 | 3914f1...Zhcc] [+] Saved power-trip-2026.json (34.5s) | Active Workers: 10
+[054/250] [Worker #01 | d05159..._Gls] [+] Saved devices-2026.json (74.2s) | Active Workers: 10
+[055/250] [Worker #05 | eea7ce...uZ1b] [+] Saved back-to-the-beginning-ozzys-final-bow-2026.json (30.6s) | Active Workers: 10
+[056/250] [Worker #07 | b5e9a7...BSPg] [+] Saved white-lightning-2026.json (40.5s) | Active Workers: 10
+[057/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved the-deputy-2026.json (36.9s) | Active Workers: 10
+[058/250] [Worker #02 | b2b393...ZLOo] [+] Saved a-christmas-prayer-tradition-2026.json (43.1s) | Active Workers: 10
+[059/250] [Worker #09 | 69c5c5...melx] [+] Saved going-for-two-2026.json (38.1s) | Active Workers: 10
+[060/250] [Worker #03 | f6d883...TEQ9] [+] Saved la-jangada-2026.json (32.5s) | Active Workers: 10
+[061/250] [Worker #08 | 439b96...LF7U] [+] Saved conceivable-2026.json (27.5s) | Active Workers: 10
+[062/250] [Worker #10 | 3914f1...Zhcc] [+] Saved misty-green-2026.json (29.8s) | Active Workers: 10
+[063/250] [Worker #04 | b63e6c...VElh] [+] Saved lady-liberty-secrets-of-an-icon-2026.json (30.8s) | Active Workers: 10
+[064/250] [Worker #05 | eea7ce...uZ1b] [+] Saved seventeen-world-tour-new-2026.json (30.7s) | Active Workers: 10
+[065/250] [Worker #07 | b5e9a7...BSPg] [+] Saved ha-chan-shake-your-booty-2026.json (30.2s) | Active Workers: 10
+[066/250] [Worker #09 | 69c5c5...melx] [+] Saved take-me-home-2026.json (25.3s) | Active Workers: 10
+[067/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved in-spite-of-ourselves-2026.json (33.7s) | Active Workers: 10
+[068/250] [Worker #02 | b2b393...ZLOo] [+] Saved making-marie-antoinette-2026.json (31.6s) | Active Workers: 10
+[069/250] [Worker #10 | 3914f1...Zhcc] [+] Saved beyond-boy-2026.json (29.1s) | Active Workers: 10
+[070/250] [Worker #08 | 439b96...LF7U] [+] Saved brotherhood-a-cinematic-musical-2026.json (36.3s) | Active Workers: 10
+[071/250] [Worker #01 | d05159..._Gls] [+] Saved gran-blanco-2026.json (64.5s) | Active Workers: 10
+[072/250] [Worker #07 | b5e9a7...BSPg] [+] Saved volta-2026.json (38.7s) | Active Workers: 10
+[073/250] [Worker #09 | 69c5c5...melx] [+] Saved trust-me-im-a-doctor-2026.json (33.3s) | Active Workers: 10
+[074/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved my-undesirable-friends-part-ii-exile-2026.json (35.9s) | Active Workers: 10
+[075/250] [Worker #02 | b2b393...ZLOo] [+] Saved arrow-2026.json (40.0s) | Active Workers: 10
+[076/250] [Worker #10 | 3914f1...Zhcc] [+] Saved the-salacity-2026.json (30.7s) | Active Workers: 10
+[077/250] [Worker #03 | f6d883...TEQ9] [+] Saved rw-lo-2026.json (72.1s) | Active Workers: 10
+[078/250] [Worker #01 | d05159..._Gls] [+] Saved beyond-the-eagle-obsession-2026.json (32.5s) | Active Workers: 10
+[079/250] [Worker #08 | 439b96...LF7U] [+] Saved a-prayer-for-the-dying-2026.json (40.2s) | Active Workers: 10
+[080/250] [Worker #04 | b63e6c...VElh] [+] Saved once-upon-a-time-in-harlem-2026.json (78.4s) | Active Workers: 10
+[081/250] [Worker #07 | b5e9a7...BSPg] [+] Saved morbid-weekend-2026.json (30.2s) | Active Workers: 10
+[082/250] [Worker #09 | 69c5c5...melx] [+] Saved its-how-it-ends-2026.json (36.0s) | Active Workers: 10
+    [Worker #05 | eea7ce...uZ1b] [!] Format error for The Dreamed Adventure (2026). Skipping.
+[083/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved kabaddi-5-after-the-final-match-2026.json (36.0s) | Active Workers: 10
+[084/250] [Worker #10 | 3914f1...Zhcc] [+] Saved switches-2026.json (37.5s) | Active Workers: 10
+[085/250] [Worker #03 | f6d883...TEQ9] [+] Saved appofeniacs-2026.json (34.7s) | Active Workers: 10
+[086/250] [Worker #02 | b2b393...ZLOo] [+] Saved mendocino-2026.json (43.0s) | Active Workers: 10
+[087/250] [Worker #08 | 439b96...LF7U] [+] Saved red-days-2-cecilia-2026.json (37.0s) | Active Workers: 10
+[088/250] [Worker #01 | d05159..._Gls] [+] Saved chha-maya-chhapakkai-2-2026.json (37.7s) | Active Workers: 10
+[089/250] [Worker #04 | b63e6c...VElh] [+] Saved reprisal-2026.json (31.7s) | Active Workers: 10
+[090/250] [Worker #09 | 69c5c5...melx] [+] Saved portrait-of-an-artist-stephen-curry-2026.json (30.6s) | Active Workers: 10
+[091/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved grandmasters-2026.json (33.1s) | Active Workers: 10
+[092/250] [Worker #05 | eea7ce...uZ1b] [+] Saved the-sickling-2026.json (37.2s) | Active Workers: 10
+[093/250] [Worker #10 | 3914f1...Zhcc] [+] Saved tomorrow-x-together-world-tour-act-tomorrow-2026.json (33.1s) | Active Workers: 10
+[094/250] [Worker #02 | b2b393...ZLOo] [+] Saved superman-2025.json (28.7s) | Active Workers: 10
+[095/250] [Worker #03 | f6d883...TEQ9] [+] Saved de-gaulle-resistance-2026.json (34.9s) | Active Workers: 10
+[096/250] [Worker #08 | 439b96...LF7U] [+] Saved mother-mary-2026.json (30.0s) | Active Workers: 10
+[097/250] [Worker #01 | d05159..._Gls] [+] Saved avatar-fire-and-ash-2025.json (34.7s) | Active Workers: 10
+[098/250] [Worker #09 | 69c5c5...melx] [+] Saved thunderbolts-2025.json (26.9s) | Active Workers: 10
+[099/250] [Worker #07 | b5e9a7...BSPg] [+] Saved a-call-for-help-2026.json (75.5s) | Active Workers: 10
+[100/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved in-waves-2026.json (32.8s) | Active Workers: 10
+[101/250] [Worker #10 | 3914f1...Zhcc] [+] Saved final-destination-bloodlines-2025.json (31.0s) | Active Workers: 10
+[102/250] [Worker #05 | eea7ce...uZ1b] [+] Saved species-2026.json (38.2s) | Active Workers: 10
+[103/250] [Worker #03 | f6d883...TEQ9] [+] Saved the-strangers-chapter-3-2026.json (34.8s) | Active Workers: 10
+[104/250] [Worker #02 | b2b393...ZLOo] [+] Saved super-scam-me-2026.json (38.3s) | Active Workers: 10
+[105/250] [Worker #08 | 439b96...LF7U] [+] Saved nightborn-2026.json (33.5s) | Active Workers: 10
+[106/250] [Worker #09 | 69c5c5...melx] [+] Saved undercurrent-2026.json (32.7s) | Active Workers: 10
+[107/250] [Worker #01 | d05159..._Gls] [+] Saved demon-slayer-kimetsu-no-yaiba-infinity-castle-2025.json (35.0s) | Active Workers: 10
+[108/250] [Worker #04 | b63e6c...VElh] [+] Saved a-better-jianghu-2026.json (70.1s) | Active Workers: 10
+[109/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved kpop-demon-hunters-2025.json (28.3s) | Active Workers: 10
+[110/250] [Worker #10 | 3914f1...Zhcc] [+] Saved the-punisher-one-last-kill-2026.json (30.9s) | Active Workers: 10
+[111/250] [Worker #05 | eea7ce...uZ1b] [+] Saved la-gradiva-2026.json (31.6s) | Active Workers: 10
+[112/250] [Worker #02 | b2b393...ZLOo] [+] Saved scene-2026.json (32.6s) | Active Workers: 10
+[113/250] [Worker #08 | 439b96...LF7U] [+] Saved hen-2026.json (37.1s) | Active Workers: 10
+[114/250] [Worker #09 | 69c5c5...melx] [+] Saved traces-of-justice-2026.json (35.6s) | Active Workers: 10
+[115/250] [Worker #04 | b63e6c...VElh] [+] Saved log-15-2026.json (36.8s) | Active Workers: 10
+[116/250] [Worker #01 | d05159..._Gls] [+] Saved xi-thou-shalt-not-be-indifferent-2026.json (41.3s) | Active Workers: 10
+[117/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved your-heart-will-be-broken-2026.json (35.1s) | Active Workers: 10
+[118/250] [Worker #10 | 3914f1...Zhcc] [+] Saved supergirl-2026.json (38.1s) | Active Workers: 10
+[119/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-housemaid-2025.json (78.4s) | Active Workers: 10
+[120/250] [Worker #02 | b2b393...ZLOo] [+] Saved war-machine-2026.json (37.6s) | Active Workers: 10
+[121/250] [Worker #08 | 439b96...LF7U] [+] Saved goat-2026.json (38.1s) | Active Workers: 10
+[122/250] [Worker #09 | 69c5c5...melx] [+] Saved the-sheep-detectives-2026.json (34.7s) | Active Workers: 10
+[123/250] [Worker #01 | d05159..._Gls] [+] Saved the-devil-wears-prada-2-2026.json (35.5s) | Active Workers: 10
+[124/250] [Worker #04 | b63e6c...VElh] [+] Saved the-wrecking-crew-2026.json (37.5s) | Active Workers: 10
+    [Worker #03 | f6d883...TEQ9] [!] Format error for Dune (2021). Skipping.
+[125/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved greenland-2-migration-2026.json (44.9s) | Active Workers: 10
+[126/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-rip-2026.json (31.8s) | Active Workers: 10
+[127/250] [Worker #10 | 3914f1...Zhcc] [+] Saved i-can-only-imagine-2-2026.json (36.2s) | Active Workers: 10
+[128/250] [Worker #05 | eea7ce...uZ1b] [+] Saved swapped-2026.json (80.9s) | Active Workers: 10
+[129/250] [Worker #02 | b2b393...ZLOo] [+] Saved crime-101-2026.json (36.1s) | Active Workers: 10
+[130/250] [Worker #08 | 439b96...LF7U] [+] Saved papi-ricky-la-pelicula-2026.json (34.4s) | Active Workers: 10
+[131/250] [Worker #09 | 69c5c5...melx] [+] Saved wuthering-heights-2026.json (35.2s) | Active Workers: 10
+[132/250] [Worker #04 | b63e6c...VElh] [+] Saved f1-2025.json (31.0s) | Active Workers: 10
+[133/250] [Worker #03 | f6d883...TEQ9] [+] Saved snow-white-2025.json (37.9s) | Active Workers: 10
+[134/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved how-to-train-your-dragon-2025.json (29.3s) | Active Workers: 10
+[135/250] [Worker #01 | d05159..._Gls] [+] Saved war-of-the-worlds-2025.json (41.4s) | Active Workers: 10
+[136/250] [Worker #05 | eea7ce...uZ1b] [+] Saved chainsaw-man-the-movie-reze-arc-2025.json (26.9s) | Active Workers: 10
+[137/250] [Worker #07 | b5e9a7...BSPg] [+] Saved predator-badlands-2025.json (38.0s) | Active Workers: 10
+[138/250] [Worker #10 | 3914f1...Zhcc] [+] Saved jurassic-world-rebirth-2025.json (40.4s) | Active Workers: 10
+[139/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-fantastic-4-first-steps-2025.json (33.1s) | Active Workers: 10
+[140/250] [Worker #08 | 439b96...LF7U] [+] Saved lilo-stitch-2025.json (33.3s) | Active Workers: 10
+[141/250] [Worker #09 | 69c5c5...melx] [+] Saved one-battle-after-another-2025.json (33.3s) | Active Workers: 10
+[142/250] [Worker #03 | f6d883...TEQ9] [+] Saved dracula-2025.json (31.7s) | Active Workers: 10
+[143/250] [Worker #01 | d05159..._Gls] [+] Saved mission-impossible-the-final-reckoning-2025.json (38.9s) | Active Workers: 10
+[144/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-gorge-2025.json (33.7s) | Active Workers: 10
+[145/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-conjuring-last-rites-2025.json (33.9s) | Active Workers: 10
+[146/250] [Worker #05 | eea7ce...uZ1b] [+] Saved parasomnia-2025.json (42.2s) | Active Workers: 10
+[147/250] [Worker #10 | 3914f1...Zhcc] [+] Saved the-bad-guys-2-2025.json (40.8s) | Active Workers: 10
+[148/250] [Worker #08 | 439b96...LF7U] [+] Saved wicked-for-good-2025.json (40.8s) | Active Workers: 10
+[149/250] [Worker #03 | f6d883...TEQ9] [+] Saved a-working-man-2025.json (38.7s) | Active Workers: 10
+[150/250] [Worker #09 | 69c5c5...melx] [+] Saved 28-years-later-2025.json (51.9s) | Active Workers: 10
+[151/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved a-minecraft-movie-2025.json (75.5s) | Active Workers: 10
+[152/250] [Worker #04 | b63e6c...VElh] [+] Saved bugonia-2025.json (84.8s) | Active Workers: 10
+[153/250] [Worker #01 | d05159..._Gls] [+] Saved i-swear-2025.json (41.6s) | Active Workers: 10
+[154/250] [Worker #07 | b5e9a7...BSPg] [+] Saved ballerina-2025.json (43.9s) | Active Workers: 10
+[155/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-running-man-2025.json (39.4s) | Active Workers: 10
+[156/250] [Worker #05 | eea7ce...uZ1b] [+] Saved karate-kid-legends-2025.json (40.0s) | Active Workers: 10
+[157/250] [Worker #08 | 439b96...LF7U] [+] Saved wake-up-dead-man-a-knives-out-mystery-2025.json (36.2s) | Active Workers: 10
+[158/250] [Worker #03 | f6d883...TEQ9] [+] Saved ne-zha-2-2025.json (33.5s) | Active Workers: 10
+[159/250] [Worker #10 | 3914f1...Zhcc] [+] Saved captain-america-brave-new-world-2025.json (49.7s) | Active Workers: 10
+[160/250] [Worker #04 | b63e6c...VElh] [+] Saved roofman-2025.json (33.4s) | Active Workers: 10
+[161/250] [Worker #01 | d05159..._Gls] [+] Saved ice-road-vengeance-2025.json (34.0s) | Active Workers: 10
+[162/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved mickey-17-2025.json (44.5s) | Active Workers: 10
+[163/250] [Worker #02 | b2b393...ZLOo] [+] Saved companion-2025.json (40.1s) | Active Workers: 10
+[164/250] [Worker #07 | b5e9a7...BSPg] [+] Saved elio-2025.json (45.2s) | Active Workers: 10
+[165/250] [Worker #08 | 439b96...LF7U] [+] Saved exit-8-2025.json (37.7s) | Active Workers: 10
+[166/250] [Worker #05 | eea7ce...uZ1b] [+] Saved havoc-2025.json (45.7s) | Active Workers: 10
+[167/250] [Worker #10 | 3914f1...Zhcc] [+] Saved the-spongebob-movie-search-for-squarepants-2025.json (41.2s) | Active Workers: 10
+[168/250] [Worker #04 | b63e6c...VElh] [+] Saved my-fault-london-2025.json (39.5s) | Active Workers: 10
+[169/250] [Worker #01 | d05159..._Gls] [+] Saved the-family-plan-2-2025.json (35.5s) | Active Workers: 10
+[170/250] [Worker #09 | 69c5c5...melx] [+] Saved you-drive-me-crazy-2025.json (83.3s) | Active Workers: 10
+[171/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved the-naked-gun-2025.json (39.1s) | Active Workers: 10
+[172/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-accountant2-2025.json (31.5s) | Active Workers: 10
+[173/250] [Worker #08 | 439b96...LF7U] [+] Saved bring-her-back-2025.json (31.5s) | Active Workers: 10
+[174/250] [Worker #07 | b5e9a7...BSPg] [+] Saved hamnet-2025.json (35.0s) | Active Workers: 10
+[175/250] [Worker #05 | eea7ce...uZ1b] [+] Saved nobody-2-2025.json (36.2s) | Active Workers: 10
+[176/250] [Worker #10 | 3914f1...Zhcc] [+] Saved dhurandhar-2025.json (29.0s) | Active Workers: 10
+[177/250] [Worker #03 | f6d883...TEQ9] [+] Saved eternity-2025.json (78.5s) | Active Workers: 10
+[178/250] [Worker #04 | b63e6c...VElh] [+] Saved nuremberg-2025.json (36.0s) | Active Workers: 10
+[179/250] [Worker #01 | d05159..._Gls] [+] Saved materialists-2025.json (35.2s) | Active Workers: 10
+[180/250] [Worker #09 | 69c5c5...melx] [+] Saved smurfs-2025.json (32.6s) | Active Workers: 10
+[181/250] [Worker #02 | b2b393...ZLOo] [+] Saved warfare-2025.json (37.2s) | Active Workers: 10
+[182/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved black-phone-2-2025.json (39.5s) | Active Workers: 10
+[183/250] [Worker #08 | 439b96...LF7U] [+] Saved tron-ares-2025.json (40.4s) | Active Workers: 10
+[184/250] [Worker #05 | eea7ce...uZ1b] [+] Saved the-legend-of-hei-2-2025.json (35.1s) | Active Workers: 10
+[185/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-amateur-2025.json (47.0s) | Active Workers: 10
+[186/250] [Worker #10 | 3914f1...Zhcc] [+] Saved jujutsu-kaisen-execution-2025.json (43.1s) | Active Workers: 10
+[187/250] [Worker #03 | f6d883...TEQ9] [+] Saved heads-of-state-2025.json (37.7s) | Active Workers: 10
+[188/250] [Worker #04 | b63e6c...VElh] [+] Saved the-secret-agent-2025.json (40.0s) | Active Workers: 10
+[189/250] [Worker #01 | d05159..._Gls] [+] Saved tell-me-softly-2025.json (39.5s) | Active Workers: 10
+[190/250] [Worker #09 | 69c5c5...melx] [+] Saved fuze-2025.json (41.0s) | Active Workers: 10
+[191/250] [Worker #02 | b2b393...ZLOo] [+] Saved anaconda-2025.json (37.3s) | Active Workers: 10
+[192/250] [Worker #08 | 439b96...LF7U] [+] Saved the-legend-of-ochi-2025.json (31.7s) | Active Workers: 10
+[193/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved play-dirty-2025.json (41.6s) | Active Workers: 10
+[194/250] [Worker #05 | eea7ce...uZ1b] [+] Saved sentimental-value-2025.json (38.4s) | Active Workers: 10
+[195/250] [Worker #07 | b5e9a7...BSPg] [+] Saved death-of-a-unicorn-2025.json (32.6s) | Active Workers: 10
+[196/250] [Worker #04 | b63e6c...VElh] [+] Saved osiris-2025.json (37.1s) | Active Workers: 10
+[197/250] [Worker #03 | f6d883...TEQ9] [+] Saved black-bag-2025.json (45.2s) | Active Workers: 10
+[198/250] [Worker #01 | d05159..._Gls] [+] Saved the-ugly-stepsister-2025.json (45.5s) | Active Workers: 10
+[199/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-phoenician-scheme-2025.json (38.6s) | Active Workers: 10
+[200/250] [Worker #09 | 69c5c5...melx] [+] Saved caught-stealing-2025.json (51.4s) | Active Workers: 10
+[201/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved until-dawn-2025.json (44.7s) | Active Workers: 10
+[202/250] [Worker #08 | 439b96...LF7U] [+] Saved playdate-2025.json (51.2s) | Active Workers: 10
+[203/250] [Worker #05 | eea7ce...uZ1b] [+] Saved wildcat-2025.json (44.2s) | Active Workers: 10
+[204/250] [Worker #10 | 3914f1...Zhcc] [+] Saved sisu-road-to-revenge-2025.json (79.2s) | Active Workers: 10
+[205/250] [Worker #04 | b63e6c...VElh] [+] Saved the-electric-state-2025.json (42.9s) | Active Workers: 10
+[206/250] [Worker #03 | f6d883...TEQ9] [+] Saved regretting-you-2025.json (42.1s) | Active Workers: 10
+[207/250] [Worker #02 | b2b393...ZLOo] [+] Saved predator-killer-of-killers-2025.json (41.7s) | Active Workers: 10
+[208/250] [Worker #09 | 69c5c5...melx] [+] Saved freakier-friday-2025.json (33.9s) | Active Workers: 10
+[209/250] [Worker #01 | d05159..._Gls] [+] Saved novocaine-2025.json (47.9s) | Active Workers: 10
+[210/250] [Worker #05 | eea7ce...uZ1b] [+] Saved hold-the-fort-2025.json (38.9s) | Active Workers: 10
+[211/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved die-my-love-2025.json (45.8s) | Active Workers: 10
+[212/250] [Worker #08 | 439b96...LF7U] [+] Saved rental-family-2025.json (43.6s) | Active Workers: 10
+[213/250] [Worker #10 | 3914f1...Zhcc] [+] Saved david-2025.json (39.8s) | Active Workers: 10
+[214/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-monkey-2025.json (95.9s) | Active Workers: 10
+[215/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-tank-2025.json (33.6s) | Active Workers: 10
+[216/250] [Worker #03 | f6d883...TEQ9] [+] Saved him-2025.json (46.6s) | Active Workers: 10
+[217/250] [Worker #09 | 69c5c5...melx] [+] Saved the-roses-2025.json (44.0s) | Active Workers: 10
+[218/250] [Worker #01 | d05159..._Gls] [+] Saved worldbreaker-2025.json (42.2s) | Active Workers: 10
+[219/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved nouvelle-vague-2025.json (36.4s) | Active Workers: 10
+[220/250] [Worker #08 | 439b96...LF7U] [+] Saved in-the-lost-lands-2025.json (39.9s) | Active Workers: 10
+[221/250] [Worker #10 | 3914f1...Zhcc] [+] Saved border-hunters-2025.json (41.4s) | Active Workers: 10
+[222/250] [Worker #02 | b2b393...ZLOo] [+] Saved hunting-season-2025.json (33.8s) | Active Workers: 10
+[223/250] [Worker #03 | f6d883...TEQ9] [+] Saved the-strangers-chapter-2-2025.json (32.6s) | Active Workers: 10
+[224/250] [Worker #09 | 69c5c5...melx] [+] Saved portal-to-hell-2025.json (32.6s) | Active Workers: 10
+[225/250] [Worker #04 | b63e6c...VElh] [+] Saved drop-2025.json (92.3s) | Active Workers: 10
+[226/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved bridget-jones-mad-about-the-boy-2025.json (32.6s) | Active Workers: 10
+[227/250] [Worker #01 | d05159..._Gls] [+] Saved together-2025.json (38.7s) | Active Workers: 10
+[228/250] [Worker #10 | 3914f1...Zhcc] [+] Saved kaiju-no-8-mission-recon-2025.json (30.2s) | Active Workers: 10
+[229/250] [Worker #08 | 439b96...LF7U] [+] Saved shelby-oaks-2025.json (35.9s) | Active Workers: 10
+[230/250] [Worker #02 | b2b393...ZLOo] [+] Saved the-life-of-chuck-2025.json (31.3s) | Active Workers: 10
+    [Worker #05 | eea7ce...uZ1b] [!] Format error for Flight Risk (2025). Skipping.
+[231/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-map-that-leads-to-you-2025.json (85.1s) | Active Workers: 10
+[232/250] [Worker #09 | 69c5c5...melx] [+] Saved in-your-dreams-2025.json (34.6s) | Active Workers: 10
+[233/250] [Worker #06 | 6cfd0c...mQ4g] [+] Saved primitive-war-2025.json (32.9s) | Active Workers: 10
+[234/250] [Worker #04 | b63e6c...VElh] [+] Saved counterattack-2025.json (38.6s) | Active Workers: 9
+[235/250] [Worker #01 | d05159..._Gls] [+] Saved pillion-2025.json (39.4s) | Active Workers: 8
+[236/250] [Worker #10 | 3914f1...Zhcc] [+] Saved the-great-flood-2025.json (36.9s) | Active Workers: 7
+[237/250] [Worker #08 | 439b96...LF7U] [+] Saved sidelined-the-qb-and-me-2025.json (36.3s) | Active Workers: 7
+[238/250] [Worker #02 | b2b393...ZLOo] [+] Saved if-i-had-legs-id-kick-you-2025.json (37.9s) | Active Workers: 5
+[239/250] [Worker #07 | b5e9a7...BSPg] [+] Saved the-old-guard-2-2025.json (36.7s) | Active Workers: 4
+[240/250] [Worker #09 | 69c5c5...melx] [+] Saved straw-2025.json (38.4s) | Active Workers: 3
+[241/250] [Worker #03 | f6d883...TEQ9] [+] Saved hell-of-a-summer-2025.json (87.9s) | Active Workers: 2
+[242/250] [Worker #05 | eea7ce...uZ1b] [+] Saved lesbian-space-princess-2025.json (59.7s) | Active Workers: 1
+
+==================================================================
+📊 GENERATION SUMMARY REPORT
+==================================================================
+Total Editorials Generated : 242 / 250
+Total Run Time             : 1023.1s (17.1 min)
+Generation Rate            : 14.2 editorials / minute
+------------------------------------------------------------------
+API Key Breakdown & Quota Status:
+  Worker #01 (d05159..._Gls):  25 generated | ✅ ACTIVE
+  Worker #02 (b2b393...ZLOo):  27 generated | ✅ ACTIVE
+  Worker #03 (f6d883...TEQ9):  21 generated | ✅ ACTIVE
+  Worker #04 (b63e6c...VElh):  22 generated | ✅ ACTIVE
+  Worker #05 (eea7ce...uZ1b):  22 generated | ✅ ACTIVE
+  Worker #06 (6cfd0c...mQ4g):  26 generated | ✅ ACTIVE
+  Worker #07 (b5e9a7...BSPg):  22 generated | ✅ ACTIVE
+  Worker #08 (439b96...LF7U):  26 generated | ✅ ACTIVE
+  Worker #09 (69c5c5...melx):  26 generated | ✅ ACTIVE
+  Worker #10 (3914f1...Zhcc):  25 generated | ✅ ACTIVE
+------------------------------------------------------------------
+Keys Still Active   : 10 / 10
+Keys Limit Reached  : 0 / 10
+
+✨ All API keys remained healthy and within quota!
+==================================================================
+

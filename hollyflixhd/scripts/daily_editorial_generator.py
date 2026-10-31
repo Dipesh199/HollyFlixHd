@@ -16,6 +16,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import datetime
@@ -35,11 +36,37 @@ PROJECT_DIR = SCRIPT_DIR.parent
 DATA_DIR = PROJECT_DIR / "data"
 EDITORIALS_DIR = DATA_DIR / "editorials"
 PERSISTENT_SERVER_DIR = Path("/data/hollyflixhd/editorials")
+LOG_FILE = SCRIPT_DIR / "daily_editorial.log"
+LIMIT_FLAG_FILE = SCRIPT_DIR / "LIMIT_REACHED.flag"
+
+
+class TeeLogger:
+    def __init__(self, filepath: Path):
+        self.terminal = sys.stdout
+        self.filepath = filepath
+        self.log_file = open(filepath, "w", encoding="utf-8", buffering=1)
+
+    def write(self, message):
+        self.terminal.write(message)
+        try:
+            self.log_file.write(message)
+        except Exception:
+            pass
+
+    def flush(self):
+        self.terminal.flush()
+        try:
+            self.log_file.flush()
+        except Exception:
+            pass
+
+
+sys.stdout = TeeLogger(LOG_FILE)
 
 # TMDB & Ollama Configuration
 TMDB_BASE = "https://api.themoviedb.org/3"
-DEFAULT_LOCAL_MODEL = "gemma4"
-DEFAULT_CLOUD_MODEL = "gemma4:31b"
+DEFAULT_LOCAL_MODEL = "beam"
+DEFAULT_CLOUD_MODEL = "beam"
 VALID_RATINGS = {"Must Watch", "Worth Watching", "Skip It", "Cult Classic"}
 
 
@@ -83,10 +110,11 @@ def get_ollama_model(api_key):
 
 
 def slugify(text: str) -> str:
-    """Matches HollyFlixHD's TypeScript slugify logic."""
+    """Matches HollyFlixHD's TypeScript slugify logic with ASCII normalization."""
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("utf-8")
     text = text.lower().strip()
     text = re.sub(r"\s+", "-", text)
-    text = re.sub(r"[^\w\-]+", "", text)
+    text = re.sub(r"[^a-z0-9\-]+", "", text)
     text = re.sub(r"\-\-+", "-", text)
     return text.strip("-")
 
@@ -109,17 +137,56 @@ def get_target_storage_dir() -> Path:
     return EDITORIALS_DIR
 
 
-def editorial_exists(slug: str) -> bool:
-    """Check if editorial already exists locally or in persistent server volume."""
+EXISTING_EDITORIAL_SLUGS: set[str] = set()
+
+
+def init_existing_slugs() -> set[str]:
+    """Pre-index all existing editorial slugs in memory to guarantee zero duplicate generation."""
+    global EXISTING_EDITORIAL_SLUGS
+    EXISTING_EDITORIAL_SLUGS.clear()
+    storage_dir = get_target_storage_dir()
+    for directory in {storage_dir, EDITORIALS_DIR}:
+        if directory.is_dir():
+            for p in directory.glob("*.json"):
+                try:
+                    if p.is_file() and p.stat().st_size > 0:
+                        EXISTING_EDITORIAL_SLUGS.add(p.stem.lower())
+                except OSError:
+                    pass
+    print(f"  [Index Cache] Loaded {len(EXISTING_EDITORIAL_SLUGS)} existing editorial files into memory.", flush=True)
+    return EXISTING_EDITORIAL_SLUGS
+
+
+def editorial_exists(slug: str, base_slug: str | None = None) -> bool:
+    """
+    Check if editorial already exists locally or in persistent server volume.
+    Guarantees no duplicate generation against both exact slug and base slug.
+    """
+    if not EXISTING_EDITORIAL_SLUGS:
+        init_existing_slugs()
+
+    # 1. Exact slug match in memory
+    slug_lower = slug.lower()
+    if slug_lower in EXISTING_EDITORIAL_SLUGS:
+        return True
+
+    # 2. Base slug match (for unversioned legacy editorials like alpha.json)
+    if base_slug and base_slug.lower() in EXISTING_EDITORIAL_SLUGS:
+        return True
+
+    # 3. Direct filesystem check as extra safety net
     storage_dir = get_target_storage_dir()
     target_path = storage_dir / f"{slug}.json"
     if target_path.is_file() and target_path.stat().st_size > 0:
+        EXISTING_EDITORIAL_SLUGS.add(slug_lower)
         return True
-    # Also check local repo dir if different from target
+
     if storage_dir != EDITORIALS_DIR:
         local_path = EDITORIALS_DIR / f"{slug}.json"
         if local_path.is_file() and local_path.stat().st_size > 0:
+            EXISTING_EDITORIAL_SLUGS.add(slug_lower)
             return True
+
     return False
 
 
@@ -136,31 +203,33 @@ def tmdb_request(endpoint: str, params: dict | None = None) -> dict | None:
     req = urllib.request.Request(
         url,
         headers={
-            "User-Agent": "HollyFlixHD-DailyGenerator/1.0",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Accept": "application/json",
             "Accept-Encoding": "gzip",
+            "Connection": "close",
         },
     )
 
-    try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
-            content = resp.read()
-            if content.startswith(b"\x1f\x8b"):
-                content = gzip.decompress(content)
-            return json.loads(content.decode("utf-8"))
-    except Exception as e:
-        print(f"  [TMDB API Error] {endpoint}: {e}")
-        return None
+    time.sleep(0.1)
+    for attempt in range(4):
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                content = resp.read()
+                if content.startswith(b"\x1f\x8b"):
+                    content = gzip.decompress(content)
+                return json.loads(content.decode("utf-8"))
+        except Exception as e:
+            if attempt == 3:
+                print(f"  [TMDB API Error] {endpoint}: {e}", flush=True)
+            time.sleep(1.5)
+    return None
 
 
-def fetch_candidate_movies(target_count: int = 400) -> list[dict]:
+def fetch_candidate_movies(target_count: int = 400, candidates_file: str | None = None) -> list[dict]:
     """
     Collect movie candidates prioritizing:
-      1. Trending today (/trending/movie/day)
-      2. Now playing in theaters/streaming (/movie/now_playing)
-      3. Trending this week (/trending/movie/week)
-      4. Upcoming releases (/movie/upcoming)
-      5. Top popular releases by year (from current year back to 2010)
+      1. Local pre-fetched candidates JSON if provided (recommended)
+      2. TMDB feeds (/trending/movie/day, /movie/now_playing, etc.)
     """
     candidates = []
     seen_ids = set()
@@ -171,26 +240,27 @@ def fetch_candidate_movies(target_count: int = 400) -> list[dict]:
         for item in results:
             movie_id = item.get("id")
             title = item.get("title")
-            release_date = item.get("release_date") or ""
             overview = item.get("overview") or ""
 
-            if not movie_id or not title or not release_date:
+            year = str(item.get("year") or "").strip()
+            if not year and item.get("release_date"):
+                year_match = re.match(r"^(\d{4})", item["release_date"])
+                if year_match:
+                    year = year_match.group(1)
+
+            if not movie_id or not title or not year or not re.match(r"^(?:19|20)\d{2}$", year):
                 continue
 
             if movie_id in seen_ids:
                 continue
             seen_ids.add(movie_id)
 
-            year_match = re.match(r"^(\d{4})", release_date)
-            if not year_match:
-                continue
-            year = year_match.group(1)
-
+            base_slug = slugify(title)
             slug = generate_movie_slug(title, year)
             if not is_valid_editorial_slug(slug):
                 continue
 
-            if editorial_exists(slug):
+            if editorial_exists(slug, base_slug):
                 continue
 
             candidates.append({
@@ -198,8 +268,11 @@ def fetch_candidate_movies(target_count: int = 400) -> list[dict]:
                 "title": title,
                 "year": year,
                 "slug": slug,
+                "base_slug": base_slug,
                 "overview": overview,
-                "source": source_label,
+                "source": item.get("source") or source_label,
+                "genres": item.get("genres"),
+                "director": item.get("director"),
                 "popularity": item.get("popularity", 0),
                 "vote_average": item.get("vote_average", 0),
             })
@@ -207,6 +280,18 @@ def fetch_candidate_movies(target_count: int = 400) -> list[dict]:
             if len(candidates) >= target_count:
                 return True
         return False
+
+    # Check candidates_file first
+    if candidates_file and Path(candidates_file).is_file():
+        print(f"\n[1/3] Loading candidate movies from {candidates_file}...", flush=True)
+        try:
+            with open(candidates_file, "r", encoding="utf-8") as f:
+                items = json.load(f)
+            process_results(items, "Cached Candidates")
+            print(f"  Loaded {len(candidates)} unreviewed candidate movies ready for generation.", flush=True)
+            return candidates
+        except Exception as e:
+            print(f"  [Warning] Could not parse {candidates_file}: {e}. Falling back to TMDB.", flush=True)
 
     print("\n[1/3] Discovering candidates from TMDB...")
 
@@ -251,8 +336,16 @@ def fetch_candidate_movies(target_count: int = 400) -> list[dict]:
     return candidates
 
 
-def fetch_movie_context(movie_id: int) -> dict:
+def fetch_movie_context(movie_id: int, movie_data: dict | None = None) -> dict:
     """Fetch movie details including director and genres for high quality prompts."""
+    if movie_data and movie_data.get("genres") and movie_data.get("director"):
+        return {
+            "director": movie_data["director"],
+            "genres": movie_data["genres"],
+            "runtime": None,
+            "tagline": "",
+        }
+
     data = tmdb_request(f"/movie/{movie_id}", {"append_to_response": "credits"})
     if not data:
         return {}
@@ -274,13 +367,18 @@ def fetch_movie_context(movie_id: int) -> dict:
     }
 
 
-def generate_editorial_llm(movie: dict, context: dict, ollama_key: str | None, model: str) -> dict | None:
-    """Send prompt to Ollama to generate an editorial review."""
+def generate_editorial_llm(movie: dict, context: dict, ollama_key: str | None, model: str) -> tuple[dict | None, bool]:
+    """
+    Send prompt to Ollama to generate an editorial review.
+    Returns: (editorial_dict or None, is_rate_limited: bool)
+    """
     title = movie["title"]
     year = movie["year"]
     overview = movie.get("overview") or "Plot synopsis not available."
     genres = context.get("genres", "Drama, Cinema")
     director = context.get("director", "Unknown")
+
+    thinking_directive = "Keep internal thinking very brief and output the JSON immediately.\n" if model == "beam" else ""
 
     prompt = f"""You are a movie guide writer for HollyFlixHD.
 Write a clear, casual, and detailed movie review for everyday viewers.
@@ -289,7 +387,7 @@ Genre: {genres}
 Director: {director}
 Overview: {overview}
 
-LANGUAGE & LENGTH RULES:
+{thinking_directive}LANGUAGE & LENGTH RULES:
 - Use simple, natural, conversational English (8th-grade reading level). Talk like a friend recommending a movie.
 - NO fancy, pretentious, or academic words (DO NOT use: visceral, claustrophobic, cerebral, juxtaposition, tour-de-force, metaphor, descent, haunting, tapestry).
 - LENGTH REQUIREMENT FOR EDITORIAL: The "editorial" review MUST be at least 150 to 200 words long (2 detailed paragraphs). Do not make it a short summary.
@@ -333,14 +431,17 @@ FIELD CONSTRAINTS:
         url = "http://localhost:11434/api/generate"
         headers = {"Content-Type": "application/json"}
 
+    num_predict = 4096 if model == "beam" else 1500
+    temperature = 0.5 if model == "beam" else 0.7
+
     payload = {
         "model": model,
         "prompt": prompt,
         "stream": False,
         "format": "json",
         "options": {
-            "num_predict": 1500,
-            "temperature": 0.7,
+            "num_predict": num_predict,
+            "temperature": temperature,
         },
     }
 
@@ -362,9 +463,9 @@ FIELD CONSTRAINTS:
 
                     # Validate essential fields
                     if not isinstance(parsed, dict):
-                        return None
+                        return None, False
                     if not isinstance(parsed.get("editorial"), str) or not parsed["editorial"].strip():
-                        return None
+                        return None, False
                     if parsed.get("editorRating") not in VALID_RATINGS:
                         parsed["editorRating"] = "Must Watch"
                     if "worthWatching" not in parsed:
@@ -372,24 +473,28 @@ FIELD CONSTRAINTS:
                     if not isinstance(parsed.get("tags"), list):
                         parsed["tags"] = ["movie-night", "featured"]
 
-                    return parsed
+                    return parsed, False
                 else:
-                    print(f"    [LLM Format Error] Could not find JSON braces in response.")
-                    return None
+                    if attempt == 0:
+                        time.sleep(1)
+                        continue
+                    print(f"    [LLM Format Error] Could not find JSON braces in response.", flush=True)
+                    return None, False
         except urllib.error.HTTPError as e:
-            if e.code == 429 and attempt == 0:
-                print(f"    [Rate Limited (429)] Pausing 15s before retrying...")
-                time.sleep(15)
-                continue
-            print(f"    [LLM HTTP Error {e.code}]: {e.reason}")
-            return None
+            if e.code == 429:
+                print(f"\n    [MODEL_LIMIT_REACHED] Ollama API returned 429 Too Many Requests (rate limit reached)!", flush=True)
+                return None, True
+            print(f"    [LLM HTTP Error {e.code}]: {e.reason}", flush=True)
+            return None, False
         except Exception as e:
-            print(f"    [LLM Request Error]: {e}")
-            return None
+            print(f"    [LLM Request Error]: {e}", flush=True)
+            return None, False
+
+    return None, False
 
 
-def save_editorial_atomically(slug: str, editorial_data: dict) -> bool:
-    """Saves editorial to target directory atomically."""
+def save_editorial_atomically(slug: str, editorial_data: dict, base_slug: str | None = None) -> bool:
+    """Saves editorial to target directory atomically and registers slug into memory."""
     storage_dir = get_target_storage_dir()
     storage_dir.mkdir(parents=True, exist_ok=True)
     target_path = storage_dir / f"{slug}.json"
@@ -399,6 +504,9 @@ def save_editorial_atomically(slug: str, editorial_data: dict) -> bool:
         with open(temp_path, "w", encoding="utf-8") as f:
             json.dump(editorial_data, f, indent=2, ensure_ascii=False)
         temp_path.replace(target_path)
+        EXISTING_EDITORIAL_SLUGS.add(slug.lower())
+        if base_slug:
+            EXISTING_EDITORIAL_SLUGS.add(base_slug.lower())
         return True
     except Exception as e:
         if temp_path.exists():
@@ -431,6 +539,12 @@ def main():
         action="store_true",
         help="Discover candidate movies and print them without generating or saving.",
     )
+    parser.add_argument(
+        "--candidates",
+        type=str,
+        default=str(SCRIPT_DIR / "candidates.json"),
+        help="Path to JSON file containing pre-fetched movie candidates",
+    )
     args = parser.parse_args()
 
     tmdb_key = get_tmdb_key()
@@ -452,7 +566,7 @@ def main():
     print("==========================================================")
 
     # 1. Fetch candidate movies
-    candidates = fetch_candidate_movies(target_count=max(args.limit * 2, 400))
+    candidates = fetch_candidate_movies(target_count=max(args.limit * 2, 400), candidates_file=args.candidates)
     if not candidates:
         print("No new candidate movies found. Everything discovered already has an editorial.")
         return
@@ -477,21 +591,34 @@ def main():
             break
 
         slug = movie["slug"]
-        if editorial_exists(slug):
+        base_slug = movie.get("base_slug")
+        if editorial_exists(slug, base_slug):
             continue
 
-        print(f"\n[{success_count + 1}/{args.limit}] Processing: {movie['title']} ({movie['year']})")
-        print(f"       Source : {movie['source']} | Slug: {slug}")
+        print(f"\n[{success_count + 1}/{args.limit}] [IN PROGRESS] {movie['title']} ({movie['year']})", flush=True)
+        print(f"       Source : {movie['source']} | Slug: {slug}", flush=True)
 
         # Fetch extra context (director, genres)
-        context = fetch_movie_context(movie["id"])
-        print(f"       Context: Director: {context.get('director')}, Genres: {context.get('genres')}")
+        context = fetch_movie_context(movie["id"], movie)
+        print(f"       Context: Director: {context.get('director')}, Genres: {context.get('genres')}", flush=True)
 
         start_time = time.time()
-        editorial = generate_editorial_llm(movie, context, ollama_key, model)
+        editorial, is_rate_limited = generate_editorial_llm(movie, context, ollama_key, model)
+
+        if is_rate_limited:
+            print("\n🚨 [MODEL_LIMIT_REACHED] Ollama API returned 429 / Daily Model Quota Reached!", flush=True)
+            print(f"   Paused generation cleanly after {success_count} successful editorials.", flush=True)
+            try:
+                LIMIT_FLAG_FILE.write_text(
+                    f"LIMIT_REACHED: {datetime.now().isoformat()} after {success_count} editorials\n",
+                    encoding="utf-8",
+                )
+            except Exception:
+                pass
+            sys.exit(42)
 
         if editorial:
-            saved = save_editorial_atomically(slug, editorial)
+            saved = save_editorial_atomically(slug, editorial, base_slug)
             if saved:
                 duration = time.time() - start_time
                 success_count += 1
@@ -502,19 +629,19 @@ def main():
                     "slug": slug,
                     "rating": editorial.get("editorRating"),
                 })
-                print(f"       [+] Successfully saved {slug}.json ({duration:.1f}s)")
+                print(f"       [+] Successfully saved {slug}.json ({duration:.1f}s) | Total Completed: {success_count}/{args.limit}", flush=True)
             else:
                 consecutive_failures += 1
-                print(f"       [-] Failed to save file.")
+                print(f"       [-] Failed to save file.", flush=True)
         else:
             consecutive_failures += 1
-            print(f"       [!] Generation failed or returned invalid JSON ({consecutive_failures}/5). Skipping.")
+            print(f"       [!] Generation failed or returned invalid JSON ({consecutive_failures}/5). Skipping.", flush=True)
             if consecutive_failures >= 5:
-                print("\n[Warning] 5 consecutive failures encountered. Pausing run to protect API.")
+                print("\n[Warning] 5 consecutive failures encountered. Pausing run to protect API.", flush=True)
                 break
 
         # Respectful delay between LLM calls
-        time.sleep(0.4)
+        time.sleep(0.5)
 
     # 3. Summary & Links to submit
     print("\n==========================================================")

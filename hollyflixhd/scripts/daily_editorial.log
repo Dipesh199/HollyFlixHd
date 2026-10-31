@@ -1,0 +1,191 @@
+==========================================================
+HollyFlixHD - Daily Editorial Generator
+==========================================================
+Target count    : 250 new editorials
+TMDB API        : Configured
+Ollama Mode     : Ollama Cloud
+Model           : beam
+Storage Dir     : E:\HollyFlixHd\HollyFlixHd\hollyflixhd\data\editorials
+==========================================================
+
+[1/3] Loading candidate movies from E:\HollyFlixHd\HollyFlixHd\hollyflixhd\scripts\candidates.json...
+  [Index Cache] Loaded 8594 existing editorial files into memory.
+  Loaded 278 unreviewed candidate movies ready for generation.
+
+[2/3] Generating 250 new editorials...
+
+[1/250] [IN PROGRESS] Sigma (2026)
+       Source : Trending Today | Slug: sigma-2026
+       Context: Director: Acclaimed Director, Genres: Action, Crime, Drama
+       [+] Successfully saved sigma-2026.json (9.2s) | Total Completed: 1/250
+
+[2/250] [IN PROGRESS] Comrade Kalyan (2026)
+       Source : Trending Today | Slug: comrade-kalyan-2026
+       Context: Director: Acclaimed Director, Genres: Romance, Action, Drama
+       [+] Successfully saved comrade-kalyan-2026.json (12.6s) | Total Completed: 2/250
+
+[3/250] [IN PROGRESS] Neglected (2026)
+       Source : Trending Today | Slug: neglected-2026
+       Context: Director: Acclaimed Director, Genres: Action, Thriller
+       [+] Successfully saved neglected-2026.json (11.7s) | Total Completed: 3/250
+
+[4/250] [IN PROGRESS] SCTV: The Greatest Show You've Never Heard Of (2026)
+       Source : Trending Today | Slug: sctv-the-greatest-show-youve-never-heard-of-2026
+       Context: Director: Acclaimed Director, Genres: Documentary
+       [+] Successfully saved sctv-the-greatest-show-youve-never-heard-of-2026.json (8.5s) | Total Completed: 4/250
+
+[5/250] [IN PROGRESS] SI Yugandhar (2026)
+       Source : Trending Today | Slug: si-yugandhar-2026
+       Context: Director: Acclaimed Director, Genres: Action, Crime, Thriller
+       [+] Successfully saved si-yugandhar-2026.json (11.3s) | Total Completed: 5/250
+
+[6/250] [IN PROGRESS] Miss Mermaid (2026)
+       Source : Trending Today | Slug: miss-mermaid-2026
+       Context: Director: Acclaimed Director, Genres: Comedy, Drama
+       [+] Successfully saved miss-mermaid-2026.json (12.5s) | Total Completed: 6/250
+
+[7/250] [IN PROGRESS] Meethe Mein Kya Hai (2026)
+       Source : Trending Today | Slug: meethe-mein-kya-hai-2026
+       Context: Director: Acclaimed Director, Genres: Family, Comedy, Drama
+       [+] Successfully saved meethe-mein-kya-hai-2026.json (10.9s) | Total Completed: 7/250
+
+[8/250] [IN PROGRESS] Avaraachan & Sons (2026)
+       Source : Trending Today | Slug: avaraachan-sons-2026
+       Context: Director: Acclaimed Director, Genres: Drama
+       [+] Successfully saved avaraachan-sons-2026.json (16.1s) | Total Completed: 8/250
+
+[9/250] [IN PROGRESS] Dunhuang Warriors (2026)
+       Source : Trending Today | Slug: dunhuang-warriors-2026
+       Context: Director: Acclaimed Director, Genres: Action, History
+       [+] Successfully saved dunhuang-warriors-2026.json (13.3s) | Total Completed: 9/250
+
+[10/250] [IN PROGRESS] Obsess (2026)
+       Source : Trending Today | Slug: obsess-2026
+       Context: Director: Acclaimed Director, Genres: Drama
+    [LLM Format Error] Could not find JSON braces in response.
+       [!] Generation failed or returned invalid JSON (1/5). Skipping.
+
+[10/250] [IN PROGRESS] Scream 7 (2026)
+       Source : Trending Today | Slug: scream-7-2026
+       Context: Director: Acclaimed Director, Genres: Horror, Mystery, Crime
+       [+] Successfully saved scream-7-2026.json (16.5s) | Total Completed: 10/250
+
+[11/250] [IN PROGRESS] Hokum (2026)
+       Source : Trending Today | Slug: hokum-2026
+       Context: Director: Acclaimed Director, Genres: Horror, Thriller
+       [+] Successfully saved hokum-2026.json (12.4s) | Total Completed: 11/250
+
+[12/250] [IN PROGRESS] Permis de détruire (2026)
+       Source : Trending Today | Slug: permis-de-detruire-2026
+       Context: Director: Acclaimed Director, Genres: Comedy
+       [+] Successfully saved permis-de-detruire-2026.json (15.0s) | Total Completed: 12/250
+
+[13/250] [IN PROGRESS] Sinners (2025)
+       Source : Trending Today | Slug: sinners-2025
+       Context: Director: Acclaimed Director, Genres: Horror, Action, Thriller
+       [+] Successfully saved sinners-2025.json (10.1s) | Total Completed: 13/250
+
+[14/250] [IN PROGRESS] Her in Frame (2026)
+       Source : Trending Today | Slug: her-in-frame-2026
+       Context: Director: Acclaimed Director, Genres: Romance, Comedy
+       [+] Successfully saved her-in-frame-2026.json (17.4s) | Total Completed: 14/250
+
+[15/250] [IN PROGRESS] Mirzapur: The Movie (2026)
+       Source : Trending Today | Slug: mirzapur-the-movie-2026
+       Context: Director: Acclaimed Director, Genres: Action, Crime, Drama, Thriller
+       [+] Successfully saved mirzapur-the-movie-2026.json (28.3s) | Total Completed: 15/250
+
+[16/250] [IN PROGRESS] Mickey's Slayhouse (2025)
+       Source : Trending Today | Slug: mickeys-slayhouse-2025
+       Context: Director: Acclaimed Director, Genres: Horror
+       [+] Successfully saved mickeys-slayhouse-2025.json (14.2s) | Total Completed: 16/250
+
+[17/250] [IN PROGRESS] Nakhrewaalii (2026)
+       Source : Trending Today | Slug: nakhrewaalii-2026
+       Context: Director: Acclaimed Director, Genres: Romance
+       [+] Successfully saved nakhrewaalii-2026.json (7.9s) | Total Completed: 17/250
+
+[18/250] [IN PROGRESS] Weapons (2025)
+       Source : Trending Today | Slug: weapons-2025
+       Context: Director: Acclaimed Director, Genres: Horror, Mystery
+       [+] Successfully saved weapons-2025.json (26.1s) | Total Completed: 18/250
+
+[19/250] [IN PROGRESS] Werwulf (2026)
+       Source : Trending Today | Slug: werwulf-2026
+       Context: Director: Acclaimed Director, Genres: Horror
+       [+] Successfully saved werwulf-2026.json (11.3s) | Total Completed: 19/250
+
+[20/250] [IN PROGRESS] Les Misérables (2026)
+       Source : Trending Today | Slug: les-miserables-2026
+       Context: Director: Acclaimed Director, Genres: History, Romance, Drama
+       [+] Successfully saved les-miserables-2026.json (12.9s) | Total Completed: 20/250
+
+[21/250] [IN PROGRESS] The Magic Faraway Tree (2026)
+       Source : Trending Today | Slug: the-magic-faraway-tree-2026
+       Context: Director: Acclaimed Director, Genres: Adventure, Family, Fantasy
+       [+] Successfully saved the-magic-faraway-tree-2026.json (12.1s) | Total Completed: 21/250
+
+[22/250] [IN PROGRESS] Michael (2026)
+       Source : Trending Today | Slug: michael-2026
+       Context: Director: Acclaimed Director, Genres: Music, Drama
+    [LLM Format Error] Could not find JSON braces in response.
+       [!] Generation failed or returned invalid JSON (1/5). Skipping.
+
+[22/250] [IN PROGRESS] Adopting St. Nick (2026)
+       Source : Trending Today | Slug: adopting-st-nick-2026
+       Context: Director: Acclaimed Director, Genres: Romance, Comedy, TV Movie
+       [+] Successfully saved adopting-st-nick-2026.json (8.1s) | Total Completed: 22/250
+
+[23/250] [IN PROGRESS] Sonic the Hedgehog 4 (2027)
+       Source : Trending Today | Slug: sonic-the-hedgehog-4-2027
+       Context: Director: Acclaimed Director, Genres: Comedy, Action, Family, Sci-Fi
+       [+] Successfully saved sonic-the-hedgehog-4-2027.json (23.7s) | Total Completed: 23/250
+
+[24/250] [IN PROGRESS] Send Help (2026)
+       Source : Trending Today | Slug: send-help-2026
+       Context: Director: Acclaimed Director, Genres: Horror, Thriller, Comedy
+       [+] Successfully saved send-help-2026.json (16.7s) | Total Completed: 24/250
+
+[25/250] [IN PROGRESS] Hoppers (2026)
+       Source : Trending Today | Slug: hoppers-2026
+       Context: Director: Acclaimed Director, Genres: Animation, Adventure, Comedy, Family, Sci-Fi
+       [+] Successfully saved hoppers-2026.json (10.6s) | Total Completed: 25/250
+
+[26/250] [IN PROGRESS] Don't Trust the Couple Upstairs (2026)
+       Source : Trending Today | Slug: dont-trust-the-couple-upstairs-2026
+       Context: Director: Acclaimed Director, Genres: TV Movie, Thriller
+       [+] Successfully saved dont-trust-the-couple-upstairs-2026.json (9.3s) | Total Completed: 26/250
+
+[27/250] [IN PROGRESS] The Sea Speaks His Name (2026)
+       Source : Trending Today | Slug: the-sea-speaks-his-name-2026
+       Context: Director: Acclaimed Director, Genres: Drama, History
+       [+] Successfully saved the-sea-speaks-his-name-2026.json (10.1s) | Total Completed: 27/250
+
+[28/250] [IN PROGRESS] Coward (2026)
+       Source : Trending Today | Slug: coward-2026
+       Context: Director: Acclaimed Director, Genres: Drama, Romance, War
+       [+] Successfully saved coward-2026.json (15.6s) | Total Completed: 28/250
+
+[29/250] [IN PROGRESS] Final Interview (2026)
+       Source : Trending Today | Slug: final-interview-2026
+       Context: Director: Acclaimed Director, Genres: Mystery
+       [+] Successfully saved final-interview-2026.json (11.0s) | Total Completed: 29/250
+
+[30/250] [IN PROGRESS] The Furious (2026)
+       Source : Trending Today | Slug: the-furious-2026
+       Context: Director: Acclaimed Director, Genres: Action, Crime, Thriller
+       [+] Successfully saved the-furious-2026.json (10.4s) | Total Completed: 30/250
+
+[31/250] [IN PROGRESS] Ready or Not: Here I Come (2026)
+       Source : Trending Today | Slug: ready-or-not-here-i-come-2026
+       Context: Director: Acclaimed Director, Genres: Horror, Comedy
+       [+] Successfully saved ready-or-not-here-i-come-2026.json (11.2s) | Total Completed: 31/250
+
+[32/250] [IN PROGRESS] Zootopia 2 (2025)
+       Source : Trending Today | Slug: zootopia-2-2025
+       Context: Director: Acclaimed Director, Genres: Animation, Adventure, Comedy, Mystery, Family
+       [+] Successfully saved zootopia-2-2025.json (10.7s) | Total Completed: 32/250
+
+[33/250] [IN PROGRESS] Mama Bear (2026)
+       Source : Trending Today | Slug: mama-bear-2026
+       Context: Director: Acclaimed Director, Genres: Horror
