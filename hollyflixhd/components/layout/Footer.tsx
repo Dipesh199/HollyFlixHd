@@ -10,7 +10,7 @@ export default function Footer() {
               HollyFlix<span className="text-white">HD</span>
             </Link>
             <p className="text-gray-400 max-w-md">
-              Your ultimate destination for Hollywood movies. Discover trending films, top-rated classics, and new releases with full cast details, plot summaries, and more.
+              Your ultimate destination for Hollywood movies. Discover trending films, top-rated classics, and new releases with full cast details, plot summaries, and editorial reviews.
             </p>
           </div>
           
@@ -44,6 +44,12 @@ export default function Footer() {
               <span className="font-bold text-[#01b4e4]">TMDB</span>
             </a>
           </div>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-gray-800/60 text-xs text-gray-500 text-center md:text-left leading-relaxed">
+          <p>
+            <strong>Disclaimer:</strong> HollyFlixHD is an independent movie database and review platform. We do not host, stream, or distribute copyrighted video or audio content. All streaming references point to official, licensed digital services (such as Amazon Prime Video, Apple TV, Netflix, and Disney+).
+          </p>
         </div>
       </div>
     </footer>

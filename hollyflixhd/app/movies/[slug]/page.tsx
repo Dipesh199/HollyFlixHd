@@ -22,14 +22,24 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const editorial = getEditorial(params.slug);
   
   if (!movie) {
-    return { title: 'Movie Not Found | HollyFlixHD' };
+    return {
+      title: 'Movie Not Found | HollyFlixHD',
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
   }
 
   const year = movie.release_date ? movie.release_date.split('-')[0] : '';
-  const shouldIndex = true;
+  // Only index if the movie has a substantial editorial review.
+  // Thin pages without editorials are marked 'noindex, follow' so Googlebot
+  // doesn't waste crawl budget or flag the site for thin programmatic content.
+  const hasEditorial = Boolean(editorial && editorial.editorial && editorial.editorial.trim().length > 100);
+  const shouldIndex = hasEditorial;
 
-  const title = `${movie.title} (${year}) - Cast, Plot, Rating & Streaming | HollyFlixHD`;
-  const description = `Discover ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 50)}. Full cast, plot summary, TMDB ${movie.vote_average?.toFixed(1)}/10 rating & where to stream. | HollyFlixHD`;
+  const title = `${movie.title} (${year}) - Reviews, Cast, Rating & Where to Watch | HollyFlixHD`;
+  const description = `Explore ${movie.title} (${year}) - ${movie.tagline || movie.overview.substring(0, 80)}. Read editorial reviews, ratings, cast details, and where to legally stream on HollyFlixHD.`;
   const url = `https://hollyflixhd.com/movies/${params.slug}`;
 
   return {

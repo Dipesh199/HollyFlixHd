@@ -8,12 +8,12 @@ import { Metadata } from 'next';
 export const revalidate = 3600; // Revalidate every hour
 
 export const metadata: Metadata = {
-  title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
-  description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, TMDB ratings, and streaming information on HollyFlixHD.",
+  title: "HollyFlixHD - Movie Reviews, Ratings & Recommendations",
+  description: "Explore the best Hollywood movies, curated editorial reviews, top-rated films, and trending hits. Full cast details, ratings, and where to legally stream on HollyFlixHD.",
   alternates: { canonical: 'https://hollyflixhd.com/' },
   openGraph: {
-    title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
-    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, TMDB ratings, and streaming information on HollyFlixHD.",
+    title: "HollyFlixHD - Movie Reviews, Ratings & Recommendations",
+    description: "Explore the best Hollywood movies, curated editorial reviews, top-rated films, and trending hits. Full cast details, ratings, and where to legally stream on HollyFlixHD.",
     type: "website",
     url: "https://hollyflixhd.com/",
     siteName: "HollyFlixHD",
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HollyFlixHD - Watch, Discover & Explore Movies Online",
-    description: "Explore the best Hollywood movies, latest releases, top-rated films, and trending hits. Full cast details, plot summaries, TMDB ratings, and streaming information on HollyFlixHD.",
+    title: "HollyFlixHD - Movie Reviews, Ratings & Recommendations",
+    description: "Explore the best Hollywood movies, curated editorial reviews, top-rated films, and trending hits. Full cast details, ratings, and where to legally stream on HollyFlixHD.",
     images: ['https://hollyflixhd.com/images/og-default.png'],
   },
 };
