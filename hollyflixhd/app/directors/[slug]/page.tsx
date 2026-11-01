@@ -29,6 +29,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         description: `Complete list of movies directed by ${director.name}.`,
         images: director.profile_path ? [`https://image.tmdb.org/t/p/h632${director.profile_path}`] : [],
       },
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   } catch {
     return { title: 'Director Not Found' };

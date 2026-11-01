@@ -31,6 +31,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         description: `Complete list of movies starring ${actor.name}. Bio, character names, and where to watch.`,
         images: actor.profile_path ? [`https://image.tmdb.org/t/p/h632${actor.profile_path}`] : [],
       },
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   } catch {
     return { title: 'Actor Not Found' };
