@@ -97,7 +97,7 @@ export default async function MoviePage({ params }: { params: { slug: string } }
   const similarMovies = movie.similar;
 
   const posterUrl = getMoviePosterUrl(movie.poster_path, 'w500');
-  const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'original');
+  const backdropUrl = getMovieBackdropUrl(movie.backdrop_path, 'w1280');
   const watchUrl = `https://www.justwatch.com/us/search?q=${encodeURIComponent(movie.title)}`;
   const url = `https://hollyflixhd.com/movies/${params.slug}`;
 
@@ -139,7 +139,30 @@ export default async function MoviePage({ params }: { params: { slug: string } }
       "worstRating": "1",
       "ratingCount": movie.vote_count.toString(),
       "reviewCount": movie.vote_count.toString()
-    } : undefined
+    } : undefined,
+    ...(editorial ? {
+      "review": {
+        "@type": "Review",
+        "name": `${movie.title} Review & Analysis`,
+        "reviewBody": editorial.editorial,
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": editorial.worthWatching ? (movie.vote_average ? movie.vote_average.toFixed(1) : "8.0") : "5.0",
+          "bestRating": "10",
+          "worstRating": "1"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "HollyFlixHD Editorial Desk",
+          "url": "https://hollyflixhd.com/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "HollyFlixHD",
+          "url": "https://hollyflixhd.com/"
+        }
+      }
+    } : {})
   };
 
   const breadcrumbSchema = {
