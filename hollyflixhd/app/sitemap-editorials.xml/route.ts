@@ -10,12 +10,12 @@ export const dynamic = 'force-dynamic'
 const SITEMAP_EDITORIAL_LIMIT = 250
 
 export async function GET() {
-  let urls: SitemapUrl[] = []
+  const urls: SitemapUrl[] = []
 
   try {
     const editorialsDir = path.join(process.cwd(), 'data', 'editorials')
     if (fs.existsSync(editorialsDir)) {
-      const featuredSet = new Set(PUBLISHED_EDITORIAL_SLUGS)
+      const featuredSet = new Set<string>(PUBLISHED_EDITORIAL_SLUGS)
       const allFiles = fs.readdirSync(editorialsDir).filter(f => f.endsWith('.json'))
 
       // 1. Featured flagship reviews (highest priority)
@@ -40,7 +40,7 @@ export async function GET() {
       const modernCandidates: { slug: string; mtime: number; iso: string }[] = []
       for (const file of allFiles) {
         const slug = file.replace('.json', '')
-        if (featuredSet.has(slug as any)) continue
+        if (featuredSet.has(slug)) continue
         if (!isValidEditorialSlug(slug)) continue
 
         // Focus on recent modern releases
