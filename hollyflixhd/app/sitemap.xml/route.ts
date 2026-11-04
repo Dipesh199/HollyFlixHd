@@ -8,5 +8,6 @@ export async function GET() {
     { loc: absoluteUrl('/sitemap-editorials.xml') },
     { loc: absoluteUrl('/sitemap-blog.xml') },
     { loc: absoluteUrl('/sitemap-genres.xml') },
+    { loc: absoluteUrl('/sitemap-people.xml') },
   ])
 }

@@ -5,10 +5,6 @@ import { isValidEditorialSlug, PUBLISHED_EDITORIAL_SLUGS } from '@/lib/editorial
 
 export const dynamic = 'force-dynamic'
 
-// Maximum number of curated movie editorials to expose to Google in the sitemap.
-// Prevents crawl-budget exhaustion and low-quality indexation penalties on large programmatic libraries.
-const SITEMAP_EDITORIAL_LIMIT = 250
-
 export async function GET() {
   const urls: SitemapUrl[] = []
 
@@ -18,7 +14,7 @@ export async function GET() {
       const featuredSet = new Set<string>(PUBLISHED_EDITORIAL_SLUGS)
       const allFiles = fs.readdirSync(editorialsDir).filter(f => f.endsWith('.json'))
 
-      // 1. Featured flagship reviews (highest priority)
+      // 1. Featured flagship reviews (highest priority 0.9)
       for (const slug of PUBLISHED_EDITORIAL_SLUGS) {
         const filePath = path.join(editorialsDir, `${slug}.json`)
         let lastmod = new Date().toISOString()
@@ -36,34 +32,20 @@ export async function GET() {
         })
       }
 
-      // 2. High-priority modern releases (2024-2026), sorted by newest update
-      const modernCandidates: { slug: string; mtime: number; iso: string }[] = []
+      // 2. All valid movie editorials generated until now (priority 0.8)
       for (const file of allFiles) {
         const slug = file.replace('.json', '')
         if (featuredSet.has(slug)) continue
         if (!isValidEditorialSlug(slug)) continue
 
-        // Focus on recent modern releases
-        if (/-(?:202[4-6])$/.test(slug)) {
-          try {
-            const stat = fs.statSync(path.join(editorialsDir, file))
-            modernCandidates.push({
-              slug,
-              mtime: stat.mtimeMs,
-              iso: stat.mtime.toISOString(),
-            })
-          } catch { /* skip unreadable file */ }
-        }
-      }
+        let lastmod = new Date().toISOString()
+        try {
+          lastmod = fs.statSync(path.join(editorialsDir, file)).mtime.toISOString()
+        } catch { /* use fallback date */ }
 
-      modernCandidates.sort((a, b) => b.mtime - a.mtime)
-      const slotsRemaining = Math.max(0, SITEMAP_EDITORIAL_LIMIT - urls.length)
-      const additional = modernCandidates.slice(0, slotsRemaining)
-
-      for (const item of additional) {
         urls.push({
-          loc: absoluteUrl(`/movies/${item.slug}`),
-          lastmod: item.iso,
+          loc: absoluteUrl(`/movies/${slug}`),
+          lastmod,
           changefreq: 'monthly',
           priority: 0.8,
         })
